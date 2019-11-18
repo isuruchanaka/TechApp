@@ -19,6 +19,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,7 +38,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
+
+import static mud.per.iw.techapp.frgmenthome.prodList;
 
 
 public class fragspecies extends Fragment {
@@ -52,7 +56,9 @@ public class fragspecies extends Fragment {
 //     String s1;
     View view;
     private String changeres;
-
+    public static HashMap<String,String > eprodList1 =new HashMap<>();
+    public static HashMap<String,String > cprodList1 =new HashMap<>();
+    public static HashMap<String,String > pprodList1 =new HashMap<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -134,7 +140,9 @@ public class fragspecies extends Fragment {
 
                 tableRow[b] = new TableRow(getContext());
                 tableRow[b].setGravity(Gravity.CENTER);
-
+                getprodc(t1);
+                getprodp(t1);
+                getprode(t1);
                 LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View v = vi.inflate(R.layout.splayout,null);
 
@@ -197,6 +205,8 @@ public class fragspecies extends Fragment {
 
 // Add another TextView here for the "Description" label
                         final TextView descriptionBox = new TextView(getContext());
+                        String stpos2 = pprodList1.get(t1);
+
                         if(v1.equals("null")){
                             descriptionBox.setText("  Treatment: ");
                         }
@@ -292,4 +302,217 @@ public class fragspecies extends Fragment {
 
         view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
     }
+
+    public String getprodc(String id ){
+        String url = getContext().getResources().getString( R.string.weburl28)+"?id="+id+"";
+
+        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        frgmenthome.prodList1.clear();
+                        prodList.clear();
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("ProductUId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+
+                                cprodList1.put(id,Code);
+                                b++;
+                            }
+
+
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+    public String getprode(String id ){
+        String url = getContext().getResources().getString( R.string.weburl27)+"?id="+id+"";
+
+        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        frgmenthome.prodList1.clear();
+                        prodList.clear();
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("ProductUId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+                                eprodList1.put(id,Code);
+                                b++;
+                            }
+
+
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+    public String getprodp(String id ){
+        String url = getContext().getResources().getString( R.string.weburl26)+"?id="+id+"";
+        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        frgmenthome.prodList1.clear();
+                        prodList.clear();
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("ProductUId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+                                pprodList1.put(id,Code);
+                                b++;
+                            }
+
+
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+
 }

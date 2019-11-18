@@ -198,7 +198,7 @@ this.albumList=AlbumsAdapter.albumList;
             initials = prefs.getString("FName", "no");
            Rnkname = prefs.getString("Description", "no");
            rid=  prefs.getString("RoleID", "no");
-            if (rid.equals("1003")||rid.equals("1002")) {
+            if (rid.equals("1003")) {
                 Menu menubn = bottomNavigationView.getMenu();
 
                 MenuItem target = menubn.findItem(R.id.nav_camera3);

@@ -46,6 +46,8 @@
     <string name="weburl29">https://poc.allgonpest.com.au/mobile/insertfeed.ashx</string>
     <string name="weburl30">https://poc.allgonpest.com.au/mobile/insertcomp.ashx</string>
     <string name="weburl31">https://poc.allgonpest.com.au/mobile/getcomplain.ashx</string>
+    <string name="weburl32">https://poc.allgonpest.com.au/mobile/getprbyall.ashx</string>
+    
     <string name="weburl16">http://poc.allgonpest.com.au/Asset/images/visit</string>
     <string name="weburl22">http://poc.allgonpest.com.au/Asset/images/species</string>
 
