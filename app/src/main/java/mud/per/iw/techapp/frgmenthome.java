@@ -128,6 +128,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
     private RecyclerView recyclerView2;
     private List<Species> spdata;
     private List<Products> prdata;
+    public static List<Pair> pairdata;
     private Expandsps spadapter2;
     private Expandpr spadapter3;
     public static List<Code> CodeList;
@@ -152,7 +153,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
         ////File imagePath = new File(container.getContext().getFilesDir(), "images");
         // File newdir = new File(dir);
         // imagePath.mkdirs();
-       // getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        // getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         view = inflater.inflate(R.layout.frgmenthome, container, false);
 
         albumList = new ArrayList<>();
@@ -162,7 +163,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
         siteList=new ArrayList<>();
         spList=new ArrayList<>();
         prodList=   new ArrayList<>();
-
+        pairdata=   new ArrayList<>();
         SharedPreferences prefs = getContext().getSharedPreferences("userinfo", MODE_PRIVATE);
         String restoredText = prefs.getString("UserID", null);
 
@@ -173,25 +174,25 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
             ctry=  prefs.getString("Country", "no");
         }
         if(rid!=null){
-        if(rid.equals("1003")){
+            if(rid.equals("1003")){
 
-            getdmsg2(restoredText);
+                getdmsg2(restoredText);
 
+            }
+            else {
+                getdmsg("",ctry);
+            }
+            getstation(ctry);
         }
         else {
             getdmsg("",ctry);
         }
 
-        }
-        else {
-            getdmsg("",ctry);
-        }
 
-        getstation();
         getsitetp();
         getspecies();
         getprod();
-
+        getprodall("");
 /////////////////////////////////////////////////////////////////////////////////////////
         firstButton = (ImageView) view.findViewById(R.id.imageView7);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -254,8 +255,8 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
                 Log.d("", "QueryTextChange: "+ query);
 
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("message", query);
+                Bundle bundle = new Bundle();
+                bundle.putString("message", query);
 
                 SecondFragment fragobj=new SecondFragment();
                 fragobj.setArguments(bundle);
@@ -418,8 +419,8 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
 
         return changeres;
     }
-    public String getstation( ){
-        String url = getContext().getResources().getString( R.string.weburl1);
+    public String getstation(String val1 ){
+        String url = getContext().getResources().getString( R.string.weburl1)+"?id="+val1;
 
 
 
@@ -608,6 +609,81 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
                             }
 
 
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+    public String getprodall(String id ){
+        String url = getContext().getResources().getString( R.string.weburl32);
+
+        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //frgmenthome.pairdata.clear();
+//                        prodList.clear();
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("ct").toString()+":"+we1.get("pt").toString();
+
+                                Pair a = new Pair(Code,we1.get("SpeciesUId").toString(),we1.get("pt").toString());
+
+
+
+                                pairdata.add(a);
+
+
+
+
+                                b++;
+                            }
+
+
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
 
                         } catch (NullPointerException ex){

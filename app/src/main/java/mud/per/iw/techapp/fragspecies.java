@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+
+import static mud.per.iw.techapp.frgmenthome.pairdata;
 import static mud.per.iw.techapp.frgmenthome.prodList;
 
 
@@ -49,7 +51,7 @@ public class fragspecies extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
 
-//    String u1;
+    //    String u1;
 //    String v1;
 //    String z1;
 //     String t1;
@@ -66,7 +68,7 @@ public class fragspecies extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_species, container, false);
         getdmsg("",view);
-    return view;
+        return view;
     }
     public String getdmsg(String  val1,View vv ){
         String url = getContext().getResources().getString( R.string.weburl5);
@@ -130,7 +132,7 @@ public class fragspecies extends Fragment {
             for (int row = 0; row < num; row++) {
                 JSONObject we1 = we.getJSONObject(b);
 
-              String   s1 = we1.get("Description").toString();
+                String   s1 = we1.get("Description").toString();
                 String   t1 = we1.get("UId").toString();
                 String  u1 = we1.get("Habitat").toString();
                 String  v1 = we1.get("Treatment").toString();
@@ -141,8 +143,7 @@ public class fragspecies extends Fragment {
                 tableRow[b] = new TableRow(getContext());
                 tableRow[b].setGravity(Gravity.CENTER);
                 getprodc(t1);
-                getprodp(t1);
-                getprode(t1);
+
                 LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View v = vi.inflate(R.layout.splayout,null);
 
@@ -202,17 +203,24 @@ public class fragspecies extends Fragment {
 
                         //titleBox.setTransformationMethod(PasswordTransformationMethod.getInstance());
                         layout.addView(titleBox); // Notice this is an add method
-
+                        String  trtmnt="";
 // Add another TextView here for the "Description" label
                         final TextView descriptionBox = new TextView(getContext());
-                        String stpos2 = pprodList1.get(t1);
+                        for (int i = 0; i < pairdata.size(); i++) {
 
-                        if(v1.equals("null")){
-                            descriptionBox.setText("  Treatment: ");
+                            Pair album = pairdata.get(i);
+                            if(album !=null) {
+                                if (!album.getSiteUId().equals(t1)){
+                                    trtmnt="   "+trtmnt+"    \n    "+album.getCode();
+
+                                }
+                            }
+
                         }
-                        else{
-                            descriptionBox.setText("  Treatment: "+v1);
-                        }
+
+                        descriptionBox.setText("  Treatment: "+trtmnt);
+
+
 
 
                         //descriptionBox.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -304,7 +312,7 @@ public class fragspecies extends Fragment {
     }
 
     public String getprodc(String id ){
-        String url = getContext().getResources().getString( R.string.weburl28)+"?id="+id+"";
+        String url = getContext().getResources().getString( R.string.weburl32)+"?id="+id+"";
 
         view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
 
@@ -335,8 +343,8 @@ public class fragspecies extends Fragment {
 
                                 JSONObject we1 = we.getJSONObject(b);
 
-                                String Code = we1.get("ProductUId").toString();
-                                String Description = we1.get("Description").toString();
+                                String Code = we1.get("ct").toString()+":"+we1.get("pt").toString();
+
 
 
 
@@ -374,145 +382,6 @@ public class fragspecies extends Fragment {
 
         return changeres;
     }
-    public String getprode(String id ){
-        String url = getContext().getResources().getString( R.string.weburl27)+"?id="+id+"";
 
-        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        frgmenthome.prodList1.clear();
-                        prodList.clear();
-                        String  suresb = response.toString();
-                        Log.wtf("CameraDemo1", suresb);
-                        try{
-
-                            JSONObject dbovh = null;
-
-                            dbovh = new JSONObject(suresb);
-
-                            JSONArray we = null;
-
-                            we = dbovh.getJSONArray("Table");
-
-
-
-                            int b=0;
-
-                            for (int row = 0; row < (we.length()); row++) {
-
-                                JSONObject we1 = we.getJSONObject(b);
-
-                                String Code = we1.get("ProductUId").toString();
-                                String Description = we1.get("Description").toString();
-
-
-
-                                eprodList1.put(id,Code);
-                                b++;
-                            }
-
-
-                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-
-
-                        } catch (NullPointerException ex){
-                            Log.wtf("CameraDemo", ex.toString());
-                        } catch (Exception e){
-                            Log.wtf("CameraDemo", e.toString());
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-
-                        Log.wtf("CameraDemo", error.toString());
-
-                    }
-                });
-
-
-        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
-
-
-        return changeres;
-    }
-    public String getprodp(String id ){
-        String url = getContext().getResources().getString( R.string.weburl26)+"?id="+id+"";
-        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
-
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        frgmenthome.prodList1.clear();
-                        prodList.clear();
-                        String  suresb = response.toString();
-                        Log.wtf("CameraDemo1", suresb);
-                        try{
-
-                            JSONObject dbovh = null;
-
-                            dbovh = new JSONObject(suresb);
-
-                            JSONArray we = null;
-
-                            we = dbovh.getJSONArray("Table");
-
-
-
-                            int b=0;
-
-                            for (int row = 0; row < (we.length()); row++) {
-
-                                JSONObject we1 = we.getJSONObject(b);
-
-                                String Code = we1.get("ProductUId").toString();
-                                String Description = we1.get("Description").toString();
-
-
-
-                                pprodList1.put(id,Code);
-                                b++;
-                            }
-
-
-                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-
-
-                        } catch (NullPointerException ex){
-                            Log.wtf("CameraDemo", ex.toString());
-                        } catch (Exception e){
-                            Log.wtf("CameraDemo", e.toString());
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-
-                        Log.wtf("CameraDemo", error.toString());
-
-                    }
-                });
-
-
-        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
-
-
-        return changeres;
-    }
 
 }
