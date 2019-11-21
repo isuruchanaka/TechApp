@@ -248,6 +248,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
         });
         savebtn = (SearchView) view.findViewById(R.id.searchView);
 
+
         savebtn.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             public boolean onQueryTextSubmit(String query) {

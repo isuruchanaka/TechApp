@@ -64,7 +64,7 @@ public class Fragviewcomp extends Fragment {
 // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_fragviewcomp, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view4);
-
+        view.findViewById(R.id.nodt).setVisibility(View.GONE);
         albumListnew1 = new ArrayList<>();
 
         SharedPreferences prefs = getContext().getSharedPreferences("userinfo", MODE_PRIVATE);
@@ -151,7 +151,13 @@ public class Fragviewcomp extends Fragment {
 
 
             int b=0;
+if(we.length()==0){
+    view.findViewById(R.id.nodt).setVisibility(View.VISIBLE);
 
+}
+else {
+    view.findViewById(R.id.nodt).setVisibility(View.GONE);
+}
             for (int row = 0; row < (we.length()); row++) {
 
                 JSONObject we1 = we.getJSONObject(b);

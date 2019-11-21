@@ -64,7 +64,7 @@ public class SecondFragment extends Fragment {
 // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_second, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-
+        view.findViewById(R.id.nodt).setVisibility(View.GONE);
         albumListnew = new ArrayList<>();
 
         SharedPreferences prefs = getContext().getSharedPreferences("userinfo", MODE_PRIVATE);
@@ -115,6 +115,15 @@ public class SecondFragment extends Fragment {
 //                adapter = new AlbumsAdapter(container.getContext(), albumListnew);
 //            }
 //            else {
+            if(albumList.size()==0){
+                view.findViewById(R.id.nodt).setVisibility(View.VISIBLE);
+
+            }
+            else {
+                view.findViewById(R.id.nodt).setVisibility(View.GONE);
+            }
+
+
                 adapter = new AlbumsAdapter(container.getContext(), albumList);
                 adapter.notifyDataSetChanged();
 //            }
@@ -231,7 +240,13 @@ public class SecondFragment extends Fragment {
 
             we = dbovh.getJSONArray("Table");
 
+            if(we.length()==0){
+                view.findViewById(R.id.nodt).setVisibility(View.VISIBLE);
 
+            }
+            else {
+                view.findViewById(R.id.nodt).setVisibility(View.GONE);
+            }
 
             int b=0;
 
