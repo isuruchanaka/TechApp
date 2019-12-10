@@ -202,7 +202,7 @@
                     android:id="@+id/sage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Age"
+                    android:hint="Visible"
                     android:inputType="number"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -221,7 +221,7 @@
                     android:id="@+id/cnt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Count"
+                    android:hint="Captured"
                     android:inputType="number"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused" />
             </com.google.android.material.textfield.TextInputLayout>
