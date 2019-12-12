@@ -226,12 +226,12 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
          spinner3 = (Spinner)view.findViewById(R.id.prod);
         spinner3.setOnItemSelectedListener(this);
 
-        String[] stockArr3 = new String[frgmenthome.prodList.size()];
-        stockArr3 = frgmenthome.prodList.toArray(stockArr3);
-
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(container.getContext(),R.layout.spinner_item, stockArr3);
-
-        spinner3.setAdapter(adapter3);
+//        String[] stockArr3 = new String[frgmenthome.prodList.size()];
+//        stockArr3 = frgmenthome.prodList.toArray(stockArr3);
+//
+//        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(container.getContext(),R.layout.spinner_item, stockArr3);
+//
+//        spinner3.setAdapter(adapter3);
 /////////////////////////////////////////////////////////////////////////////////////////
         firstButton = (Button) view.findViewById(R.id.btn_tpic);
 
