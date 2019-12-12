@@ -3,6 +3,7 @@ package mud.per.iw.techapp;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -41,6 +42,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -94,9 +96,11 @@ import static mud.per.iw.techapp.MainActivity.svcid;
 import static mud.per.iw.techapp.frgmenthome.prodList;
 
 public class Savedata extends Fragment implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
+    private static final int OPEN_DOCUMENT_CODE = 148;
     private Context mContext;
     View view;
     Button firstButton;
+    Button galButton;
     Button savebtn;
     Button spbtn;
     Button prbtn;
@@ -179,16 +183,19 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
                 switch(checkedId){
                     case R.id.radioButton1:
                         int spcpos = spinner2.getSelectedItemPosition();
+                        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                         String spcpos2 = frgmenthome.spList1.get(spcpos);
                         getprode(spcpos2);
                         break;
                     case R.id.radioButton2:
                         int spcpos1 = spinner2.getSelectedItemPosition();
+                        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                         String spcpos3 = frgmenthome.spList1.get(spcpos1);
                         getprodc(spcpos3);
                         break;
                     case R.id.radioButton3:
                         int spcpos5 = spinner2.getSelectedItemPosition();
+                        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                         String spcpos4 = frgmenthome.spList1.get(spcpos5);
                         getprodp(spcpos4);
                         break;
@@ -210,15 +217,15 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
      //   spinner.setSelection(frgmenthome.siteList.size());
     //    adapter.notifyDataSetChanged();
 /////////////////////////////////////////////////////////////////////////////
-        Spinner spinner1 = (Spinner)view.findViewById(R.id.suburb);
-        spinner1.setOnItemSelectedListener(this);
-
-        String[] stockArr1 = new String[frgmenthome.sitetypList.size()];
-        stockArr1 = frgmenthome.sitetypList.toArray(stockArr1);
-
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(container.getContext(),R.layout.spinner_item, stockArr1);
-
-        spinner1.setAdapter(adapter1);
+//        Spinner spinner1 = (Spinner)view.findViewById(R.id.suburb);
+//        spinner1.setOnItemSelectedListener(this);
+//
+//        String[] stockArr1 = new String[frgmenthome.sitetypList.size()];
+//        stockArr1 = frgmenthome.sitetypList.toArray(stockArr1);
+//
+//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(container.getContext(),R.layout.spinner_item, stockArr1);
+//
+//        spinner1.setAdapter(adapter1);
 
 ////////////////////////////////////////////////////////////////////////////////
          spinner2 = (Spinner)view.findViewById(R.id.species);
@@ -248,6 +255,9 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
             @Override
             public void onClick(View v) {
 
+
+
+                ////////
                 count++;
 
                 String file =count+".jpg";
@@ -279,7 +289,36 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
             }
         });
 
+        galButton = (Button) view.findViewById(R.id.btn_tpic2);
 
+        galButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                ////////
+                count++;
+
+                String file =count+".jpg";
+                try {
+
+
+
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, OPEN_DOCUMENT_CODE);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+
+                //Toast.makeText(getActivity(), "First Fragment", Toast.LENGTH_LONG).show();
+            }
+        });
         spbtn = (Button) view.findViewById(R.id.btn_sps);
 
         spbtn.setOnClickListener(new View.OnClickListener() {
@@ -417,8 +456,9 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
 
 
                 String stpos2 = tid;
-                int subpos = spinner1.getSelectedItemPosition();
-                String subpos2 = frgmenthome.sitetypList1.get(subpos);
+                //int subpos = spinner1.getSelectedItemPosition();
+                String subpos2 = "1000";
+                        //frgmenthome.sitetypList1.get(subpos);
 
 
 
@@ -796,7 +836,7 @@ count=0;
 
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                        for(int u=0;u<data3.size();u++){
                            InputStream is = null;
                            try {
@@ -811,6 +851,7 @@ count=0;
 
                        }
                        try {
+                           view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                            data3.values().clear();
                            data3.clear();
                            //data3 = null;
@@ -819,7 +860,7 @@ count=0;
                        }
                         Toast.makeText(getContext(), "Success!",
                                 Toast.LENGTH_LONG).show();
-                        Fragment  fragment1 = new SecondFragment();
+                        Fragment  fragment1 = new frgmenthome();
                         FragmentTransaction ft1 =getActivity().getSupportFragmentManager().beginTransaction();
                         ft1.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
                         ft1.replace(R.id.frameLayout, fragment1);
@@ -904,6 +945,20 @@ count=0;
 
             gridView.setAdapter(adapter);
 
+        }
+        if (requestCode == OPEN_DOCUMENT_CODE && resultCode == RESULT_OK) {
+            if (data != null) {
+                // this is the image selected by the user
+                Uri imageUri = data.getData();
+
+                InitilizeGridLayout(count);
+                imagePaths.add(imageUri.toString());
+                adapter = new GridViewImageAdapter2(Savedata.this.getContext(), imagePaths,
+                        columnWidth);
+
+
+                gridView.setAdapter(adapter);
+            }
         }
         if(requestCode ==152){
 

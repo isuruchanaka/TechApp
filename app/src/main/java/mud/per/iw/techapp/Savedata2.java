@@ -37,6 +37,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,6 +82,7 @@ import static android.app.Activity.RESULT_OK;
 import static androidx.core.content.FileProvider.getUriForFile;
 
 
+import static mud.per.iw.techapp.AlbumsAdapter.albumList;
 import static mud.per.iw.techapp.Expandpr.prds;
 import static mud.per.iw.techapp.Expandsps.sps;
 import static mud.per.iw.techapp.GridViewImageAdapter2.data3;
@@ -88,9 +90,12 @@ import static mud.per.iw.techapp.MainActivity.qrcod;
 import static mud.per.iw.techapp.MainActivity.svcid;
 import static mud.per.iw.techapp.StationAdapter.statoinList;
 import static mud.per.iw.techapp.frgmenthome.CodeList;
+import static mud.per.iw.techapp.frgmenthome.prodList;
 
-public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedListener {
+public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
+    private Context mContext;
     View view;
+    Button galButton;
     Button firstButton;
     Button savebtn;
     Button spbtn;
@@ -121,8 +126,10 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
     private List<Products> prdata;
     private Expandsps spadapter2;
     private Expandpr spadapter3;
-
-
+    ArrayAdapter<String> adapter3;
+    ArrayAdapter<String> adaptersit;
+    Spinner spinner3;
+    private static final int OPEN_DOCUMENT_CODE = 148;
     @SuppressLint("MissingPermission")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -163,7 +170,6 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
 /////////////////////////////////////////////////////////////////////////////
 
 
-
         Code al=  getalbum(qrcod.toLowerCase());
         TextView sdesc = (TextView) view.findViewById(R.id.sdesc);
         sdesc.setText(al.getDescription());
@@ -186,7 +192,38 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
         spinner2.setAdapter(adapter2);
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        Spinner spinner3 = (Spinner)view.findViewById(R.id.prod);
+        RadioGroup rg = (RadioGroup) view.findViewById(R.id.radiog);
+
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.radioButton1:
+                        int spcpos = spinner2.getSelectedItemPosition();
+                        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+                        String spcpos2 = frgmenthome.spList1.get(spcpos);
+                        getprode(spcpos2);
+                        break;
+                    case R.id.radioButton2:
+                        int spcpos1 = spinner2.getSelectedItemPosition();
+                        String spcpos3 = frgmenthome.spList1.get(spcpos1);
+                        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+                        getprodc(spcpos3);
+                        break;
+                    case R.id.radioButton3:
+                        int spcpos5 = spinner2.getSelectedItemPosition();
+                        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+                        String spcpos4 = frgmenthome.spList1.get(spcpos5);
+                        getprodp(spcpos4);
+                        break;
+                }
+            }
+        });
+//////////////////////////////////////////////////////////////////////
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+         spinner3 = (Spinner)view.findViewById(R.id.prod);
         spinner3.setOnItemSelectedListener(this);
 
         String[] stockArr3 = new String[frgmenthome.prodList.size()];
@@ -232,8 +269,38 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
                 //Toast.makeText(getActivity(), "First Fragment", Toast.LENGTH_LONG).show();
             }
         });
+/////////////////////////////////////////////////
+        galButton = (Button) view.findViewById(R.id.btn_tpic2);
+
+        galButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
+
+                ////////
+                count++;
+
+                String file =count+".jpg";
+                try {
+
+
+
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, OPEN_DOCUMENT_CODE);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+
+                //Toast.makeText(getActivity(), "First Fragment", Toast.LENGTH_LONG).show();
+            }
+        });
+/////////////////////////////////////////////
         spbtn = (Button) view.findViewById(R.id.btn_sps);
 
         spbtn.setOnClickListener(new View.OnClickListener() {
@@ -674,7 +741,7 @@ if(sbread1.equals("")){
 
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                         for(int u=0;u<data3.size();u++){
                             InputStream is = null;
                             try {
@@ -688,6 +755,7 @@ if(sbread1.equals("")){
                         }catch (Exception ex){}
                         }
                         try {
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                             data3.values().clear();
                             data3.clear();
                             //data3 = null;
@@ -696,7 +764,7 @@ if(sbread1.equals("")){
                         }
                         Toast.makeText(getContext(), "Success!",
                                 Toast.LENGTH_LONG).show();
-                        Fragment  fragment1 = new SecondFragment();
+                        Fragment  fragment1 = new frgmenthome();
                         FragmentTransaction ft1 =getActivity().getSupportFragmentManager().beginTransaction();
                         ft1.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
                         ft1.replace(R.id.frameLayout, fragment1);
@@ -782,6 +850,20 @@ if(sbread1.equals("")){
             gridView.setAdapter(adapter);
 
         }
+        if (requestCode == OPEN_DOCUMENT_CODE && resultCode == RESULT_OK) {
+            if (data != null) {
+                // this is the image selected by the user
+                Uri imageUri = data.getData();
+
+                InitilizeGridLayout(count);
+                imagePaths.add(imageUri.toString());
+                adapter = new GridViewImageAdapter2(Savedata2.this.getContext(), imagePaths,
+                        columnWidth);
+
+
+                gridView.setAdapter(adapter);
+            }
+        }
     }
 
     public void checkloc(){
@@ -865,6 +947,246 @@ if(sbread1.equals("")){
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+    public String getprodc(String id ){
+        String url = getContext().getResources().getString( R.string.weburl28)+"?id="+id+"";
+
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        frgmenthome.prodList1.clear();
+                        prodList.clear();
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("ProductUId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+                                prodList.add(Description);
+                                frgmenthome.prodList1.put(row,Code);
+                                b++;
+                            }
+
+                            String[] stockArr3 = new String[prodList.size()];
+                            stockArr3 = prodList.toArray(stockArr3);
+                            adapter3 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr3);
+
+                            adapter3.notifyDataSetChanged();
+                            spinner3.setAdapter(adapter3);
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+    public String getprode(String id ){
+        String url = getContext().getResources().getString( R.string.weburl27)+"?id="+id+"";
+
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        frgmenthome.prodList1.clear();
+                        prodList.clear();
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("ProductUId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+                                prodList.add(Description);
+                                frgmenthome.prodList1.put(row,Code);
+                                b++;
+                            }
+
+                            String[] stockArr3 = new String[prodList.size()];
+                            stockArr3 = prodList.toArray(stockArr3);
+                            adapter3 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr3);
+                            adapter3.notifyDataSetChanged();
+                            spinner3.setAdapter(adapter3);
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+    public String getprodp(String id ){
+        String url = getContext().getResources().getString( R.string.weburl26)+"?id="+id+"";
+
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        frgmenthome.prodList1.clear();
+                        prodList.clear();
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("ProductUId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+                                prodList.add(Description);
+                                frgmenthome.prodList1.put(row,Code);
+                                b++;
+                            }
+
+                            String[] stockArr3 = new String[prodList.size()];
+                            stockArr3 = prodList.toArray(stockArr3);
+                            adapter3 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr3);
+                            adapter3.notifyDataSetChanged();
+                            spinner3.setAdapter(adapter3);
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+
+
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
 
     }
 }

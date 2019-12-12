@@ -177,7 +177,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/prod1"
+                app:layout_constraintTop_toBottomOf="@id/radiog"
                 tools:ignore="UselessParent">
 
                 <Spinner
@@ -316,17 +316,35 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_tpic"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
 
 
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
                 android:padding="12dp"
-                android:text="Add Photos"
+                android:text="Camera"
                 android:textColor="@color/black"
-                app:layout_constraintLeft_toRightOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_tpic2"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recycler4" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_tpic2"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
 
+
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:padding="12dp"
+                android:text="Gallery"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_tpic"
+                app:layout_constraintTop_toBottomOf="@id/recycler4" />
             <GridView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/grid_view2"
                 android:layout_width="wrap_content"
@@ -352,6 +370,38 @@
                 android:text="Save"
                 app:layout_constraintLeft_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/grid_view2" />
+
+            <RadioGroup
+                android:id="@+id/radiog"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/prod1"
+                app:layout_constraintEnd_toEndOf="@+id/prod1"
+                app:layout_constraintStart_toStartOf="@+id/prod1"
+                app:layout_constraintBottom_toTopOf="@+id/prod2" >
+
+                <RadioButton
+                    android:id="@+id/radioButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Equipment"
+                    android:textColor="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Chemical"
+                    android:textColor="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/radioButton3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product"
+                    android:textColor="@color/black" />
+            </RadioGroup>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
     <RelativeLayout
