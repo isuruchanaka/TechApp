@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -37,9 +38,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -101,95 +104,98 @@ public class fragmentfifth extends Fragment {
 
 
         String strcd=getArguments().getString("stationuid");
-        Code al=  getalbum(strcd);
-        Album a2=  getalbum2(al.getSiteUId());
-        Log.wtf("bnb",strcd);
-
-        getdmsg(al.getUId());
-
-        TextView sdesc = (TextView) view.findViewById(R.id.descp);
-        sdesc.setText(al.getDescription());
-        TextView suburb = (TextView) view.findViewById(R.id.suburbs);
-        suburb.setText(a2.getsurb());
-        TextView state = (TextView) view.findViewById(R.id.states);
-        state.setText(a2.getstat());
-        TextView stadress = (TextView) view.findViewById(R.id.saddress);
-        stadress.setText(a2.getAddress());
-        repodata = new ArrayList<>();
+        station al=  getalbum(strcd);
+        if(al!=null) {
 
 
-        String strlat=al.getLat();
-        String strlon=al.getLong();
-        String strdesc=al.getDescription();
-        String straddr=a2.getAddress();
+            Album a2 = getalbum2(al.getSiteUId());
+            Log.wtf("bnb", strcd);
 
-        mMapView = (MapView) view.findViewById(R.id.mapView);
-        mMapView.onCreate(savedInstanceState);
+            getdmsg(al.getUId());
 
-        mMapView.onResume(); // needed to get the map to display immediately
+            TextView sdesc = (TextView) view.findViewById(R.id.descp);
+            sdesc.setText(al.getDescription());
+            TextView suburb = (TextView) view.findViewById(R.id.suburbs);
+            suburb.setText(a2.getsurb());
+            TextView state = (TextView) view.findViewById(R.id.states);
+            state.setText(a2.getstat());
+            TextView stadress = (TextView) view.findViewById(R.id.saddress);
+            stadress.setText(a2.getAddress());
+            repodata = new ArrayList<>();
 
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-                mMap.setOnMarkerClickListener(fragmentfifth.this::onMarkerClick);
+            String strlat = al.getLat();
+            String strlon = al.getLong();
+            String strdesc = al.getDescription();
+            String straddr = a2.getAddress();
 
-                // For showing a move to my location button
-                // googleMap.setMyLocationEnabled(true);
-                mMap.getUiSettings().setMapToolbarEnabled(true);
-                mMap.getUiSettings().setZoomControlsEnabled(true);
-                mMap.getUiSettings().setMapToolbarEnabled(true);
-                // For dropping a marker at a point on the Map
+            mMapView = (MapView) view.findViewById(R.id.mapView);
+            mMapView.onCreate(savedInstanceState);
 
-                if(!strlat.equals("null")&&!strlon.equals("null")) {
-                    LatLng sydney = new LatLng(Double.parseDouble(strlat), Double.parseDouble(strlon));
+            mMapView.onResume(); // needed to get the map to display immediately
 
-                    googleMap.addMarker(new MarkerOptions().position(sydney).title(strdesc).snippet(straddr).icon(BitmapDescriptorFactory.fromResource(R.drawable.rodent)));
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(13).build();
-                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            try {
+                MapsInitializer.initialize(getActivity().getApplicationContext());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            mMapView.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap mMap) {
+                    googleMap = mMap;
+                    mMap.setOnMarkerClickListener(fragmentfifth.this::onMarkerClick);
+
+                    // For showing a move to my location button
+                    // googleMap.setMyLocationEnabled(true);
+                    mMap.getUiSettings().setMapToolbarEnabled(true);
+                    mMap.getUiSettings().setZoomControlsEnabled(true);
+                    mMap.getUiSettings().setMapToolbarEnabled(true);
+                    // For dropping a marker at a point on the Map
+
+                    if (!strlat.equals("null") && !strlon.equals("null")) {
+                        LatLng sydney = new LatLng(Double.parseDouble(strlat), Double.parseDouble(strlon));
+
+                        googleMap.addMarker(new MarkerOptions().position(sydney).title(strdesc).snippet(straddr).icon(BitmapDescriptorFactory.fromResource(R.drawable.rodent)));
+                        CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(13).build();
+                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    }
+                    // For zooming automatically to the location of the marker
+
+
                 }
-                // For zooming automatically to the location of the marker
 
 
-
-            }
-
+            });
 
 
-
-        });
-
-
-
-
-
-
-        adapter2 = new ExpandableRecyclerAdapter( repodata);
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycler);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext().getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
+            adapter2 = new ExpandableRecyclerAdapter(repodata);
+            recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+            recyclerView.setHasFixedSize(true);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext().getApplicationContext());
+            recyclerView.setLayoutManager(layoutManager);
 //fetch data and on ExpandableRecyclerAdapter
-        recyclerView.setAdapter(adapter2);
-        DefaultItemAnimator animator = new DefaultItemAnimator() {
-            @Override
-            public boolean canReuseUpdatedViewHolder(RecyclerView.ViewHolder viewHolder) {
-                return true;
-            }
-        };
-        recyclerView.setItemAnimator(animator);
-        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, 0);
-        //recyclerView.setVisibility(View.GONE);
-        //view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+            recyclerView.setAdapter(adapter2);
+            DefaultItemAnimator animator = new DefaultItemAnimator() {
+                @Override
+                public boolean canReuseUpdatedViewHolder(RecyclerView.ViewHolder viewHolder) {
+                    return true;
+                }
+            };
+            recyclerView.setItemAnimator(animator);
+            recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, 0);
+            //recyclerView.setVisibility(View.GONE);
+            //view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
+        }
+else{
+            Toast.makeText(getActivity(), "No data!", Toast.LENGTH_LONG).show();
+            Fragment myFragment = new SecondFragment();
 
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
 
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, myFragment).addToBackStack(null).commit();
+        }
         return view;
     }
 
@@ -213,8 +219,8 @@ public class fragmentfifth extends Fragment {
     }
 
 
-    Code getalbum(String codeIsIn) {
-        for(Code carnet : CodeList) {
+    station getalbum(String codeIsIn) {
+        for(station carnet : statoinList) {
             if(carnet.getUId().equals(codeIsIn)) {
                 return carnet;
             }
@@ -533,6 +539,7 @@ else{
 
 
     }
+
     public String getdmsg2( String visituid1){
         String url = getContext().getResources().getString( R.string.weburl19)+"?id="+visituid1;
 

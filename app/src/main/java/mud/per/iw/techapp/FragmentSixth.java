@@ -46,7 +46,7 @@ public class FragmentSixth extends Fragment {
 
     private StationAdapter adapter;
     private List<Album> albumList;
-    private List<station> stationsList;
+    public static List<station> stationsList;
     public static List<String> sitetypList;
     public static List<String> siteList;
     public static List<String> spList;
@@ -77,7 +77,7 @@ public class FragmentSixth extends Fragment {
         getdmsg(strcd);
         stationsList = new ArrayList<>();
         adapter = new StationAdapter(container.getContext(), stationsList);
-
+        view.findViewById(R.id.nodt).setVisibility(View.GONE);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(container.getContext(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(10), true));
@@ -138,13 +138,19 @@ public class FragmentSixth extends Fragment {
         } catch (Exception e){
             Log.wtf("CameraDemo", e.toString());
         }
-
-
-
-
-
-
         adapter.notifyDataSetChanged();
+
+        if(stationsList.size()==0){
+            view.findViewById(R.id.nodt).setVisibility(View.VISIBLE);
+
+        }
+        else {
+            view.findViewById(R.id.nodt).setVisibility(View.GONE);
+        }
+
+
+
+
     }
     public String getdmsg(String  val1 ){
         String url = getContext().getResources().getString( R.string.weburl8)+"?id="+val1;
