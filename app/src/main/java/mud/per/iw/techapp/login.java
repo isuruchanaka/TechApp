@@ -60,7 +60,7 @@ public class login extends AppCompatActivity {
         _passwordText=(EditText)findViewById(R.id.input_password);
         _loginButton=(Button)findViewById(R.id.btn_login);
         _signupLink=(TextView)findViewById(R.id.link_signup);
-
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -94,7 +94,7 @@ public class login extends AppCompatActivity {
 
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
-
+        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
         loaduser(email,generateSHA1Hash(password));
 //        Intent intent = new Intent(login.this, MainActivity.class);
 //        startActivity(intent);
@@ -207,7 +207,7 @@ public class login extends AppCompatActivity {
 
                // Log.wtf("testpass",cryptWithMD5("isuru"));
                 inBed=true;
-
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 Toast.makeText(login.this, "Login Successful!",
                         Toast.LENGTH_LONG).show();

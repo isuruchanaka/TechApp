@@ -369,6 +369,15 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
                         recyclerView.setLayoutManager(layoutManager);
 //fetch data and on ExpandableRecyclerAdapter
                         recyclerView.setAdapter(spadapter2);
+                    sbread.setText("");
+
+                    sage.setText("");
+
+                    savg.setText("");
+
+                    sdead.setText("");
+
+                    scnt.setText("");
                    // }
                 }
                 catch (Exception e)
@@ -472,6 +481,11 @@ if(validate()){
         try {
             isertdata(qrcod, subpos2, stpos2, sdesc1, lti, lngi, "13", svcid, "1", visitdesc1, svcid);
             Log.wtf("cls1", qrcod);
+
+
+
+
+
         } catch (Exception ex) {
         }
     }
@@ -904,6 +918,10 @@ count=0;
 
                 if(s.equals("true")){
                    // Toast.makeText(getContext(), "Uploaded Successful", Toast.LENGTH_LONG).show();
+
+
+
+
                 }
                 else{
                    // Toast.makeText(getContext(), "Some error occurred!", Toast.LENGTH_LONG).show();
