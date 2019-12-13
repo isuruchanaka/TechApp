@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -85,6 +86,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 import static androidx.core.content.FileProvider.getUriForFile;
 
 import static mud.per.iw.techapp.AlbumsAdapter.albumList;
@@ -139,6 +141,8 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
     Spinner spinner2;
     ArrayAdapter<String> adapter3;
     Spinner spinner3;
+    String rid;
+    String ctry;
     @SuppressLint("MissingPermission")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -479,7 +483,16 @@ if(validate()){
         view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
         savebtn.setEnabled(false);
         try {
-            isertdata(qrcod, subpos2, stpos2, sdesc1, lti, lngi, "13", svcid, "1", visitdesc1, svcid);
+            SharedPreferences prefs = getContext().getSharedPreferences("userinfo", MODE_PRIVATE);
+            String restoredText = prefs.getString("UserID", null);
+
+
+
+            if (restoredText != null) {
+                rid=  prefs.getString("RoleID", "no");
+                ctry= prefs.getString("Country", "no");
+            }
+            isertdata(qrcod, subpos2, stpos2, sdesc1, lti, lngi, ctry, svcid, "1", visitdesc1, svcid);
             Log.wtf("cls1", qrcod);
 
 
