@@ -353,6 +353,15 @@ if(sbread1.equals("")){
                         recyclerView.setLayoutManager(layoutManager);
 //fetch data and on ExpandableRecyclerAdapter
                         recyclerView.setAdapter(spadapter2);
+                    sbread.setText("");
+
+                    sage.setText("");
+
+                    savg.setText("");
+
+                    sdead.setText("");
+
+                    scnt.setText("");
                   //  }
                 }
                 catch (Exception e)
