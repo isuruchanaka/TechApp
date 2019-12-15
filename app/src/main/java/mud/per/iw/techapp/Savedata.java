@@ -405,7 +405,9 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
                 try {
                     int prodpos = spinner3.getSelectedItemPosition();
                     String prodpos2 = frgmenthome.prodList1.get(prodpos);
-                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString());
+                    int spcpos = spinner2.getSelectedItemPosition();
+                    String spcpos2 = frgmenthome.spList1.get(spcpos);
+                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2);
                     prdata.add(a);
                     spadapter3 = new Expandpr( prdata);
                     recyclerView2 = (RecyclerView)view.findViewById(R.id.recycler4);

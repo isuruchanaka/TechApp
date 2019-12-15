@@ -487,7 +487,7 @@ else{
 
 
 
-                Products a = new Products(ProductUId,Description );
+                Products a = new Products(ProductUId,Description, "");
                 prdata.add(a);
                 Log.wtf("uiu",  ProductUId+"**"+Description);
 

@@ -257,6 +257,23 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pqty1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintTop_toBottomOf="@id/prod2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/pqty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Quantity"
+                    android:inputType="textAutoComplete"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/sage1"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -368,7 +385,7 @@
                 android:text="Add Products"
                 android:textColor="@color/black"
                 app:layout_constraintLeft_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/prod2" />
+                app:layout_constraintTop_toBottomOf="@id/pqty1" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler4"
                 android:layout_width="match_parent"

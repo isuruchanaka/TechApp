@@ -5,13 +5,14 @@ package mud.per.iw.techapp;
 public class Products {
     private String puid;
     private  String pdesc;
-
+    private  String psuid;
     public Products() {
     }
 
-    public Products(String puid, String pdesc) {
+    public Products(String puid, String pdesc,String psuid) {
         this.puid = puid;
         this.pdesc = pdesc;
+        this.psuid=psuid
 
     }
 
@@ -21,7 +22,9 @@ public class Products {
     public String getpdesc() {
         return pdesc;
     }
-
+    public String getpsuid() {
+        return psuid;
+    }
 
 
     public void setpuid(String puid) {
@@ -31,5 +34,7 @@ public class Products {
         this.pdesc = pdesc;
     }
 
-
+    public void setpsuid(String psuid) {
+        this.psuid = psuid;
+    }
 }
