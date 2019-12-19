@@ -16,6 +16,9 @@ public class ExpandableListDataPump2 {
         if(getspsdata!=null) {
             for (int i = 0; i < getspsdata.size(); i++) {
                 cricket = new ArrayList<String>();
+                cricket.add("Species:" + getspsdata.get(i).getpsuid());
+
+                cricket.add("Quantity:" + getspsdata.get(i).getunit()+" "+ getspsdata.get(i).getunitid());
                 vtsdes = getspsdata.get(i).getpdesc();
 
                 Log.wtf("ljkll", vtsdes);

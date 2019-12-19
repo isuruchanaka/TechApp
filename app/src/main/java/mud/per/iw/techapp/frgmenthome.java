@@ -133,11 +133,13 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
     private Expandpr spadapter3;
     public static List<Code> CodeList;
     public static List<String> sitetypList;
+    public static List<String> unitList;
     public static List<String> siteList;
     public static List<String> spList;
     public static List<String> prodList;
 
     public static HashMap<Integer,String > sitetypList1 =new HashMap<>();
+    public static HashMap<Integer,String > unitList1 =new HashMap<>();
     public static HashMap<Integer,String > siteList1 =new HashMap<>();
     public static HashMap<Integer,String > spList1 =new HashMap<>();
     public static HashMap<Integer,String > prodList1 =new HashMap<>();
@@ -160,6 +162,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
 
         CodeList = new ArrayList<>();
         sitetypList=new ArrayList<>();
+        unitList=new ArrayList<>();
         siteList=new ArrayList<>();
         spList=new ArrayList<>();
         prodList=   new ArrayList<>();
@@ -188,7 +191,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
             getdmsg("",ctry);
         }
 
-
+        getunit();
         getsitetp();
         getspecies();
         getprod();
@@ -467,6 +470,82 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
 
 
                                 CodeList.add(a);
+                                b++;
+                            }
+
+
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+
+        return changeres;
+    }
+    public String getunit(){
+        String url = getContext().getResources().getString( R.string.weburl33);
+
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String  suresb = response.toString();
+                        // Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("Description").toString();
+                                String SiteUId = we1.get("UId").toString();
+//                                //String StationTypeUId = we1.get("StationTypeUId").toString();
+//                                String Description = we1.get("sitedesp").toString();
+//                                String Lat = we1.get("Lat").toString();
+//                                String Long = we1.get("Long").toString();
+//                                String stype = we1.get("sttype").toString();
+//                                String UId = we1.get("UId").toString();
+//                                String stypedes = we1.get("stdesp").toString();
+
+
+                                unitList.add(Code);
+                                unitList1.put(row,SiteUId);
                                 b++;
                             }
 

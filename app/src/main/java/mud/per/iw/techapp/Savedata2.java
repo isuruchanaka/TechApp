@@ -110,6 +110,7 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
     private String changeres;
     private FusedLocationProviderClient fusedLocationClient;
     private String lti;
+    private String prqty1="0";
     private String lngi;
     private String sdesc1="";
     private String visitdesc1="";
@@ -232,6 +233,19 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
 //        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(container.getContext(),R.layout.spinner_item, stockArr3);
 //
 //        spinner3.setAdapter(adapter3);
+
+        Spinner spinner4 = (Spinner)view.findViewById(R.id.unit1);
+        spinner4.setOnItemSelectedListener(this);
+
+        String[] stockArr1 = new String[frgmenthome.unitList.size()];
+        stockArr1 = frgmenthome.unitList.toArray(stockArr1);
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(container.getContext(),R.layout.spinner_item, stockArr1);
+
+        spinner4.setAdapter(adapter1);
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////
         firstButton = (Button) view.findViewById(R.id.btn_tpic);
 
@@ -385,7 +399,18 @@ if(sbread1.equals("")){
                 try {
                     int prodpos = spinner3.getSelectedItemPosition();
                     String prodpos2 = frgmenthome.prodList1.get(prodpos);
-                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString());
+                    int spcpos = spinner2.getSelectedItemPosition();
+                    String spcpos2 = frgmenthome.spList1.get(spcpos);
+
+                    int unitpos = spinner4.getSelectedItemPosition();
+                    String unitpos2 = frgmenthome.unitList1.get(unitpos);
+                    EditText unnit = (EditText) view.findViewById(R.id.pqty);
+                    prqty1 = unnit.getText().toString();
+                    if(prqty1.equals("")){
+                        prqty1="0";
+                    }
+
+                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2,unitpos2,prqty1);
                     prdata.add(a);
                     spadapter3 = new Expandpr( prdata);
                     recyclerView2 = (RecyclerView)view.findViewById(R.id.recycler4);
@@ -631,7 +656,7 @@ if(sbread1.equals("")){
                             if(prds!=null) {
                             for(int u=0;u<prds.size();u++) {
                                 try{
-                                isertpr(s1,prds.get(u).getpuid(),svcid);
+                                isertpr(s1,prds.get(u).getpuid(),svcid,prds.get(u).getpsuid(),prds.get(u).getunit(),prds.get(u).getunitid());
                                 }catch (Exception ex){}
                             }}
                             prdata.clear();
@@ -702,8 +727,8 @@ if(sbread1.equals("")){
         return changeres;
     }
 
-    public String isertpr(String visitid ,String prid,String empid){
-        String url = getContext().getResources().getString( R.string.weburl17)+"?visitid="+visitid+"&prid="+prid+"&empid="+empid+"";
+    public String isertpr(String visitid ,String prid,String empid,String spuid,String unit,String unitid){
+        String url = getContext().getResources().getString( R.string.weburl17)+"?visitid="+visitid+"&prid="+prid+"&empid="+empid+"&spuid="+spuid+"&Qty="+unit+"&UnitUId="+unitid+"";
 
 
 

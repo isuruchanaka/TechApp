@@ -73,7 +73,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.MyViewHo
             glon="";
         }
         holder.count.setText("Lattitude:"+glat+"        Longitude:" +glon);
-        holder.crdate.setText("Station Type:"+album.getstypedes() );
+        holder.crdate.setText("QR Code:"+album.getCode() );
 //        holder.count2.setText(album.getCustomerContactNo());
 //        holder.count3.setText(album.getAddress());
 //holder.thumbnail.setImageResource(album.getThumbnail());

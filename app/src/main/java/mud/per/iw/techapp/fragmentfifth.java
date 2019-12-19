@@ -485,9 +485,11 @@ else{
 
                 String Description = we1.get("Description").toString();
 
+                String spuid = we1.get("spuid").toString();
+                String Qty = we1.get("Qty").toString();
+                String UnitUId = we1.get("UnitUId").toString();
 
-
-                Products a = new Products(ProductUId,Description, "");
+                Products a = new Products(ProductUId,Description, spuid,UnitUId,Qty);
                 prdata.add(a);
                 Log.wtf("uiu",  ProductUId+"**"+Description);
 

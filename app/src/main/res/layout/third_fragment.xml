@@ -21,7 +21,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rl1"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:background="@drawable/border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,16 +32,16 @@
         <AutoCompleteTextView
             android:id="@+id/state"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/border"
             android:hint="Search Sites"
-            android:textColorHint="@color/black"
             android:inputType="text"
-
             android:singleLine="true"
+
             android:textColor="#000DFF"
+            android:textColorHint="@color/black"
             app:itemIconTint="@color/white"
             app:itemTextColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"

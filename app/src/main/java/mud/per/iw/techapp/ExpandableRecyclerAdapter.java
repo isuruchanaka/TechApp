@@ -86,6 +86,7 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
         getdmsg(item.getvisituid(), holder);
         try {
             if (!item.getvisituid().equals(getsp(item.getvisituid()))) {
+               
                 holder.ly2.getLayoutParams().height = 80*holder.expandableListView.getChildCount();
                 holder.ly3.getLayoutParams().height = 80*holder.expandableListView1.getChildCount();
                 holder.expandableListDetail = ExpandableListDataPump.getData(item.getvisituid(),item.getspsdata());

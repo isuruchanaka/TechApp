@@ -122,6 +122,7 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
     private String sage1="0";
     private String stadress1="";
     private String savg1="0";
+    private String prqty1="0";
     private String sdead1="0";
     private String srmk1="0";
     private String sbread1="0";
@@ -141,6 +142,7 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
     Spinner spinner2;
     ArrayAdapter<String> adapter3;
     Spinner spinner3;
+    Spinner spinner4;
     String rid;
     String ctry;
     @SuppressLint("MissingPermission")
@@ -221,15 +223,15 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
      //   spinner.setSelection(frgmenthome.siteList.size());
     //    adapter.notifyDataSetChanged();
 /////////////////////////////////////////////////////////////////////////////
-//        Spinner spinner1 = (Spinner)view.findViewById(R.id.suburb);
-//        spinner1.setOnItemSelectedListener(this);
-//
-//        String[] stockArr1 = new String[frgmenthome.sitetypList.size()];
-//        stockArr1 = frgmenthome.sitetypList.toArray(stockArr1);
-//
-//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(container.getContext(),R.layout.spinner_item, stockArr1);
-//
-//        spinner1.setAdapter(adapter1);
+        Spinner spinner4 = (Spinner)view.findViewById(R.id.unit1);
+        spinner4.setOnItemSelectedListener(this);
+
+        String[] stockArr1 = new String[frgmenthome.unitList.size()];
+        stockArr1 = frgmenthome.unitList.toArray(stockArr1);
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(container.getContext(),R.layout.spinner_item, stockArr1);
+
+        spinner4.setAdapter(adapter1);
 
 ////////////////////////////////////////////////////////////////////////////////
          spinner2 = (Spinner)view.findViewById(R.id.species);
@@ -405,9 +407,17 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
                 try {
                     int prodpos = spinner3.getSelectedItemPosition();
                     String prodpos2 = frgmenthome.prodList1.get(prodpos);
+
+                    int unitpos = spinner4.getSelectedItemPosition();
+                    String unitpos2 = frgmenthome.unitList1.get(unitpos);
+                    EditText unnit = (EditText) view.findViewById(R.id.pqty);
+                    prqty1 = unnit.getText().toString();
+                    if(prqty1.equals("")){
+                        prqty1="0";
+                    }
                     int spcpos = spinner2.getSelectedItemPosition();
                     String spcpos2 = frgmenthome.spList1.get(spcpos);
-                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2);
+                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2,unitpos2,prqty1);
                     prdata.add(a);
                     spadapter3 = new Expandpr( prdata);
                     recyclerView2 = (RecyclerView)view.findViewById(R.id.recycler4);
@@ -746,7 +756,7 @@ count=0;
                             if(prds!=null) {
                             for(int u=0;u<prds.size();u++) {
                                 try{
-                                isertpr(s1,prds.get(u).getpuid(),svcid);
+                                isertpr(s1,prds.get(u).getpuid(),svcid,prds.get(u).getpsuid(),prds.get(u).getunit(),prds.get(u).getunitid());
                             }catch (Exception ex){}
                             }}
                             prdata.clear();
@@ -817,10 +827,10 @@ count=0;
         return changeres;
     }
 
-    public String isertpr(String visitid ,String prid,String empid){
-        String url = getContext().getResources().getString( R.string.weburl17)+"?visitid="+visitid+"&prid="+prid+"&empid="+empid+"";
+    public String isertpr(String visitid ,String prid,String empid,String spuid,String unit,String unitid){
+        String url = getContext().getResources().getString( R.string.weburl17)+"?visitid="+visitid+"&prid="+prid+"&empid="+empid+"&spuid="+spuid+"&Qty="+unit+"&UnitUId="+unitid+"";
 
-
+        Log.wtf("nwe1", url.toString());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -837,7 +847,7 @@ count=0;
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.wtf("nwe1", error.toString());
+
                         Toast.makeText(getContext(), "Error!",
                                 Toast.LENGTH_LONG).show();
 
