@@ -86,7 +86,7 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
         getdmsg(item.getvisituid(), holder);
         try {
             if (!item.getvisituid().equals(getsp(item.getvisituid()))) {
-               
+
                 holder.ly2.getLayoutParams().height = 80*holder.expandableListView.getChildCount();
                 holder.ly3.getLayoutParams().height = 80*holder.expandableListView1.getChildCount();
                 holder.expandableListDetail = ExpandableListDataPump.getData(item.getvisituid(),item.getspsdata());
@@ -121,14 +121,17 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             @Override
             public void onGroupExpand(int groupPosition) {
                 int height = 0;
+                int rt=holder.expandableListView.getChildCount();
                 for (int i = 0; i < holder.expandableListView.getChildCount(); i++) {
                     height += holder.expandableListView.getChildAt(i).getMeasuredHeight();
                     height += holder.expandableListView.getDividerHeight();
                 }
-                holder.expandableListView.setSelectedGroup(groupPosition);
+              //  holder.expandableListView.setSelectedGroup(groupPosition);
                 //Toast.makeText(context,String.valueOf( holder.expandableListView.getChildCount()) , Toast.LENGTH_SHORT).show();
-                holder.expandableListView.getLayoutParams().height = (height+6)*10;
-                holder.ly2.getLayoutParams().height =(height+6)*8;
+                holder.expandableListView.getLayoutParams().height = (height+717);
+                holder.ly2.getLayoutParams().height =(height+717);
+
+
             }
         });
 
@@ -139,7 +142,7 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             public void onGroupCollapse(int groupPosition) {
 
                 int nb_children =  holder.expandableListView.getChildCount();
-                holder.expandableListView.getLayoutParams().height -= 117*nb_children;
+                holder.expandableListView.getLayoutParams().height -= 50*nb_children;
                 //holder.expandableListView.getLayoutParams().height =109;
                 holder.ly2.getLayoutParams().height =80*holder.expandableListView.getChildCount();
             }
@@ -149,13 +152,14 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             @Override
             public void onGroupExpand(int groupPosition) {
                 int height = 0;
+                int rt=holder.expandableListView1.getChildCount();
                 for (int i = 0; i < holder.expandableListView1.getChildCount(); i++) {
                     height += holder.expandableListView1.getChildAt(i).getMeasuredHeight();
                     height += holder.expandableListView1.getDividerHeight();
                 }
                 holder.expandableListView1.setSelectedGroup(groupPosition);
-                holder.expandableListView1.getLayoutParams().height = (height+6)*10;
-                holder.ly3.getLayoutParams().height =(height+6)*8;
+                holder.expandableListView1.getLayoutParams().height = (height+717);
+                holder.ly3.getLayoutParams().height =(height+717);
             }
         });
 
@@ -166,7 +170,7 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             public void onGroupCollapse(int groupPosition) {
 
                 int nb_children =  holder.expandableListView1.getChildCount();
-                holder.expandableListView1.getLayoutParams().height -= 117*nb_children;
+                holder.expandableListView1.getLayoutParams().height -= 50*nb_children;
                 holder.ly3.getLayoutParams().height =117*holder.expandableListView1.getChildCount();
             }
         });

@@ -179,10 +179,18 @@ public class fragspecies extends Fragment {
                 mImageView.setClickable(true);
                 mImageView.setOnClickListener(new View.OnClickListener(){
                     public void onClick(View v) {
-                        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                        alertDialog.setMessage(s1);
-                        LinearLayout layout = new LinearLayout(getContext());
-                        layout.setOrientation(LinearLayout.VERTICAL);
+
+                        LayoutInflater inflater= LayoutInflater.from(getContext());
+                        View view=inflater.inflate(R.layout.alertx, null);
+
+
+
+//alertDialog.setMessage("Here is a really long message.");
+
+//                        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+//                        alertDialog.setMessage(s1);
+//                        LinearLayout layout = new LinearLayout(getContext());
+//                        layout.setOrientation(LinearLayout.VERTICAL);
 
 
 
@@ -193,24 +201,27 @@ public class fragspecies extends Fragment {
 //                        //titleBox1.setTransformationMethod(PasswordTransformationMethod.getInstance());
 //                        layout.addView(titleBox1); // Notice this is an add method
 // Add a TextView here for the "Title" label, as noted in the comments
-                        final TextView titleBox = new TextView(getContext());
+                        final   TextView textview=(TextView)view.findViewById(R.id.textmsg);
+                        String hbitat="";
                         if(u1.equals("null")){
-                            titleBox.setText("  Habitat: ");
+                            //  titleBox.setText("  Habitat: ");
+                            hbitat="  Habitat: ";
                         }
                         else{
-                            titleBox.setText("  Habitat: "+u1);
+                            //  titleBox.setText("  Habitat: "+u1);
+                            hbitat="  Habitat: "+u1;
                         }
 
                         //titleBox.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                        layout.addView(titleBox); // Notice this is an add method
+                        //  layout.addView(titleBox); // Notice this is an add method
                         String  trtmnt="";
 // Add another TextView here for the "Description" label
-                        final TextView descriptionBox = new TextView(getContext());
+
                         for (int i = 0; i < pairdata.size(); i++) {
 
                             Pair album = pairdata.get(i);
                             if(album !=null) {
-                                if (!album.getSiteUId().equals(t1)){
+                                if (album.getSiteUId().equals(t1)){
                                     trtmnt="   "+trtmnt+"    \n    "+album.getCode();
 
                                 }
@@ -218,28 +229,29 @@ public class fragspecies extends Fragment {
 
                         }
 
-                        descriptionBox.setText("  Treatment: "+trtmnt);
+                        trtmnt="  Treatment: "+trtmnt;
 
 
 
 
                         //descriptionBox.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                        layout.addView(descriptionBox); // Another add method
-                        alertDialog.setView(layout);
+//                        layout.addView(descriptionBox); // Another add method
+//                        alertDialog.setView(layout);
 // Add another TextView here for the "Description" label
-                        final TextView descriptionBox1 = new TextView(getContext());
+                        String rmkd="";
                         if(z1.equals("null")){
-                            descriptionBox1.setText("  Remarks: ");
+                            rmkd="  Remarks: ";
                         }
                         else{
-                            descriptionBox1.setText("  Remarks: "+z1);
+                            rmkd="  Remarks: "+z1;
                         }
-
-
+                        textview.setText(hbitat+"\n"+trtmnt+"\n"+rmkd);
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                        alertDialog.setTitle(s1);
                         //descriptionBox1.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                        layout.addView(descriptionBox1); // Another add method
-                        alertDialog.setView(layout);
-                        alertDialog.setIcon(R.drawable.ic_menu_manage);
+//                        layout.addView(descriptionBox1); // Another add method
+//                        alertDialog.setView(layout);
+                       // alertDialog.setIcon(R.drawable.ic_menu_manage);
 //                        alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Change password", new DialogInterface.OnClickListener() {
 //                            @Override
 //                            public void onClick(DialogInterface dialogInterface, int which) {
@@ -248,7 +260,10 @@ public class fragspecies extends Fragment {
 //                            }
 //                        });
 
-                        alertDialog.show();
+                        alertDialog.setView(view);
+                        //alertDialog.setButton("OK", null);
+                        AlertDialog alert = alertDialog.create();
+                        alert.show();
 
                     }
                 });
