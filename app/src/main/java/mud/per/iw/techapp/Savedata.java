@@ -749,14 +749,14 @@ count=0;
                             if(sps!=null) {
                                 for (int u = 0; u < sps.size(); u++) {
                                   try{
-                                    isertsp(s1, sps.get(u).getspuid(), sps.get(u).getspdesc(), sps.get(u).getavgcns(), sps.get(u).getdeadpr(), sps.get(u).getage(), sps.get(u).getbreed(), sps.get(u).getcnt(), svcid);
+                                    isertsp(s1, sps.get(u).getspuid(), sps.get(u).getspdesc(), sps.get(u).getavgcns(), sps.get(u).getdeadpr(), sps.get(u).getage(), sps.get(u).getbreed(), sps.get(u).getcnt(), svcid,cntry);
                                 }catch (Exception ex){}
                                 }
                             }
                             if(prds!=null) {
                             for(int u=0;u<prds.size();u++) {
                                 try{
-                                isertpr(s1,prds.get(u).getpuid(),svcid,prds.get(u).getpsuid(),prds.get(u).getunit(),prds.get(u).getunitid());
+                                isertpr(s1,prds.get(u).getpuid(),svcid,prds.get(u).getpsuid(),prds.get(u).getunit(),prds.get(u).getunitid(),cntry);
                             }catch (Exception ex){}
                             }}
                             prdata.clear();
@@ -789,8 +789,8 @@ count=0;
         return changeres;
     }
 
-    public String isertsp(String visitid ,String spid ,String inspdet ,String avgcns,String dedpr ,String spage ,String brd ,String spcnt,String empid){
-        String url = getContext().getResources().getString( R.string.weburl18)+"?visitid="+visitid+"&spid="+spid+"&inspdet="+inspdet+"&avgcns="+avgcns+"&dedpr="+dedpr+"&spage="+spage+"&brd="+brd+"&spcnt="+spcnt+"&empid="+empid+"";
+    public String isertsp(String visitid ,String spid ,String inspdet ,String avgcns,String dedpr ,String spage ,String brd ,String spcnt,String empid,String cntry){
+        String url = getContext().getResources().getString( R.string.weburl18)+"?visitid="+visitid+"&spid="+spid+"&inspdet="+inspdet+"&avgcns="+avgcns+"&dedpr="+dedpr+"&spage="+spage+"&brd="+brd+"&spcnt="+spcnt+"&empid="+empid+"&cntry="+cntry+"";
 
 
 
@@ -827,8 +827,8 @@ count=0;
         return changeres;
     }
 
-    public String isertpr(String visitid ,String prid,String empid,String spuid,String unit,String unitid){
-        String url = getContext().getResources().getString( R.string.weburl17)+"?visitid="+visitid+"&prid="+prid+"&empid="+empid+"&spuid="+spuid+"&Qty="+unit+"&UnitUId="+unitid+"";
+    public String isertpr(String visitid ,String prid,String empid,String spuid,String unit,String unitid,String cntry){
+        String url = getContext().getResources().getString( R.string.weburl17)+"?visitid="+visitid+"&prid="+prid+"&empid="+empid+"&spuid="+spuid+"&Qty="+unit+"&UnitUId="+unitid+"&cntry="+cntry+"";
 
         Log.wtf("nwe1", url.toString());
 

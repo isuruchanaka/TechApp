@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -79,6 +80,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 import static androidx.core.content.FileProvider.getUriForFile;
 
 
@@ -130,6 +132,8 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
     ArrayAdapter<String> adapter3;
     ArrayAdapter<String> adaptersit;
     Spinner spinner3;
+    String rid;
+    String ctry;
     private static final int OPEN_DOCUMENT_CODE = 148;
     @SuppressLint("MissingPermission")
     @Override
@@ -456,14 +460,22 @@ if(sbread1.equals("")){
 //                String stpos2 = SecondFragment.siteList1.get(stpos);
 //                int subpos = spinner1.getSelectedItemPosition();
 //                String subpos2 = SecondFragment.sitetypList1.get(subpos);
+                SharedPreferences prefs = getContext().getSharedPreferences("userinfo", MODE_PRIVATE);
+                String restoredText = prefs.getString("UserID", null);
 
+
+
+                if (restoredText != null) {
+                    rid=  prefs.getString("RoleID", "no");
+                    ctry= prefs.getString("Country", "no");
+                }
 
 
                // if(validate()){
                     view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                     savebtn.setEnabled(false);
                     try{
-                    isertdata(al.getUId(),"2",visitdesc1,svcid);
+                    isertdata(al.getUId(),"2",visitdesc1,svcid,ctry);
                     }catch (Exception ex){}
                     Log.wtf("cls1", qrcod);
                // }
@@ -616,8 +628,8 @@ if(sbread1.equals("")){
             Log.wtf("cls2", ((Object) this).getClass().getSimpleName() + " is on screen");
         }
     }
-    public String isertdata(String tuid,String vistyp,String visdet,String empid ){
-        String url = getContext().getResources().getString( R.string.weburl11)+"?tuid="+tuid+"&vistyp="+vistyp+"&visdet="+visdet+"&empid="+empid+"&pcnt="+data3.size()+"";
+    public String isertdata(String tuid,String vistyp,String visdet,String empid,String cntry ){
+        String url = getContext().getResources().getString( R.string.weburl11)+"?tuid="+tuid+"&vistyp="+vistyp+"&visdet="+visdet+"&empid="+empid+"&pcnt="+data3.size()+"&cntry="+cntry+"";
 
 
 
@@ -648,7 +660,7 @@ if(sbread1.equals("")){
                             if(sps!=null) {
                                 for (int u = 0; u < sps.size(); u++) {
                                     try{
-                                    isertsp(s1, sps.get(u).getspuid(), sps.get(u).getspdesc(), sps.get(u).getavgcns(), sps.get(u).getdeadpr(), sps.get(u).getage(), sps.get(u).getbreed(), sps.get(u).getcnt(), svcid);
+                                    isertsp(s1, sps.get(u).getspuid(), sps.get(u).getspdesc(), sps.get(u).getavgcns(), sps.get(u).getdeadpr(), sps.get(u).getage(), sps.get(u).getbreed(), sps.get(u).getcnt(), svcid,ctry);
                                     }catch (Exception ex){}
 
                                 }
@@ -656,7 +668,7 @@ if(sbread1.equals("")){
                             if(prds!=null) {
                             for(int u=0;u<prds.size();u++) {
                                 try{
-                                isertpr(s1,prds.get(u).getpuid(),svcid,prds.get(u).getpsuid(),prds.get(u).getunit(),prds.get(u).getunitid());
+                                isertpr(s1,prds.get(u).getpuid(),svcid,prds.get(u).getpsuid(),prds.get(u).getunit(),prds.get(u).getunitid(),ctry);
                                 }catch (Exception ex){}
                             }}
                             prdata.clear();
@@ -689,8 +701,8 @@ if(sbread1.equals("")){
         return changeres;
     }
 
-    public String isertsp(String visitid ,String spid ,String inspdet ,String avgcns,String dedpr ,String spage ,String brd ,String spcnt,String empid){
-        String url = getContext().getResources().getString( R.string.weburl18)+"?visitid="+visitid+"&spid="+spid+"&inspdet="+inspdet+"&avgcns="+avgcns+"&dedpr="+dedpr+"&spage="+spage+"&brd="+brd+"&spcnt="+spcnt+"&empid="+empid+"";
+    public String isertsp(String visitid ,String spid ,String inspdet ,String avgcns,String dedpr ,String spage ,String brd ,String spcnt,String empid,String cntry){
+        String url = getContext().getResources().getString( R.string.weburl18)+"?visitid="+visitid+"&spid="+spid+"&inspdet="+inspdet+"&avgcns="+avgcns+"&dedpr="+dedpr+"&spage="+spage+"&brd="+brd+"&spcnt="+spcnt+"&empid="+empid+"&cntry="+cntry+"";
 
 
 
@@ -727,8 +739,8 @@ if(sbread1.equals("")){
         return changeres;
     }
 
-    public String isertpr(String visitid ,String prid,String empid,String spuid,String unit,String unitid){
-        String url = getContext().getResources().getString( R.string.weburl17)+"?visitid="+visitid+"&prid="+prid+"&empid="+empid+"&spuid="+spuid+"&Qty="+unit+"&UnitUId="+unitid+"";
+    public String isertpr(String visitid ,String prid,String empid,String spuid,String unit,String unitid,String cntry){
+        String url = getContext().getResources().getString( R.string.weburl17)+"?visitid="+visitid+"&prid="+prid+"&empid="+empid+"&spuid="+spuid+"&Qty="+unit+"&UnitUId="+unitid+"&cntry="+cntry+"";
 
 
 

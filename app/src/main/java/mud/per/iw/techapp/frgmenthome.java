@@ -190,7 +190,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
         else {
             getdmsg("",ctry);
         }
-
+        getver();
         getunit();
         getsitetp();
         getspecies();
@@ -546,6 +546,89 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
 
                                 unitList.add(Code);
                                 unitList1.put(row,SiteUId);
+                                b++;
+                            }
+
+
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+
+        return changeres;
+    }
+    public String getver(){
+        String url = getContext().getResources().getString( R.string.weburl34);
+
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String  suresb = response.toString();
+                        // Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("VersionNo").toString();
+                                //String SiteUId = we1.get("UId").toString();
+//                                //String StationTypeUId = we1.get("StationTypeUId").toString();
+//                                String Description = we1.get("sitedesp").toString();
+//                                String Lat = we1.get("Lat").toString();
+//                                String Long = we1.get("Long").toString();
+//                                String stype = we1.get("sttype").toString();
+//                                String UId = we1.get("UId").toString();
+//                                String stypedes = we1.get("stdesp").toString();
+
+                            if(!Code.equals(getContext().getResources().getString( R.string.weburl35))) {
+                                final String appPackageName = getContext().getPackageName(); // getPackageName() from Context or Activity object
+                                try {
+                                    Toast.makeText(getActivity(), "Please Update Your App!", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                } catch (android.content.ActivityNotFoundException anfe) {
+                                    Toast.makeText(getActivity(), "Please Update Your App!", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                                }
+                            }
                                 b++;
                             }
 

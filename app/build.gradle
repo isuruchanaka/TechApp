@@ -6,8 +6,8 @@ android {
         applicationId "mud.per.iw.techapp"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 22
-        versionName "22.0"
+        versionCode 23
+        versionName "23.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
