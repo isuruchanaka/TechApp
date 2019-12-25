@@ -2,6 +2,7 @@ package mud.per.iw.techapp;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
@@ -52,6 +53,8 @@ public class login extends AppCompatActivity {
      Button _loginButton;
      TextView _signupLink;
     private static MessageDigest md;
+    private String changeres;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,14 +69,15 @@ public class login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    login();
+                    getver1();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
 
-
+        getver();
     }
 
     public void login() throws Exception {
@@ -230,7 +234,173 @@ public class login extends AppCompatActivity {
 
     }
 
+    public String getver1(){
+        String url = this.getApplicationContext().getResources().getString( R.string.weburl34);
 
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String  suresb = response.toString();
+                        // Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("VersionNo").toString();
+                                //String SiteUId = we1.get("UId").toString();
+//                                //String StationTypeUId = we1.get("StationTypeUId").toString();
+//                                String Description = we1.get("sitedesp").toString();
+//                                String Lat = we1.get("Lat").toString();
+//                                String Long = we1.get("Long").toString();
+//                                String stype = we1.get("sttype").toString();
+//                                String UId = we1.get("UId").toString();
+//                                String stypedes = we1.get("stdesp").toString();
+
+                                if(!Code.equals(login.this.getResources().getString( R.string.weburl35))) {
+                                    final String appPackageName =login.this.getPackageName(); // getPackageName() from Context or Activity object
+                                    try {
+                                        Toast.makeText(login.this, "Please Update Your App!", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                    } catch (android.content.ActivityNotFoundException anfe) {
+                                        Toast.makeText(login.this, "Please Update Your App!", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                                    }
+                                }
+                                else { login();}
+                                b++;
+                            }
+
+
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+
+
+                    }
+                });
+
+
+        singletongm.getInstance(login.this).addToRequestQueue(jsonObjectRequest);
+
+
+
+        return changeres;
+    }
+    public String getver(){
+        String url = this.getApplicationContext().getResources().getString( R.string.weburl34);
+
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String  suresb = response.toString();
+                        // Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("VersionNo").toString();
+                                //String SiteUId = we1.get("UId").toString();
+//                                //String StationTypeUId = we1.get("StationTypeUId").toString();
+//                                String Description = we1.get("sitedesp").toString();
+//                                String Lat = we1.get("Lat").toString();
+//                                String Long = we1.get("Long").toString();
+//                                String stype = we1.get("sttype").toString();
+//                                String UId = we1.get("UId").toString();
+//                                String stypedes = we1.get("stdesp").toString();
+
+                                if(!Code.equals(login.this.getResources().getString( R.string.weburl35))) {
+                                    final String appPackageName =login.this.getPackageName(); // getPackageName() from Context or Activity object
+                                    try {
+                                        Toast.makeText(login.this, "Please Update Your App!", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                    } catch (android.content.ActivityNotFoundException anfe) {
+                                        Toast.makeText(login.this, "Please Update Your App!", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                                    }
+                                }
+                                b++;
+                            }
+
+
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+
+
+                    }
+                });
+
+
+        singletongm.getInstance(login.this).addToRequestQueue(jsonObjectRequest);
+
+
+
+        return changeres;
+    }
        public static String generateSHA1Hash(String input) throws Exception {
 
         MessageDigest messagedigest = MessageDigest.getInstance("SHA");

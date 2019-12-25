@@ -54,6 +54,16 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
@@ -102,6 +112,8 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
     Button savebtn;
     Button spbtn;
     Button prbtn;
+    MapView mMapView;
+    private GoogleMap googleMap;
     int TAKE_PHOTO_CODE = 0;
     public static int count = 0;
     private GridView gridView;
@@ -147,25 +159,31 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         view = inflater.inflate(R.layout.actupdatest, container, false);
         view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-        checkloc();
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-////////////////////////////////////////////////////////////////
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-                            lti= String.valueOf(location.getLatitude());
-                            lngi= String.valueOf(location.getLongitude());
-                            if(lti!=null){
-                                TextView ll = (TextView) view.findViewById(R.id.textViewll);
-                                ll.setText("Latitude:  "+lti+"  Longitude:  "+lngi);
-                            }
-                        }
-                    }
-                });
+        //checkloc();
+//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+//////////////////////////////////////////////////////////////////
+//        fusedLocationClient.getLastLocation()
+//                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+//                    @Override
+//                    public void onSuccess(Location location) {
+//                        // Got last known location. In some rare situations this can be null.
+//                        if (location != null) {
+//                            // Logic to handle location object
+//                            lti= String.valueOf(location.getLatitude());
+//                            lngi= String.valueOf(location.getLongitude());
+//                            if(lti!=null){
+//                                TextView ll = (TextView) view.findViewById(R.id.textViewll);
+//                                ll.setText("Latitude:  "+lti+"  Longitude:  "+lngi);
+//
+//                                LatLng sydney = new LatLng(Double.parseDouble(lti), Double.parseDouble(lngi));
+//
+//                                googleMap.addMarker(new MarkerOptions().position(sydney).title("").snippet("").icon(BitmapDescriptorFactory.fromResource(R.drawable.rodent)));
+//                                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(13).build();
+//                                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//                            }
+//                        }
+//                    }
+//                });
 
 
 
@@ -178,12 +196,14 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
         Code al=  getalbum(qrcod.toLowerCase());
         TextView sdesc = (TextView) view.findViewById(R.id.sdesc);
         sdesc.setText(al.getDescription());
-//        TextView suburb = (TextView) view.findViewById(R.id.suburb);
-//        suburb.setText(al.ge);
+        TextView suburb = (TextView) view.findViewById(R.id.sdesc3);
+        suburb.setText(al.getstypedes());
 //        TextView state = (TextView) view.findViewById(R.id.state);
 //        state.setText(al.getState());
 //        TextView stadress = (TextView) view.findViewById(R.id.stadress);
 //        stadress.setText(al.getAddress());
+        lti=al.getLat();
+        lngi=al.getLong();
 
 ////////////////////////////////////////////////////////////////////////////////
         Spinner spinner2 = (Spinner)view.findViewById(R.id.species);
@@ -249,7 +269,45 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
         spinner4.setAdapter(adapter1);
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+        mMapView = (MapView) view.findViewById(R.id.mapViewu);
+        mMapView.onCreate(savedInstanceState);
 
+        mMapView.onResume(); // needed to get the map to display immediately
+
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+                mMap.setOnMarkerClickListener(Savedata2.this::onMarkerClick);
+
+                // For showing a move to my location button
+                // googleMap.setMyLocationEnabled(true);
+                mMap.getUiSettings().setMapToolbarEnabled(true);
+                mMap.getUiSettings().setZoomControlsEnabled(true);
+                mMap.getUiSettings().setMapToolbarEnabled(true);
+                // For dropping a marker at a point on the Map
+
+                if (lti!=null && lngi!=null ) {
+                    LatLng sydney = new LatLng(Double.parseDouble(lti), Double.parseDouble(lngi));
+
+                    googleMap.addMarker(new MarkerOptions().position(sydney).title(al.getDescription()).snippet(al.getstype()).icon(BitmapDescriptorFactory.fromResource(R.drawable.rodent)));
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(13).build();
+                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }
+                // For zooming automatically to the location of the marker
+
+
+            }
+
+
+        });
 /////////////////////////////////////////////////////////////////////////////////////////
         firstButton = (Button) view.findViewById(R.id.btn_tpic);
 
@@ -1227,7 +1285,23 @@ if(sbread1.equals("")){
         mContext = context;
     }
 
+    public boolean onMarkerClick(final Marker marker) {
 
+        // Retrieve the data from the marker.
+        Integer clickCount = (Integer) marker.getTag();
+        Log.wtf("icw","Map clicked");
+        // Check if a click count was set, then display the click count.
+        if (clickCount != null) {
+            clickCount = clickCount + 1;
+            marker.setTag(clickCount);
+
+        }
+
+        // Return false to indicate that we have not consumed the event and that we wish
+        // for the default behavior to occur (which is for the camera to move such that the
+        // marker is centered and for the marker's info window to open, if it has one).
+        return false;
+    }
 
 
     @Override
