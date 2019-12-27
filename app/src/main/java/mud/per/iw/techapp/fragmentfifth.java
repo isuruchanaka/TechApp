@@ -115,6 +115,8 @@ public class fragmentfifth extends Fragment {
 
             TextView sdesc = (TextView) view.findViewById(R.id.descp);
             sdesc.setText(al.getDescription());
+            TextView stp = (TextView) view.findViewById(R.id.stp);
+            stp.setText("Site Type: "+al.getstypedes());
             TextView suburb = (TextView) view.findViewById(R.id.suburbs);
             suburb.setText(a2.getsurb());
             TextView state = (TextView) view.findViewById(R.id.states);

@@ -96,6 +96,7 @@ import static mud.per.iw.techapp.GridViewImageAdapter2.data3;
 import static mud.per.iw.techapp.MainActivity.qrcod;
 import static mud.per.iw.techapp.MainActivity.svcid;
 import static mud.per.iw.techapp.frgmenthome.prodList;
+import static mud.per.iw.techapp.frgmenthome.sitetypList;
 
 public class Savedata extends Fragment implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
     private static final int OPEN_DOCUMENT_CODE = 148;
@@ -141,8 +142,10 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
     AutoCompleteTextView spinner;
     Spinner spinner2;
     ArrayAdapter<String> adapter3;
+    ArrayAdapter<String> adapter5;
     Spinner spinner3;
     Spinner spinner4;
+    Spinner spinner5;
     String rid;
     String ctry;
     @SuppressLint("MissingPermission")
@@ -254,6 +257,17 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
 //        adapter3 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr3);
 //
 //        spinner3.setAdapter(adapter3);
+/////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
+        spinner5 = (Spinner)view.findViewById(R.id.sitetype);
+        spinner5.setOnItemSelectedListener(this);
+
+        String[] stockArr5 = new String[sitetypList.size()];
+        stockArr5= sitetypList.toArray(stockArr5);
+
+        adapter5 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr5);
+
+        spinner5.setAdapter(adapter5);
 /////////////////////////////////////////////////////////////////////////////////////////
         firstButton = (Button) view.findViewById(R.id.btn_tpic);
 
@@ -481,9 +495,8 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
 
 
                 String stpos2 = tid;
-                //int subpos = spinner1.getSelectedItemPosition();
-                String subpos2 = "1000";
-                        //frgmenthome.sitetypList1.get(subpos);
+                int subpos = spinner5.getSelectedItemPosition();
+                String subpos2 =frgmenthome.sitetypList1.get(subpos);
 
 
 

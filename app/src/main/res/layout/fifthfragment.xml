@@ -72,9 +72,8 @@
 
                         android:textStyle="bold"
                         card_view:layout_constraintTop_toBottomOf="@id/textView" />
-
                     <TextView
-                        android:id="@+id/states"
+                        android:id="@+id/stp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/descp"
@@ -85,6 +84,18 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/songs_count"
                         card_view:layout_constraintTop_toBottomOf="@id/descp" />
+                    <TextView
+                        android:id="@+id/states"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/stp"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/album_title_padding"
+                        android:paddingRight="@dimen/album_title_padding"
+                        android:paddingBottom="@dimen/songs_count_padding_bottom"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/songs_count"
+                        card_view:layout_constraintTop_toBottomOf="@id/stp" />
 
                     <TextView
                         android:id="@+id/suburbs"

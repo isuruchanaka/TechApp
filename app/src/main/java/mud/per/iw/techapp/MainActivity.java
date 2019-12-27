@@ -13,6 +13,7 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -220,7 +221,7 @@ this.albumList=AlbumsAdapter.albumList;
             TextView b1 = (TextView)headerView1.findViewById(R.id.txtname);
             b1.setText(Rnkname+""+initials+" "+ name);
             TextView b2 = (TextView)headerView1.findViewById(R.id.txtemail);
-            b2.setText("PIMS v1.7");
+            b2.setText("PIMS v4");
             inBed=true;
             updateMenuTitles();
             int PERMISSION_ALL = 1;
@@ -393,11 +394,11 @@ this.albumList=AlbumsAdapter.albumList;
                     data3.values().clear();
                     data3.clear();
                     //data3 = null;
+                    getver1();
                 }catch (Exception ex){
                     Log.wtf("dfg", ex.toString());
                 }
-                Intent intent1 = new Intent(this, BarcodeScannerActivity.class);
-                startActivity(intent1);
+
                 break;
             case R.id.nav_camera5:
 
@@ -494,7 +495,93 @@ this.albumList=AlbumsAdapter.albumList;
 
         return super.onOptionsItemSelected(item);
     }
+    public String getver1(){
+        String url = this.getApplicationContext().getResources().getString( R.string.weburl34);
 
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String  suresb = response.toString();
+                        // Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("VersionNo").toString();
+                                //String SiteUId = we1.get("UId").toString();
+//                                //String StationTypeUId = we1.get("StationTypeUId").toString();
+//                                String Description = we1.get("sitedesp").toString();
+//                                String Lat = we1.get("Lat").toString();
+//                                String Long = we1.get("Long").toString();
+//                                String stype = we1.get("sttype").toString();
+//                                String UId = we1.get("UId").toString();
+//                                String stypedes = we1.get("stdesp").toString();
+
+                                if(!Code.equals(MainActivity.this.getResources().getString( R.string.weburl35))) {
+                                    final String appPackageName =MainActivity.this.getPackageName(); // getPackageName() from Context or Activity object
+                                    try {
+                                        Toast.makeText(MainActivity.this, "Please Update Your App!", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                    } catch (android.content.ActivityNotFoundException anfe) {
+                                        Toast.makeText(MainActivity.this, "Please Update Your App!", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                                    }
+                                }
+                                else {
+                                    Intent intent1 = new Intent(MainActivity.this, BarcodeScannerActivity.class);
+                                    startActivity(intent1);
+                                }
+                                b++;
+                            }
+
+
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+
+
+                    }
+                });
+
+
+        singletongm.getInstance(MainActivity.this).addToRequestQueue(jsonObjectRequest);
+
+
+
+        return changeres;
+    }
 //    public Integer getdmsg(String  val1 ){
 //        String url = this.getResources().getString( R.string.weburl8)+"?id="+val1;
 //
