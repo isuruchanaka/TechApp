@@ -472,7 +472,7 @@ if(sbread1.equals("")){
                         prqty1="0";
                     }
 
-                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2,unitpos2,prqty1);
+                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2,unitpos2,prqty1,spcpos2);
                     prdata.add(a);
                     spadapter3 = new Expandpr( prdata);
                     recyclerView2 = (RecyclerView)view.findViewById(R.id.recycler4);

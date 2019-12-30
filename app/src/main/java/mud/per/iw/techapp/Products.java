@@ -8,15 +8,17 @@ public class Products {
     private  String psuid;
     private  String unitid;
     private  String unit;
+    private String spid;
     public Products() {
     }
 
-    public Products(String puid, String pdesc,String psuid,String unitid,String unit) {
+    public Products(String puid, String pdesc,String psuid,String unitid,String unit,String spid) {
         this.puid = puid;
         this.pdesc = pdesc;
         this.psuid=psuid;
         this.unitid=unitid;
         this.unit=unit;
+        this.spid=spid;
     }
 
     public String getpuid() {
@@ -33,6 +35,9 @@ public class Products {
     }
     public String getpsuid() {
         return psuid;
+    }
+    public String getspid() {
+        return spid;
     }
     public void setpuid(String puid) {
         this.puid = puid;

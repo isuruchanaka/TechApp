@@ -88,48 +88,50 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             if (!item.getvisituid().equals(getsp(item.getvisituid()))) {
 
                 holder.ly2.getLayoutParams().height = 80*holder.expandableListView.getChildCount();
-                holder.ly3.getLayoutParams().height = 80*holder.expandableListView1.getChildCount();
-                holder.expandableListDetail = ExpandableListDataPump.getData(item.getvisituid(),item.getspsdata());
+//                holder.ly3.getLayoutParams().height = 80*holder.expandableListView1.getChildCount();
+                holder.expandableListDetail = ExpandableListDataPump.getData(item.getvisituid(),item.getspsdata(),item.getprdata());
                 holder.expandableListTitle = new ArrayList<String>(holder.expandableListDetail.keySet());
                 holder.expandableListAdapter = new CustomExpandableListAdapter(context, holder.expandableListTitle, holder.expandableListDetail);
                 holder.expandableListView.setAdapter(holder.expandableListAdapter);
            //////////////////
-                holder.expandableListDetail1 = ExpandableListDataPump2.getData(item.getvisituid(),item.getprdata());
-                holder.expandableListTitle1 = new ArrayList<String>(holder.expandableListDetail1.keySet());
-                holder.expandableListAdapter1 = new CustomExpandableListAdapter(context, holder.expandableListTitle1, holder.expandableListDetail1);
-                holder.expandableListView1.setAdapter(holder.expandableListAdapter1);
+//                holder.expandableListDetail1 = ExpandableListDataPump2.getData(item.getvisituid(),item.getprdata());
+//                holder.expandableListTitle1 = new ArrayList<String>(holder.expandableListDetail1.keySet());
+//                holder.expandableListAdapter1 = new CustomExpandableListAdapter(context, holder.expandableListTitle1, holder.expandableListDetail1);
+//                holder.expandableListView1.setAdapter(holder.expandableListAdapter1);
 
 
             }
         }catch (Exception ex){
 
-            holder.expandableListDetail = ExpandableListDataPump.getData(item.getvisituid(),item.getspsdata());
+            holder.expandableListDetail = ExpandableListDataPump.getData(item.getvisituid(),item.getspsdata(),item.getprdata());
             holder.expandableListTitle = new ArrayList<String>(holder.expandableListDetail.keySet());
             holder.expandableListAdapter = new CustomExpandableListAdapter(context, holder.expandableListTitle, holder.expandableListDetail);
             holder.expandableListView.setAdapter(holder.expandableListAdapter);
 
             //////////////////
-            holder.expandableListDetail1 = ExpandableListDataPump2.getData(item.getvisituid(),item.getprdata());
-            holder.expandableListTitle1 = new ArrayList<String>(holder.expandableListDetail1.keySet());
-            holder.expandableListAdapter1 = new CustomExpandableListAdapter(context, holder.expandableListTitle1, holder.expandableListDetail1);
-            holder.expandableListView1.setAdapter(holder.expandableListAdapter1);
+//            holder.expandableListDetail1 = ExpandableListDataPump2.getData(item.getvisituid(),item.getprdata());
+//            holder.expandableListTitle1 = new ArrayList<String>(holder.expandableListDetail1.keySet());
+//            holder.expandableListAdapter1 = new CustomExpandableListAdapter(context, holder.expandableListTitle1, holder.expandableListDetail1);
+//            holder.expandableListView1.setAdapter(holder.expandableListAdapter1);
 
         }
         holder.expandableListView.setSelection(position);
-        holder.expandableListView1.setSelection(position);
+//        holder.expandableListView1.setSelection(position);
         holder.expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
                 int height = 0;
+                int chkl = 0;
                 int rt=holder.expandableListView.getChildCount();
+                chkl=  item.getprdata().size()+item.getspsdata().size();
                 for (int i = 0; i < holder.expandableListView.getChildCount(); i++) {
                     height += holder.expandableListView.getChildAt(i).getMeasuredHeight();
                     height += holder.expandableListView.getDividerHeight();
                 }
               //  holder.expandableListView.setSelectedGroup(groupPosition);
                 //Toast.makeText(context,String.valueOf( holder.expandableListView.getChildCount()) , Toast.LENGTH_SHORT).show();
-                holder.expandableListView.getLayoutParams().height = (height+717);
-                holder.ly2.getLayoutParams().height =(height+717);
+                holder.expandableListView.getLayoutParams().height = (height+(189*chkl));
+                holder.ly2.getLayoutParams().height =(height+(189*chkl));
 
 
             }
@@ -148,32 +150,32 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             }
         });
         ///////////////////////////////
-        holder.expandableListView1.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                int height = 0;
-                int rt=holder.expandableListView1.getChildCount();
-                for (int i = 0; i < holder.expandableListView1.getChildCount(); i++) {
-                    height += holder.expandableListView1.getChildAt(i).getMeasuredHeight();
-                    height += holder.expandableListView1.getDividerHeight();
-                }
-                holder.expandableListView1.setSelectedGroup(groupPosition);
-                holder.expandableListView1.getLayoutParams().height = (height+717);
-                holder.ly3.getLayoutParams().height =(height+717);
-            }
-        });
-
-        // Listview Group collapsed listener
-        holder.expandableListView1.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-
-                int nb_children =  holder.expandableListView1.getChildCount();
-                holder.expandableListView1.getLayoutParams().height -= 50*nb_children;
-                holder.ly3.getLayoutParams().height =117*holder.expandableListView1.getChildCount();
-            }
-        });
+//        holder.expandableListView1.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//            @Override
+//            public void onGroupExpand(int groupPosition) {
+//                int height = 0;
+//                int rt=holder.expandableListView1.getChildCount();
+//                for (int i = 0; i < holder.expandableListView1.getChildCount(); i++) {
+//                    height += holder.expandableListView1.getChildAt(i).getMeasuredHeight();
+//                    height += holder.expandableListView1.getDividerHeight();
+//                }
+//                holder.expandableListView1.setSelectedGroup(groupPosition);
+//                holder.expandableListView1.getLayoutParams().height = (height+717);
+//                holder.ly3.getLayoutParams().height =(height+717);
+//            }
+//        });
+//
+//        // Listview Group collapsed listener
+//        holder.expandableListView1.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+//
+//            @Override
+//            public void onGroupCollapse(int groupPosition) {
+//
+//                int nb_children =  holder.expandableListView1.getChildCount();
+//                holder.expandableListView1.getLayoutParams().height -= 50*nb_children;
+//                holder.ly3.getLayoutParams().height =117*holder.expandableListView1.getChildCount();
+//            }
+//        });
 
 
 
@@ -261,7 +263,7 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
         private GridView gridView;
         public List<Species> spdata;
         ExpandableListView expandableListView;
-        ExpandableListView expandableListView1;
+//        ExpandableListView expandableListView1;
         ExpandableListAdapter expandableListAdapter;
         ExpandableListAdapter expandableListAdapter1;
         List<String> expandableListTitle;
@@ -277,14 +279,14 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             visitp = (TextView)view.findViewById(R.id.visitsp);
             //refg=(RecyclerView)view.findViewById(R.id.recycler5);
 ly2=(LinearLayout)view.findViewById(R.id.ly1);
-            ly3=(LinearLayout)view.findViewById(R.id.ly2);
+           // ly3=(LinearLayout)view.findViewById(R.id.ly2);
             textView_name = (TextView)view.findViewById(R.id.textView_name);
             ////ivOwner = (ImageView) view.findViewById(R.id.imageView_Owner);
 
             buttonLayout = (RelativeLayout) view.findViewById(R.id.button);
             expandableLayout = (LinearLayout) view.findViewById(R.id.expandableLayout);
             expandableListView = (ExpandableListView) view.findViewById(R.id.expandableListView);
-            expandableListView1 = (ExpandableListView) view.findViewById(R.id.expandableListView1);
+//            expandableListView1 = (ExpandableListView) view.findViewById(R.id.expandableListView1);
 
 
 

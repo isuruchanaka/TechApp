@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ExpandableListDataPump {
-    public static HashMap<String, List<String>> getData(String getvisituid, List<Species> getspsdata) {
+    public static HashMap<String, List<String>> getData(String getvisituid, List<Species> getspsdata, List<Products> getprdata) {
         HashMap<String, List<String>> expandableListDetail = new HashMap<String, List<String>>();
         List<String> cricket=null;
 String vtsdes = "";
@@ -25,8 +25,14 @@ String vtsdes = "";
         cricket.add("Average Consumed:" + getspsdata.get(i).getavgcns());
         cricket.add("Dead Presence:" + getspsdata.get(i).getdeadpr());
         cricket.add("Captured:" + getspsdata.get(i).getcnt());
+        if(getprdata!=null){
+            for (int i1 = 0; i1 < getprdata.size(); i1++) {
+                if(getprdata.get(i1).getspid().equals(getspsdata.get(i).getspuid())) {
+                    cricket.add("Product:" + getprdata.get(i1).getpdesc());
 
+                    cricket.add("Quantity:" + getprdata.get(i1).getunit() + " " + getprdata.get(i1).getunitid());
 
+                } }}
 
         expandableListDetail.put(vtsdes, cricket);
         }catch (Exception ex){

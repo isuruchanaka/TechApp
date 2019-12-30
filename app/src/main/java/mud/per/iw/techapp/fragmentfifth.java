@@ -368,13 +368,13 @@ else{
 
                 String visitcns = we1.get("AverageConsumed").toString();
                 String visitdr = we1.get("DeadPresence").toString();
-                // String visitrmk = we1.get("insds").toString();
+                 String spuid = we1.get("UId1").toString();
                 String crdt="";
                 if(we1.get("EffectiveDate").toString()!="null"){
                     crdt =we1.get("EffectiveDate").toString().split("T")[0];
                 }
 
-                Species a = new Species(visituid,visitbr,visitag,visitsp,visitcns,visitdr,visicnt,visituid1 );
+                Species a = new Species(spuid,visitbr,visitag,visitsp,visitcns,visitdr,visicnt,visituid1 );
                 spsdata.add(a);
                 Log.wtf("uiu",  visituid+"**"+visitsp);
 
@@ -488,10 +488,11 @@ else{
                 String Description = we1.get("Description").toString();
 
                 String spuid = we1.get("spuid").toString();
+                String spid = we1.get("spid").toString();
                 String Qty = we1.get("Qty").toString();
                 String UnitUId = we1.get("UnitUId").toString();
 
-                Products a = new Products(ProductUId,Description, spuid,UnitUId,Qty);
+                Products a = new Products(ProductUId,Description, spuid,UnitUId,Qty,spid);
                 prdata.add(a);
                 Log.wtf("uiu",  ProductUId+"**"+Description);
 
