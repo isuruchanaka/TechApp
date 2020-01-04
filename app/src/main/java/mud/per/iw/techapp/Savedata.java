@@ -16,6 +16,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -624,14 +627,15 @@ if(validate()){
         } else {
             sdesc.setError(null);
         }
-//        if (visitdesc2.isEmpty() ) {
-//
-//
-//            visitdesc.setError("enter value!");
-//            valid = false;
-//        } else {
-//            visitdesc.setError(null);
-//        }
+        if (isNetworkAvailable(mContext)==false) {
+
+            Toast.makeText(mContext, "Check Your Internet Connection!",
+                    Toast.LENGTH_LONG).show();
+
+            valid = false;
+        } else {
+
+        }
 
 
 
@@ -785,7 +789,7 @@ count=0;
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.wtf("nwe1", error.toString());
-                        Toast.makeText(getContext(), "Error!",
+                        Toast.makeText(mContext, "Error!",
                                 Toast.LENGTH_LONG).show();
 
 
@@ -793,8 +797,8 @@ count=0;
                 });
 
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-                3000,
-                5,
+                10000,
+                10,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
 
@@ -823,7 +827,7 @@ count=0;
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.wtf("nwe1", error.toString());
-                        Toast.makeText(getContext(), "Error!",
+                        Toast.makeText(mContext, "Error!",
                                 Toast.LENGTH_LONG).show();
 
 
@@ -831,8 +835,8 @@ count=0;
                 });
 
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-                3000,
-                5,
+                10000,
+                10,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
 
@@ -861,7 +865,7 @@ count=0;
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(getContext(), "Error!",
+                        Toast.makeText(mContext, "Error!",
                                 Toast.LENGTH_LONG).show();
 
 
@@ -869,8 +873,8 @@ count=0;
                 });
 
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-                3000,
-                5,
+                10000,
+                10,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
 
@@ -910,7 +914,7 @@ count=0;
                        }catch (Exception ex){
                            Log.wtf("dfg", ex.toString());
                        }
-                        Toast.makeText(getContext(), "Success!",
+                        Toast.makeText(mContext, "Success!",
                                 Toast.LENGTH_LONG).show();
                         Fragment  fragment1 = new frgmenthome();
                         FragmentTransaction ft1 =getActivity().getSupportFragmentManager().beginTransaction();
@@ -932,8 +936,8 @@ count=0;
                     }
                 });
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-                3000,
-                5,
+                10000,
+                10,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 // Access the RequestQueue through your singleton class.
         singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
@@ -968,7 +972,7 @@ count=0;
         },new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                insertimage(bitmap, imgn,vtuid);
             }
         }) {
             //adding parameters to send
@@ -981,7 +985,10 @@ count=0;
                 return parameters;
             }
         };
-
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                10,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue rQueue = Volley.newRequestQueue(getContext());
         rQueue.add(request);
 
@@ -1099,7 +1106,44 @@ public void checkloc(){
 
 }
 
+    public static boolean isNetworkAvailable(Context context) {
+        if(context == null)  return false;
 
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager != null) {
+
+
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
+                if (capabilities != null) {
+                    if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                        return true;
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                        return true;
+                    }  else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)){
+                        return true;
+                    }
+                }
+            }
+
+            else {
+
+                try {
+                    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                    if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+                        Log.i("update_statut", "Network is available : true");
+                        return true;
+                    }
+                } catch (Exception e) {
+                    Log.i("update_statut", "" + e.getMessage());
+                }
+            }
+        }
+        Log.i("update_statut","Network is available : FALSE ");
+        return false;
+    }
     private void InitilizeGridLayout(int cnty) {
         Resources r = getResources();
         float padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,

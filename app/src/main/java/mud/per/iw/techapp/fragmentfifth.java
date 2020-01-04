@@ -176,6 +176,7 @@ public class fragmentfifth extends Fragment {
             recyclerView.setHasFixedSize(true);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext().getApplicationContext());
             recyclerView.setLayoutManager(layoutManager);
+
 //fetch data and on ExpandableRecyclerAdapter
             recyclerView.setAdapter(adapter2);
             DefaultItemAnimator animator = new DefaultItemAnimator() {
@@ -263,7 +264,7 @@ else{
 
 
             int b=0;
-
+          //  recyclerView.getLayoutParams().height=200*we.length();
             for (int row = 0; row < (we.length()); row++) {
 
                 JSONObject we1 = we.getJSONObject(b);

@@ -16,9 +16,9 @@
         card_view:cardCornerRadius="@dimen/card_album_radius"
         card_view:cardElevation="50dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -72,6 +72,7 @@
 
                         android:textStyle="bold"
                         card_view:layout_constraintTop_toBottomOf="@id/textView" />
+
                     <TextView
                         android:id="@+id/stp"
                         android:layout_width="match_parent"
@@ -84,6 +85,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/songs_count"
                         card_view:layout_constraintTop_toBottomOf="@id/descp" />
+
                     <TextView
                         android:id="@+id/states"
                         android:layout_width="match_parent"
@@ -128,8 +130,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clipToPadding="false"
-                        android:nestedScrollingEnabled="false"
-                        android:scrollbars="vertical"
+
+android:scrollbars="vertical"
                         card_view:layout_constraintBottom_toTopOf="@id/mapView"
                         card_view:layout_constraintTop_toBottomOf="@id/ln1">
 
@@ -145,7 +147,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
-        </RelativeLayout>
+<!--        </RelativeLayout>-->
 
     </androidx.cardview.widget.CardView>
 

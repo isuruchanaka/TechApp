@@ -86,8 +86,9 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
         getdmsg(item.getvisituid(), holder);
         try {
             if (!item.getvisituid().equals(getsp(item.getvisituid()))) {
-
+              //  holder.expandableListView.getLayoutParams().height=800*holder.expandableListView.getChildCount();
                 holder.ly2.getLayoutParams().height = 80*holder.expandableListView.getChildCount();
+
 //                holder.ly3.getLayoutParams().height = 80*holder.expandableListView1.getChildCount();
                 holder.expandableListDetail = ExpandableListDataPump.getData(item.getvisituid(),item.getspsdata(),item.getprdata());
                 holder.expandableListTitle = new ArrayList<String>(holder.expandableListDetail.keySet());
@@ -128,10 +129,10 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
                     height += holder.expandableListView.getChildAt(i).getMeasuredHeight();
                     height += holder.expandableListView.getDividerHeight();
                 }
-              //  holder.expandableListView.setSelectedGroup(groupPosition);
+               // holder.expandableListView.setSelectedGroup(groupPosition);
                 //Toast.makeText(context,String.valueOf( holder.expandableListView.getChildCount()) , Toast.LENGTH_SHORT).show();
-                holder.expandableListView.getLayoutParams().height = (height+(189*chkl));
-                holder.ly2.getLayoutParams().height =(height+(189*chkl));
+                holder.expandableListView.getLayoutParams().height = (height+(600*chkl));
+                holder.ly2.getLayoutParams().height =(height+(600*chkl));
 
 
             }

@@ -226,7 +226,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Quantity"
-                    android:inputType="textAutoComplete"
+                    android:inputType="numberDecimal"
 
                     android:textColor="@color/common_google_signin_btn_text_dark_focused" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -331,7 +331,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Average Consumed"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused" />
             </com.google.android.material.textfield.TextInputLayout>
 
