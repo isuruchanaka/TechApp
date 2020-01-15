@@ -601,8 +601,8 @@ if(validate()){
        // Spinner spinnerx = (Spinner)view.findViewById(R.id.state);
      //   int stpos = spinnerx.getSelectedItemPosition();
         try {
-            String stpos2 = frgmenthome.siteList1.get(stpos);
-            if(stpos2==""||stpos2==null){
+         //   String stpos2 = frgmenthome.siteList1.get(stpos);
+            if(tid==""||tid==null||tid.isEmpty()){
                 Toast.makeText(getContext(), "Select Site!",
                         Toast.LENGTH_LONG).show();
                 valid = false;

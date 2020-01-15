@@ -124,7 +124,7 @@ public class Fragviewcomp extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
         // recyclerView.setVisibility(View.GONE);
-        view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
 
         return view;
     }
@@ -166,7 +166,30 @@ else {
                 String SiteUId = we1.get("Complain_date").toString();
                 String StationTypeUId = we1.get("Locof_sighting").toString();
                 String[] locarr = StationTypeUId.split(",");
-                String Description = we1.get("spdesp").toString();
+                String Description ="";
+                if(!(we1.get("sp1").toString().equals(""))&&!(we1.get("sp1").toString().equals("null"))){
+                    Description=we1.get("sp1").toString();
+                }
+                if(!(we1.get("sp2").toString().equals(""))&&!(we1.get("sp2").toString().equals("null"))){
+                    Description=Description+","+we1.get("sp2").toString();
+                }
+                if(!(we1.get("sp3").toString().equals(""))&&!(we1.get("sp3").toString().equals("null"))){
+                    Description=Description+","+we1.get("sp3").toString();
+                }
+                if(!(we1.get("sp4").toString().equals(""))&&!(we1.get("sp4").toString().equals("null"))){
+                    Description=Description+","+we1.get("sp4").toString();
+                }
+                if(!(we1.get("sp5").toString().equals(""))&&!(we1.get("sp5").toString().equals("null"))){
+                    Description=Description+","+we1.get("sp5").toString();
+                }
+                if(!(we1.get("sp6").toString().equals(""))&&!(we1.get("sp6").toString().equals("null"))){
+                    Description=Description+","+we1.get("sp6").toString();
+                }
+
+                String contact_person = we1.get("contact_person").toString();
+                String contact_no = we1.get("contact_no").toString();
+                String stdes = we1.get("stdes").toString();
+
                 String Lat = locarr[0];
                 String Long = locarr[1];
                 String stype = we1.get("sitedesp").toString();
@@ -174,12 +197,18 @@ else {
                 String stypedes = we1.get("remarks").toString();
 
 
-                station a = new station(Code,SiteUId,StationTypeUId,Description,Lat,Long,stype,UId,stypedes);
+                station a = new station(Code,SiteUId,StationTypeUId,Description,contact_no,contact_person,stype,stdes,stypedes);
                 albumListnew1.add(a);
 
                 b++;
             }
+            if(albumListnew1.size()==0){
+                view.findViewById(R.id.nodt).setVisibility(View.VISIBLE);
 
+            }
+            else {
+                view.findViewById(R.id.nodt).setVisibility(View.GONE);
+            }
             view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
 //            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
@@ -200,9 +229,9 @@ else {
         adapter.notifyDataSetChanged();
     }
     public String getdmsg(String  val1 ){
-        String url = getContext().getResources().getString( R.string.weburl31)+"?id1="+val1;
+        String url = getContext().getResources().getString( R.string.weburl31)+"?id="+val1;
 
-
+        Log.wtf("ert", url.toString());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

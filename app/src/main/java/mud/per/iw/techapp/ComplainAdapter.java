@@ -29,7 +29,7 @@ public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.MyView
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, count,crdate,count2,count3;
+        public TextView title, count,crdate,count2,count3,count4,count5;
         public ImageView thumbnail, overflow;
 
         public MyViewHolder(View view) {
@@ -38,6 +38,8 @@ public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.MyView
             count = (TextView) view.findViewById(R.id.count1);
             count2 = (TextView) view.findViewById(R.id.count2);
             count3 = (TextView) view.findViewById(R.id.count3);
+            count4 = (TextView) view.findViewById(R.id.count4);
+            count5 = (TextView) view.findViewById(R.id.count5);
             crdate = (TextView) view.findViewById(R.id.count);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             overflow = (ImageView) view.findViewById(R.id.overflow);
@@ -62,24 +64,27 @@ public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.MyView
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         station album = statoinList.get(position);
-        holder.title.setText(album.getDescription());
-        String glat=album.getLat();
-        if(glat.equals("null")){
+        holder.title.setText(album.getstype());
+        String glat=album.getStationTypeUId();
+        String[] locarr = glat.split(",");
+        String Lat = locarr[0];
+        String Long = locarr[1];
+        if(Lat.equals("null")){
 
-            glat="";
+            Lat="";
         }
 
-        String glon=album.getLong();
-        if(glon.equals("null")){
+        //String glon=album.getLong();
+        if(Long.equals("null")){
 
-            glon="";
+            Long="";
         }
-        holder.count.setText("Lattitude:"+glat+"        Longitude:" +glon);
+        holder.count.setText("Lattitude:"+Lat+"        Longitude:" +Long);
         //holder.crdate.setText("Remarks:"+album.getstypedes() );
-        holder.count2.setText("Site: "+album.getstype() );
+        holder.count2.setText("Station: "+album.getUId() );
         holder.count3.setText("Customer: "+album.getCode() );
-//        holder.count2.setText(album.getCustomerContactNo());
-//        holder.count3.setText(album.getAddress());
+        holder.count4.setText("Contact person:"+album.getLat()+"  Contact No:"+album.getLong());
+        holder.count5.setText("Species: "+album.getDescription());
 //holder.thumbnail.setImageResource(album.getThumbnail());
         // loading album cover using Glide library
         //Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
@@ -114,13 +119,16 @@ public class ComplainAdapter extends RecyclerView.Adapter<ComplainAdapter.MyView
             public void onClick(View view) {
                 // showPopupMenu(holder.overflow);
 
-
+                String glat=album.getStationTypeUId();
+                String[] locarr = glat.split(",");
+                String Lat = locarr[0];
+                String Long = locarr[1];
 
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 Fragment myFragment = new fourthfragment();
                 Bundle bundle=new Bundle();
-                bundle.putString("lat",album.getLat());
-                bundle.putString("longi",album.getLong());
+                bundle.putString("lat",Lat);
+                bundle.putString("longi",Long);
                 bundle.putString("desc",album.getDescription());
                 bundle.putString("addr",album.getstypedes());
                 myFragment.setArguments(bundle);

@@ -33,7 +33,7 @@
         android:layout_height="40dp"
         android:gravity="center"
         android:paddingRight="10dp"
-        android:text="fddgfsfg"
+        android:text=" "
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15dp"
         app:layout_constraintLeft_toLeftOf="parent"

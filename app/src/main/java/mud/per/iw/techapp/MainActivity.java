@@ -206,7 +206,7 @@ this.albumList=AlbumsAdapter.albumList;
 
                 target.setVisible(false);
             }
-            if (!rid.equals("1003")&&!rid.equals("1002")&&!rid.equals("1000")) {
+            if (!rid.equals("1003")&&!rid.equals("1002")&&!rid.equals("1000")&&!rid.equals("1001")) {
                 Menu menubn = bottomNavigationView.getMenu();
 
                 MenuItem target = menubn.findItem(R.id.nav_comp);
@@ -221,7 +221,7 @@ this.albumList=AlbumsAdapter.albumList;
             TextView b1 = (TextView)headerView1.findViewById(R.id.txtname);
             b1.setText(Rnkname+""+initials+" "+ name);
             TextView b2 = (TextView)headerView1.findViewById(R.id.txtemail);
-            b2.setText("PIMS v6");
+            b2.setText("PIMS v8");
             inBed=true;
             updateMenuTitles();
             int PERMISSION_ALL = 1;
@@ -419,9 +419,28 @@ this.albumList=AlbumsAdapter.albumList;
                 break;
             case R.id.nav_comp:
                 if (rid.equals("1003")) {
-                Intent intentcomp = new Intent(this, actcomplain.class);
-                startActivity(intentcomp);
-                }else{
+//                Intent intentcomp = new Intent(this, actcomplain.class);
+//                    startActivity(intentcomp);
+                    fragment = new actcomplain();
+                    FragmentTransaction ftcom = getSupportFragmentManager().beginTransaction();
+                    ftcom.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                    ftcom.replace(R.id.frameLayout, fragment);
+                    ftcom.commit();
+
+
+                }
+              else  if (rid.equals("1001")) {
+//                Intent intentcomp = new Intent(this, actcomplain.class);
+//                startActivity(intentcomp);
+                    fragment = new frtechcomplain();
+                    FragmentTransaction ftcom = getSupportFragmentManager().beginTransaction();
+                    ftcom.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                    ftcom.replace(R.id.frameLayout, fragment);
+                    ftcom.commit();
+
+
+                }
+                else{
                     fragment = new Fragviewcomp();
                     FragmentTransaction ftcom = getSupportFragmentManager().beginTransaction();
                     ftcom.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);

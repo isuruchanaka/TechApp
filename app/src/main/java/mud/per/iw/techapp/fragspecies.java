@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -38,6 +39,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -217,6 +220,9 @@ public class fragspecies extends Fragment {
                         String  trtmnt="";
 // Add another TextView here for the "Description" label
 
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            pairdata.sort(Comparator.comparing(Pair::getCode));
+                        }
                         for (int i = 0; i < pairdata.size(); i++) {
 
                             Pair album = pairdata.get(i);

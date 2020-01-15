@@ -35,7 +35,7 @@
                     android:src="@drawable/rodent"
 
                     card_view:layout_constraintRight_toLeftOf="@+id/overflow"
-                    card_view:layout_constraintTop_toBottomOf="@+id/count3" />
+                    card_view:layout_constraintTop_toBottomOf="@+id/count5" />
 
                 <TextView
                     android:id="@+id/title"
@@ -84,7 +84,28 @@
                     android:textSize="@dimen/songs_count"
                     card_view:layout_constraintTop_toBottomOf="@+id/count2" />
 
-
+                <TextView
+                    android:id="@+id/count4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title"
+                    android:paddingLeft="@dimen/album_title_padding"
+                    android:paddingRight="@dimen/album_title_padding"
+                    android:paddingBottom="@dimen/songs_count_padding_bottom"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/songs_count"
+                    card_view:layout_constraintTop_toBottomOf="@+id/count3" />
+                <TextView
+                    android:id="@+id/count5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title"
+                    android:paddingLeft="@dimen/album_title_padding"
+                    android:paddingRight="@dimen/album_title_padding"
+                    android:paddingBottom="@dimen/songs_count_padding_bottom"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/songs_count"
+                    card_view:layout_constraintTop_toBottomOf="@+id/count4" />
 
                 <ImageView
                     android:id="@+id/overflow"
@@ -95,7 +116,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_dots"
                     card_view:layout_constraintRight_toRightOf="parent"
-                    card_view:layout_constraintTop_toBottomOf="@+id/count3" />
+                    card_view:layout_constraintTop_toBottomOf="@+id/count5" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
