@@ -51,6 +51,14 @@
     <string name="weburl16">https://poc.allgonpest.com.au/Asset/images/visit</string>
     <string name="weburl22">https://poc.allgonpest.com.au/Asset/images/species</string>
     <string name="weburl34">https://poc.allgonpest.com.au/mobile/getver.ashx</string>
+    <string name="weburl36">https://poc.allgonpest.com.au/mobile/getat.ashx</string>
+    <string name="weburl37">https://poc.allgonpest.com.au/mobile/getreco.ashx</string>
+    <string name="weburl38">https://poc.allgonpest.com.au/mobile/getvisittp.ashx</string>
+    <string name="weburl39">https://poc.allgonpest.com.au/mobile/insertat.ashx</string>
+    <string name="weburl40">https://poc.allgonpest.com.au/mobile/getvisittp.ashx</string>
+    <string name="weburl41">https://poc.allgonpest.com.au/mobile/getvisittp.ashx</string>
+
+
     <string name="weburl35">9</string>
 
 

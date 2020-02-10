@@ -98,7 +98,9 @@ import static mud.per.iw.techapp.Expandsps.sps;
 import static mud.per.iw.techapp.GridViewImageAdapter2.data3;
 import static mud.per.iw.techapp.MainActivity.qrcod;
 import static mud.per.iw.techapp.MainActivity.svcid;
+import static mud.per.iw.techapp.frgmenthome.caList;
 import static mud.per.iw.techapp.frgmenthome.prodList;
+import static mud.per.iw.techapp.frgmenthome.recoList;
 import static mud.per.iw.techapp.frgmenthome.sitetypList;
 
 public class Savedata extends Fragment implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
@@ -146,9 +148,13 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
     Spinner spinner2;
     ArrayAdapter<String> adapter3;
     ArrayAdapter<String> adapter5;
+    ArrayAdapter<String> adapter6;
+    ArrayAdapter<String> adapter7;
     Spinner spinner3;
     Spinner spinner4;
     Spinner spinner5;
+    Spinner spinner6;
+    Spinner spinner7;
     String rid;
     String ctry;
     @SuppressLint("MissingPermission")
@@ -260,6 +266,50 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
 //        adapter3 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr3);
 //
 //        spinner3.setAdapter(adapter3);
+/////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
+       try{
+        spinner6 = (Spinner)view.findViewById(R.id.ca);
+        spinner6.setOnItemSelectedListener(this);
+
+        String[] stockArr6 = new String[caList.size()];
+        stockArr6= caList.toArray(stockArr6);
+
+        adapter6 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr6);
+
+        spinner6.setAdapter(adapter6);
+       }
+
+       catch (Exception ex){
+
+       }
+/////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
+        try{
+        spinner7 = (Spinner)view.findViewById(R.id.reco);
+        spinner7.setOnItemSelectedListener(this);
+
+        String[] stockArr7 = new String[recoList.size()];
+        stockArr7= recoList.toArray(stockArr7);
+
+        adapter7 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr7);
+
+        spinner7.setAdapter(adapter7);
+    }
+
+       catch (Exception ex){
+
+    }
+/////////////////////////////////////////////////////////////////////////////////////////
+//        spinner8 = (Spinner)view.findViewById(R.id.v);
+//        spinner8.setOnItemSelectedListener(this);
+//
+//        String[] stockArr8 = new String[recoList.size()];
+//        stockArr8= recoList.toArray(stockArr8);
+//
+//        adapter8 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr8);
+//
+//        spinner8.setAdapter(adapter8);
 /////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////
         spinner5 = (Spinner)view.findViewById(R.id.sitetype);

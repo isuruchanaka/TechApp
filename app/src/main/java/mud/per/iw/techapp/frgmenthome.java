@@ -137,12 +137,18 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
     public static List<String> siteList;
     public static List<String> spList;
     public static List<String> prodList;
+    public static List<String> caList;
+    public static List<String> recoList;
+    public static List<String> vsitypList;
 
     public static HashMap<Integer,String > sitetypList1 =new HashMap<>();
     public static HashMap<Integer,String > unitList1 =new HashMap<>();
     public static HashMap<Integer,String > siteList1 =new HashMap<>();
     public static HashMap<Integer,String > spList1 =new HashMap<>();
     public static HashMap<Integer,String > prodList1 =new HashMap<>();
+    public static HashMap<Integer,String > caList1 =new HashMap<>();
+    public static HashMap<Integer,String > recoList1 =new HashMap<>();
+    public static HashMap<Integer,String > vsitypList1 =new HashMap<>();
     private String rid;
     private String ctry;
 
@@ -167,6 +173,12 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
         spList=new ArrayList<>();
         prodList=   new ArrayList<>();
         pairdata=   new ArrayList<>();
+
+        caList=   new ArrayList<>();
+        recoList=   new ArrayList<>();
+        vsitypList=   new ArrayList<>();
+
+
         SharedPreferences prefs = getContext().getSharedPreferences("userinfo", MODE_PRIVATE);
         String restoredText = prefs.getString("UserID", null);
 
@@ -196,6 +208,10 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
         getspecies();
         getprod();
         getprodall("");
+
+        getca(ctry);
+        getreco(ctry);
+        getvistyp(ctry);
 /////////////////////////////////////////////////////////////////////////////////////////
         firstButton = (ImageView) view.findViewById(R.id.imageView7);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -978,7 +994,216 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
 
         return changeres;
     }
+    public String getca( String  val1){
+        String url = getContext().getResources().getString( R.string.weburl36)+"?id="+val1;
 
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("UId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+                                caList.add(Description);
+                                caList1.put(row,Code);
+                                b++;
+                            }
+
+
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+    public String getreco( String  val1){
+        String url = getContext().getResources().getString( R.string.weburl37)+"?id="+val1;
+
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("UId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+                                recoList.add(Description);
+                                recoList1.put(row,Code);
+                                b++;
+                            }
+
+
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+    public String getvistyp(String  val1 ){
+        String url = getContext().getResources().getString( R.string.weburl38)+"?id="+val1;
+
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("UId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+                                vsitypList.add(Description);
+                                vsitypList1.put(row,Code);
+                                b++;
+                            }
+
+
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
     public String getsite( ){
         String url = getContext().getResources().getString( R.string.weburl4);
 
