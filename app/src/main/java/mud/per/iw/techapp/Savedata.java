@@ -93,15 +93,20 @@ import static android.content.Context.MODE_PRIVATE;
 import static androidx.core.content.FileProvider.getUriForFile;
 
 import static mud.per.iw.techapp.AlbumsAdapter.albumList;
+import static mud.per.iw.techapp.Expandat.atprds;
 import static mud.per.iw.techapp.Expandpr.prds;
+import static mud.per.iw.techapp.Expandrc.rcprds;
 import static mud.per.iw.techapp.Expandsps.sps;
 import static mud.per.iw.techapp.GridViewImageAdapter2.data3;
 import static mud.per.iw.techapp.MainActivity.qrcod;
 import static mud.per.iw.techapp.MainActivity.svcid;
 import static mud.per.iw.techapp.frgmenthome.caList;
+import static mud.per.iw.techapp.frgmenthome.caList1;
 import static mud.per.iw.techapp.frgmenthome.prodList;
 import static mud.per.iw.techapp.frgmenthome.recoList;
+import static mud.per.iw.techapp.frgmenthome.recoList1;
 import static mud.per.iw.techapp.frgmenthome.sitetypList;
+import static mud.per.iw.techapp.frgmenthome.vsitypList;
 
 public class Savedata extends Fragment implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
     private static final int OPEN_DOCUMENT_CODE = 148;
@@ -112,6 +117,8 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
     Button savebtn;
     Button spbtn;
     Button prbtn;
+    Button atbtn;
+    Button recbtn;
     int TAKE_PHOTO_CODE = 0;
     public static int count = 0;
     private GridView gridView;
@@ -135,10 +142,16 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
     private String scnt1="0";
     private RecyclerView recyclerView;
     private RecyclerView recyclerView2;
+    private RecyclerView recyclerView3;
+    private RecyclerView recyclerView4;
     private List<Species> spdata;
     private List<Products> prdata;
+    private List<atdatas> atdata;
+    private List<rcdatas> rcdata;
     private Expandsps spadapter2;
     private Expandpr spadapter3;
+    private Expandat spadapter4;
+    private Expandrc spadapter5;
     String[] stockArr;
     ArrayAdapter<String> adaptersit;
     int stpos;
@@ -150,11 +163,13 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
     ArrayAdapter<String> adapter5;
     ArrayAdapter<String> adapter6;
     ArrayAdapter<String> adapter7;
+    ArrayAdapter<String> adapter8;
     Spinner spinner3;
     Spinner spinner4;
     Spinner spinner5;
     Spinner spinner6;
     Spinner spinner7;
+    Spinner spinner8;
     String rid;
     String ctry;
     @SuppressLint("MissingPermission")
@@ -222,6 +237,8 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
         });
         spdata = new ArrayList<>();
         prdata = new ArrayList<>();
+        atdata = new ArrayList<>();
+        rcdata = new ArrayList<>();
          spinner = (AutoCompleteTextView)view.findViewById(R.id.state);
         spinner.setOnItemSelectedListener(this);
         spinner.setOnItemClickListener(this);
@@ -272,12 +289,16 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
         spinner6 = (Spinner)view.findViewById(R.id.ca);
         spinner6.setOnItemSelectedListener(this);
 
-        String[] stockArr6 = new String[caList.size()];
+         String[] stockArr6 = new String[caList.size()+1];
         stockArr6= caList.toArray(stockArr6);
+
 
         adapter6 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr6);
 
         spinner6.setAdapter(adapter6);
+           stockArr6[caList.size()]="-Select Action-";
+           spinner6.setSelection(caList.size());
+           adapter6.notifyDataSetChanged();
        }
 
        catch (Exception ex){
@@ -289,17 +310,40 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
         spinner7 = (Spinner)view.findViewById(R.id.reco);
         spinner7.setOnItemSelectedListener(this);
 
-        String[] stockArr7 = new String[recoList.size()];
+        String[] stockArr7 = new String[recoList.size()+1];
         stockArr7= recoList.toArray(stockArr7);
 
         adapter7 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr7);
 
         spinner7.setAdapter(adapter7);
+            stockArr7[recoList.size()]="-Select Recommondation-";
+            spinner7.setSelection(recoList.size());
+            adapter7.notifyDataSetChanged();
     }
 
        catch (Exception ex){
 
     }
+/////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
+        try{
+            spinner8 = (Spinner)view.findViewById(R.id.visittype);
+            spinner8.setOnItemSelectedListener(this);
+
+            String[] stockArr8 = new String[vsitypList.size()];
+            stockArr8= vsitypList.toArray(stockArr8);
+
+            adapter8 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr8);
+
+            spinner8.setAdapter(adapter8);
+           // stockArr8[vsitypList.size()]="-Select Visit Type-";
+            spinner8.setSelection(vsitypList.size()-1);
+            adapter8.notifyDataSetChanged();
+        }
+
+        catch (Exception ex){
+
+        }
 /////////////////////////////////////////////////////////////////////////////////////////
 //        spinner8 = (Spinner)view.findViewById(R.id.v);
 //        spinner8.setOnItemSelectedListener(this);
@@ -506,7 +550,89 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
                 //Toast.makeText(getActivity(), "First Fragment", Toast.LENGTH_LONG).show();
             }
         });
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
+        atbtn = (Button) view.findViewById(R.id.btn_at);
+
+        atbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+
+                try {
+                    int prodpos = spinner6.getSelectedItemPosition();
+                    String prodpos2 = caList1.get(prodpos);
+                    if(prodpos2!=null) {
+
+                        atdatas a = new atdatas(prodpos2, spinner6.getSelectedItem().toString());
+                        atdata.add(a);
+                        spadapter4 = new Expandat(atdata);
+                        recyclerView3 = (RecyclerView) view.findViewById(R.id.recyclerat);
+                        recyclerView3.setHasFixedSize(true);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext().getApplicationContext());
+                        recyclerView3.setLayoutManager(layoutManager);
+//fetch data and on ExpandableRecyclerAdapter
+                        recyclerView3.setAdapter(spadapter4);
+
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+
+                //Toast.makeText(getActivity(), "First Fragment", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        recbtn = (Button) view.findViewById(R.id.btn_rcm);
+
+        recbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+
+                try {
+
+                    int prodpos = spinner7.getSelectedItemPosition();
+                    String prodpos2 = recoList1.get(prodpos);
+
+if(prodpos2!=null) {
+    rcdatas a = new rcdatas(prodpos2, spinner7.getSelectedItem().toString());
+    rcdata.add(a);
+    spadapter5 = new Expandrc(rcdata);
+    recyclerView4 = (RecyclerView) view.findViewById(R.id.recyclerrcm);
+    recyclerView4.setHasFixedSize(true);
+    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext().getApplicationContext());
+    recyclerView4.setLayoutManager(layoutManager);
+//fetch data and on ExpandableRecyclerAdapter
+    recyclerView4.setAdapter(spadapter5);
+
+}
+
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+
+                //Toast.makeText(getActivity(), "First Fragment", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
         clbtn = (ImageView) view.findViewById(R.id.calc_clear_txt_Prise);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             //  clbtn.setBackground(makeSelector(Color.parseColor("#ff7200")));
@@ -550,7 +676,8 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
                 String stpos2 = tid;
                 int subpos = spinner5.getSelectedItemPosition();
                 String subpos2 =frgmenthome.sitetypList1.get(subpos);
-
+                int subpos5 = spinner8.getSelectedItemPosition();
+                String subpos6 =frgmenthome.vsitypList1.get(subpos5);
 
 
 if(validate()){
@@ -570,7 +697,7 @@ if(validate()){
                 rid=  prefs.getString("RoleID", "no");
                 ctry= prefs.getString("Country", "no");
             }
-            isertdata(qrcod, subpos2, stpos2, sdesc1, lti, lngi, ctry, svcid, "1", visitdesc1, svcid);
+            isertdata(qrcod, subpos2, stpos2, sdesc1, lti, lngi, ctry, svcid, subpos6, visitdesc1, svcid);
             Log.wtf("cls1", qrcod);
 
 
@@ -825,9 +952,26 @@ count=0;
                                 try{
                                 isertpr(s1,prds.get(u).getpuid(),svcid,prds.get(u).getpsuid(),prds.get(u).getunit(),prds.get(u).getunitid(),cntry);
                             }catch (Exception ex){}
-                            }}
+                            }
+                            }
+                            if(rcprds!=null) {
+                                for(int u=0;u<rcprds.size();u++) {
+                                    try{
+                                        isertprrc(s1,rcprds.get(u).getpuid(),svcid,cntry);
+                                    }catch (Exception ex){}
+                                }
+                            }
+                            if(atprds!=null) {
+                                for(int u=0;u<atprds.size();u++) {
+                                    try{
+                                        isertprat(s1,atprds.get(u).getpuid(),svcid,cntry);
+                                    }catch (Exception ex){}
+                                }
+                            }
                             prdata.clear();
                             spdata.clear();
+                            atdata.clear();
+                            rcdata.clear();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -931,8 +1075,81 @@ count=0;
 
         return changeres;
     }
+    public String isertprrc(String visitid ,String prid,String empid,String cntry){
+        String url = getContext().getResources().getString( R.string.weburl40)+"?visitid="+visitid+"&prid="+prid+"&empid="+empid+"&cntry="+cntry+"";
+
+        Log.wtf("nwe1", url.toString());
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
 
 
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(mContext, "Error!",
+                                Toast.LENGTH_LONG).show();
+
+
+                    }
+                });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                10,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+
+    public String isertprat(String visitid ,String prid,String empid,String cntry){
+        String url = getContext().getResources().getString( R.string.weburl39)+"?visitid="+visitid+"&prid="+prid+"&empid="+empid+"&cntry="+cntry+"";
+
+        Log.wtf("nwe1", url.toString());
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(mContext, "Error!",
+                                Toast.LENGTH_LONG).show();
+
+
+                    }
+                });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                10,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
     public String insertfolder(String  vtuid){
 
         String url = this.getContext().getResources().getString( R.string.weburl12)+"?vtuid="+vtuid+"";

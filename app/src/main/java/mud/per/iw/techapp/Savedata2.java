@@ -99,23 +99,36 @@ import static androidx.core.content.FileProvider.getUriForFile;
 
 
 import static mud.per.iw.techapp.AlbumsAdapter.albumList;
+import static mud.per.iw.techapp.Expandat.atprds;
 import static mud.per.iw.techapp.Expandpr.prds;
+import static mud.per.iw.techapp.Expandrc.rcprds;
 import static mud.per.iw.techapp.Expandsps.sps;
 import static mud.per.iw.techapp.GridViewImageAdapter2.data3;
 import static mud.per.iw.techapp.MainActivity.qrcod;
 import static mud.per.iw.techapp.MainActivity.svcid;
 import static mud.per.iw.techapp.StationAdapter.statoinList;
 import static mud.per.iw.techapp.frgmenthome.CodeList;
+import static mud.per.iw.techapp.frgmenthome.caList;
+import static mud.per.iw.techapp.frgmenthome.caList1;
+import static mud.per.iw.techapp.frgmenthome.compList;
+import static mud.per.iw.techapp.frgmenthome.compList1;
 import static mud.per.iw.techapp.frgmenthome.prodList;
+import static mud.per.iw.techapp.frgmenthome.recoList;
+import static mud.per.iw.techapp.frgmenthome.recoList1;
+import static mud.per.iw.techapp.frgmenthome.vsitypList;
+import static mud.per.iw.techapp.frgmenthome.vsitypList1;
 
 public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
     private Context mContext;
+    int iCurrentSelection =0;
     View view;
     Button galButton;
     Button firstButton;
     Button savebtn;
     Button spbtn;
     Button prbtn;
+    Button atbtn;
+    Button recbtn;
     MapView mMapView;
     private GoogleMap googleMap;
     int TAKE_PHOTO_CODE = 0;
@@ -141,13 +154,28 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
     private String scnt1="0";
     private RecyclerView recyclerView;
     private RecyclerView recyclerView2;
+    private RecyclerView recyclerView3;
+    private RecyclerView recyclerView4;
     private List<Species> spdata;
     private List<Products> prdata;
+    private List<atdatas> atdata;
+    private List<rcdatas> rcdata;
     private Expandsps spadapter2;
     private Expandpr spadapter3;
+    private Expandat spadapter4;
+    private Expandrc spadapter5;
+    private Expandrc spadapter6;
+    ArrayAdapter<String> adapter6;
+    ArrayAdapter<String> adapter7;
+    ArrayAdapter<String> adapter8;
+    ArrayAdapter<String> adapter9;
     ArrayAdapter<String> adapter3;
     ArrayAdapter<String> adaptersit;
     Spinner spinner3;
+    Spinner spinner6;
+    Spinner spinner7;
+    Spinner spinner8;
+    Spinner spinner9;
     String rid;
     String ctry;
     private static final int OPEN_DOCUMENT_CODE = 148;
@@ -163,6 +191,7 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         view = inflater.inflate(R.layout.actupdatest, container, false);
         view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        view.findViewById(R.id.comp).setVisibility(View.GONE);
         //checkloc();
 //        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 //////////////////////////////////////////////////////////////////
@@ -193,7 +222,8 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
 
         spdata = new ArrayList<>();
         prdata = new ArrayList<>();
-
+        atdata = new ArrayList<>();
+        rcdata = new ArrayList<>();
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -249,7 +279,9 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
             }
         });
 //////////////////////////////////////////////////////////////////////
-
+        ///////////////////////////////////////////////////////////////////////////////////////
+        spinner9 = (Spinner)view.findViewById(R.id.comp);
+        spinner9.setOnItemSelectedListener(this);
 
         ///////////////////////////////////////////////////////////////////////////////////////
          spinner3 = (Spinner)view.findViewById(R.id.prod);
@@ -274,6 +306,91 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
+        try{
+            spinner6 = (Spinner)view.findViewById(R.id.ca);
+            spinner6.setOnItemSelectedListener(this);
+
+            String[] stockArr6 = new String[caList.size()+1];
+            stockArr6= caList.toArray(stockArr6);
+
+
+            adapter6 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr6);
+
+            spinner6.setAdapter(adapter6);
+            stockArr6[caList.size()]="-Select Action-";
+            spinner6.setSelection(caList.size());
+            adapter6.notifyDataSetChanged();
+        }
+
+        catch (Exception ex){
+
+        }
+/////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
+        try{
+            spinner7 = (Spinner)view.findViewById(R.id.reco);
+            spinner7.setOnItemSelectedListener(this);
+
+            String[] stockArr7 = new String[recoList.size()+1];
+            stockArr7= recoList.toArray(stockArr7);
+
+            adapter7 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr7);
+
+            spinner7.setAdapter(adapter7);
+            stockArr7[recoList.size()]="-Select Recommondation-";
+            spinner7.setSelection(recoList.size());
+            adapter7.notifyDataSetChanged();
+        }
+
+        catch (Exception ex){
+
+        }
+/////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
+        try{
+            spinner8 = (Spinner)view.findViewById(R.id.visittype);
+           // spinner8.setOnItemSelectedListener(this);
+
+            String[] stockArr8 = new String[vsitypList.size()];
+            stockArr8= vsitypList.toArray(stockArr8);
+
+            adapter8 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr8);
+
+            spinner8.setAdapter(adapter8);
+            // stockArr8[vsitypList.size()]="-Select Visit Type-";
+            spinner8.setSelection(vsitypList.size()-1);
+
+            spinner8.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+                {
+                    String selectedItem = parent.getItemAtPosition(position).toString(); //this is your selected item
+                    int spcpos = spinner8.getSelectedItemPosition();
+              String spcpos2 = vsitypList1.get(spcpos);
+                 //   String itemName = adapter8.getItem(selectedItem);
+                    if(spcpos2!=null) {
+                        if (spcpos2.equals("1003")) {
+                            Code a2 = getalbum(qrcod.toLowerCase());
+                            getcomp(a2.getUId());
+                        }
+                    }
+
+                }
+                public void onNothingSelected(AdapterView<?> parent)
+                {
+
+                }
+            });
+
+
+            // iCurrentSelection = spinner8.getSelectedItemPosition();
+            adapter8.notifyDataSetChanged();
+        }
+
+        catch (Exception ex){
+
+        }
+/////////////////////////////////////////////////////////////////////////////////////////
         mMapView = (MapView) view.findViewById(R.id.mapViewu);
         mMapView.onCreate(savedInstanceState);
 
@@ -312,6 +429,89 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
 
 
         });
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        atbtn = (Button) view.findViewById(R.id.btn_at);
+
+        atbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+
+                try {
+                    int prodpos = spinner6.getSelectedItemPosition();
+                    String prodpos2 = caList1.get(prodpos);
+                    if(prodpos2!=null) {
+
+                        atdatas a = new atdatas(prodpos2, spinner6.getSelectedItem().toString());
+                        atdata.add(a);
+                        spadapter4 = new Expandat(atdata);
+                        recyclerView3 = (RecyclerView) view.findViewById(R.id.recyclerat);
+                        recyclerView3.setHasFixedSize(true);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext().getApplicationContext());
+                        recyclerView3.setLayoutManager(layoutManager);
+//fetch data and on ExpandableRecyclerAdapter
+                        recyclerView3.setAdapter(spadapter4);
+
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+
+                //Toast.makeText(getActivity(), "First Fragment", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        recbtn = (Button) view.findViewById(R.id.btn_rcm);
+
+        recbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+
+                try {
+
+                    int prodpos = spinner7.getSelectedItemPosition();
+                    String prodpos2 = recoList1.get(prodpos);
+
+                    if(prodpos2!=null) {
+                        rcdatas a = new rcdatas(prodpos2, spinner7.getSelectedItem().toString());
+                        rcdata.add(a);
+                        spadapter5 = new Expandrc(rcdata);
+                        recyclerView4 = (RecyclerView) view.findViewById(R.id.recyclerrcm);
+                        recyclerView4.setHasFixedSize(true);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext().getApplicationContext());
+                        recyclerView4.setLayoutManager(layoutManager);
+//fetch data and on ExpandableRecyclerAdapter
+                        recyclerView4.setAdapter(spadapter5);
+
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+
+                //Toast.makeText(getActivity(), "First Fragment", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
         firstButton = (Button) view.findViewById(R.id.btn_tpic);
 
@@ -514,10 +714,15 @@ if(sbread1.equals("")){
                 visitdesc1 = visitdesc.getText().toString();
 
 
+                int subpos5 = spinner8.getSelectedItemPosition();
+                String subpos6 =frgmenthome.vsitypList1.get(subpos5);
 
+                int spcpos = spinner9.getSelectedItemPosition();
+                String spcpos2 = compList1.get(spcpos);
+                if(spcpos2.equals("null")){
 
-//                int spcpos = spinner2.getSelectedItemPosition();
-//                String spcpos2 = SecondFragment.spList1.get(spcpos);
+                    spcpos2="0";
+                }
 //                int stpos = spinner.getSelectedItemPosition();
 //                String stpos2 = SecondFragment.siteList1.get(stpos);
 //                int subpos = spinner1.getSelectedItemPosition();
@@ -537,7 +742,7 @@ if(sbread1.equals("")){
                     view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                     savebtn.setEnabled(false);
                     try{
-                    isertdata(al.getUId(),"2",visitdesc1,svcid,ctry);
+                    isertdata(al.getUId(),subpos6,visitdesc1,svcid,ctry,spcpos2);
                     }catch (Exception ex){}
                     Log.wtf("cls1", qrcod);
                }
@@ -694,8 +899,8 @@ if(sbread1.equals("")){
             Log.wtf("cls2", ((Object) this).getClass().getSimpleName() + " is on screen");
         }
     }
-    public String isertdata(String tuid,String vistyp,String visdet,String empid,String cntry ){
-        String url = getContext().getResources().getString( R.string.weburl11)+"?tuid="+tuid+"&vistyp="+vistyp+"&visdet="+visdet+"&empid="+empid+"&pcnt="+data3.size()+"&cntry="+cntry+"";
+    public String isertdata(String tuid,String vistyp,String visdet,String empid,String cntry,String comid ){
+        String url = getContext().getResources().getString( R.string.weburl11)+"?tuid="+tuid+"&vistyp="+vistyp+"&visdet="+visdet+"&empid="+empid+"&pcnt="+data3.size()+"&cntry="+cntry+"&comid="+comid+"";
 
 
 
@@ -737,6 +942,21 @@ if(sbread1.equals("")){
                                 isertpr(s1,prds.get(u).getpuid(),svcid,prds.get(u).getpsuid(),prds.get(u).getunit(),prds.get(u).getunitid(),ctry);
                                 }catch (Exception ex){}
                             }}
+                            if(rcprds!=null) {
+                                for(int u=0;u<rcprds.size();u++) {
+                                    try{
+                                        isertprrc(s1,rcprds.get(u).getpuid(),svcid,cntry);
+                                    }catch (Exception ex){}
+                                }
+                            }
+                            if(atprds!=null) {
+                                for(int u=0;u<atprds.size();u++) {
+                                    try{
+                                        isertprat(s1,atprds.get(u).getpuid(),svcid,cntry);
+                                    }catch (Exception ex){}
+                                }
+                            }
+
                             prdata.clear();
                             spdata.clear();
                         } catch (JSONException e) {
@@ -842,7 +1062,81 @@ if(sbread1.equals("")){
 
         return changeres;
     }
+    public String isertprrc(String visitid ,String prid,String empid,String cntry){
+        String url = getContext().getResources().getString( R.string.weburl40)+"?visitid="+visitid+"&prid="+prid+"&empid="+empid+"&cntry="+cntry+"";
 
+        Log.wtf("nwe1", url.toString());
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(mContext, "Error!",
+                                Toast.LENGTH_LONG).show();
+
+
+                    }
+                });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                10,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+
+    public String isertprat(String visitid ,String prid,String empid,String cntry){
+        String url = getContext().getResources().getString( R.string.weburl39)+"?visitid="+visitid+"&prid="+prid+"&empid="+empid+"&cntry="+cntry+"";
+
+        Log.wtf("nwe1", url.toString());
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(mContext, "Error!",
+                                Toast.LENGTH_LONG).show();
+
+
+                    }
+                });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                10,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
 
     public String insertfolder(String  vtuid){
 
@@ -1095,6 +1389,11 @@ if(sbread1.equals("")){
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
+//        if (iCurrentSelection != i){
+//
+//        }
+//        iCurrentSelection = i;
+
     }
 
     @Override
@@ -1327,6 +1626,86 @@ if(sbread1.equals("")){
 
         return changeres;
     }
+    public String getcomp(String id ){
+        String url = getContext().getResources().getString( R.string.weburl41)+"?id="+id+"";
+
+        view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                      //  frgmenthome.compList1.clear();
+                     //   compList.clear();
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("Uid").toString();
+                                String Description = we1.get("remarks").toString();
+
+
+
+                                compList.add(Description);
+                                compList1.put(row,Code);
+                                b++;
+                            }
+
+                            String[] stockArr9 = new String[compList.size()+1];
+                            stockArr9 = compList.toArray(stockArr9);
+                            adapter9 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr9);
+                           // adapter9.notifyDataSetChanged();
+                            spinner9.setAdapter(adapter9);
+
+                            stockArr9[compList.size()]="-Select Complain-";
+                            spinner9.setSelection(compList.size());
+                            adapter9.notifyDataSetChanged();
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                            view.findViewById(R.id.comp).setVisibility(View.VISIBLE);
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -1355,6 +1734,12 @@ if(sbread1.equals("")){
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+//        for(Album carnet : albumList) {
+//            if (carnet.getsitedesp().trim().contains(sdfgh[0].trim())) {
+//                tid = carnet.getuid();
+//                break;
+//            }
+//        }
 
     }
 }

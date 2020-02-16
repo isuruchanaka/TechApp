@@ -55,8 +55,11 @@
     <string name="weburl37">https://poc.allgonpest.com.au/mobile/getreco.ashx</string>
     <string name="weburl38">https://poc.allgonpest.com.au/mobile/getvisittp.ashx</string>
     <string name="weburl39">https://poc.allgonpest.com.au/mobile/insertat.ashx</string>
-    <string name="weburl40">https://poc.allgonpest.com.au/mobile/getvisittp.ashx</string>
-    <string name="weburl41">https://poc.allgonpest.com.au/mobile/getvisittp.ashx</string>
+    <string name="weburl40">https://poc.allgonpest.com.au/mobile/insertrc.ashx</string>
+    <string name="weburl41">https://poc.allgonpest.com.au/mobile/getcompbyst.ashx</string>
+    <string name="weburl42">https://poc.allgonpest.com.au/mobile/getstrec.ashx</string>
+    <string name="weburl43">https://poc.allgonpest.com.au/mobile/getstat.ashx</string>
+
 
 
     <string name="weburl35">9</string>

@@ -140,6 +140,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
     public static List<String> caList;
     public static List<String> recoList;
     public static List<String> vsitypList;
+    public static List<String> compList;
 
     public static HashMap<Integer,String > sitetypList1 =new HashMap<>();
     public static HashMap<Integer,String > unitList1 =new HashMap<>();
@@ -149,6 +150,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
     public static HashMap<Integer,String > caList1 =new HashMap<>();
     public static HashMap<Integer,String > recoList1 =new HashMap<>();
     public static HashMap<Integer,String > vsitypList1 =new HashMap<>();
+    public static HashMap<Integer,String > compList1 =new HashMap<>();
     private String rid;
     private String ctry;
 
@@ -177,7 +179,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
         caList=   new ArrayList<>();
         recoList=   new ArrayList<>();
         vsitypList=   new ArrayList<>();
-
+       compList=   new ArrayList<>();
 
         SharedPreferences prefs = getContext().getSharedPreferences("userinfo", MODE_PRIVATE);
         String restoredText = prefs.getString("UserID", null);
