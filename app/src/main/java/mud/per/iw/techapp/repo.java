@@ -8,6 +8,8 @@ public class repo {
     private List<Species> spsdata;
     private int thumbnail;
     List<Products> prdata;
+    List<atdatas> atdata;
+    List<rcdatas> rcdata;
     public repo() {
     }
 
@@ -38,9 +40,20 @@ public class repo {
     public List<Products> getprdata() {
         return prdata;
     }
-
+    public List<atdatas> getatdata() {
+        return atdata;
+    }
+    public List<rcdatas> getrcdata() {
+        return rcdata;
+    }
     public void setprdata(List<Products> prdata) {
         this.prdata = prdata;
+    }
+    public void setatdata(List<atdatas> atdata) {
+        this.atdata = atdata;
+    }
+    public void setrcdata(List<rcdatas> rcdata) {
+        this.rcdata = rcdata;
     }
     public void setuid(String visituid) {
         this.visituid = visituid;

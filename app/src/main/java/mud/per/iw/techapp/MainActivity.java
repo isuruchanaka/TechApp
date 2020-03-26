@@ -221,7 +221,7 @@ this.albumList=AlbumsAdapter.albumList;
             TextView b1 = (TextView)headerView1.findViewById(R.id.txtname);
             b1.setText(Rnkname+""+initials+" "+ name);
             TextView b2 = (TextView)headerView1.findViewById(R.id.txtemail);
-            b2.setText("PIMS v9");
+            b2.setText("PIMS v12");
             inBed=true;
             updateMenuTitles();
             int PERMISSION_ALL = 1;

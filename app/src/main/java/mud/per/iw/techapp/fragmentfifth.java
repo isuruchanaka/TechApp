@@ -63,6 +63,8 @@ public class fragmentfifth extends Fragment {
     private ExpandableRecyclerAdapter adapter2;
     public List<Species> spsdata;
     public List<Products> prdata;
+    public List<atdatas> atdata;
+    public List<rcdatas> rcdata;
     View view;
     View view1;
     MapView mMapView;
@@ -271,12 +273,7 @@ else{
                 String visituid = we1.get("UId").toString();
                 String visitd = we1.get("vsitds").toString();
                 String VisitType = we1.get("VisitType").toString();
-if(VisitType.equals("1")){
-    VisitType="Initial Visit";
-}
-else{
-    VisitType="Visit";
-}
+
                 String crdt="";
                 if(we1.get("EffectiveDate").toString()!="null"){
                     crdt =we1.get("EffectiveDate").toString().split("T")[0];
@@ -286,6 +283,7 @@ else{
                 Log.wtf("lll",visitd);
 
                 getdmsg1(visitd,visituid,VisitType,crdt);
+
                 getdmsg2(visituid);
                 b++;
             }
@@ -383,6 +381,8 @@ else{
             }
             repo a1 = new repo( visitd,visituid1,visitType,crdt1,spsdata,prdata);
             repodata.add(a1);
+            getrecc(visituid1);
+            getatt(visituid1);
             adapter2.notifyDataSetChanged();
 
             DefaultItemAnimator animator = new DefaultItemAnimator() {
@@ -545,7 +545,150 @@ else{
 
 
     }
+    public String getrecc(String id ){
+        String url = getContext().getResources().getString( R.string.weburl42)+"?id="+id+"";
 
+      //  view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //  frgmenthome.compList1.clear();
+                        //   compList.clear();
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+                            rcdata = new ArrayList<>();
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("UId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+                                rcdatas a = new rcdatas(Code,Description);
+                                rcdata.add(a);
+                                b++;
+                            }
+
+                            repo a1 = getalbum3(id);
+                            a1.setrcdata(rcdata);
+                           // view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                            adapter2.notifyDataSetChanged();
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+    public String getatt(String id ){
+        String url = getContext().getResources().getString( R.string.weburl43)+"?id="+id+"";
+
+      //  view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //  frgmenthome.compList1.clear();
+                        //   compList.clear();
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+                            atdata = new ArrayList<>();
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("UId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+                                atdatas a = new atdatas(Code,Description);
+                                atdata.add(a);
+                                b++;
+                            }
+
+                            repo a1 = getalbum3(id);
+                            a1.setatdata(atdata);
+                           // view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                            adapter2.notifyDataSetChanged();
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
     public String getdmsg2( String visituid1){
         String url = getContext().getResources().getString( R.string.weburl19)+"?id="+visituid1;
 

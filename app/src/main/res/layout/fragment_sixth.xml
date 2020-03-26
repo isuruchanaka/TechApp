@@ -6,23 +6,80 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SecondFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/state2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+       >
+
+        <AutoCompleteTextView
+            android:id="@+id/state"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/border"
+            android:hint="Search Station"
+            android:inputType="text"
+            android:singleLine="true"
+
+            android:textColor="#000DFF"
+            android:textColorHint="@color/black"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.51"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/calc_clear_txt_Prise"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+
+            app:backgroundTint="@color/colorAccent1"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/state"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:rippleColor="@color/background"
+            app:srcCompat="@drawable/close"
+            app:useCompatPadding="false" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <!--TextView and Button displayed in Second Fragment -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
+        android:layout_below="@+id/state2"
+        android:layout_marginTop="5dp"
         android:clipToPadding="false"
         android:scrollbars="vertical"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="parent">
 
 
     </androidx.recyclerview.widget.RecyclerView>
     <RelativeLayout
-        android:id="@+id/loadingPanel"
+        android:id="@+id/loadingPaneln"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center">

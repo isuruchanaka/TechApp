@@ -14,11 +14,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,7 +80,7 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
         //holder.setIsRecyclable(false);
         final repo item = repos.get(position);
 
-        holder.visitd.setText("Visit Detail: " + item.getvisitd());
+        holder.visitd.setText("Notes: " + item.getvisitd());
         holder.visitp.setText("Visit type: " + item.getVisitType());
 
         holder.textView_name.setText("Station Visit: " + item.getcrdt());
@@ -88,19 +90,23 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             if (!item.getvisituid().equals(getsp(item.getvisituid()))) {
               //  holder.expandableListView.getLayoutParams().height=800*holder.expandableListView.getChildCount();
                 holder.ly2.getLayoutParams().height = 80*holder.expandableListView.getChildCount();
+              int  chklcnt=  item.getprdata().size()+item.getspsdata().size();
 
-//                holder.ly3.getLayoutParams().height = 80*holder.expandableListView1.getChildCount();
+               // holder.ly3.getLayoutParams().height = (1600*chklcnt);
                 holder.expandableListDetail = ExpandableListDataPump.getData(item.getvisituid(),item.getspsdata(),item.getprdata());
                 holder.expandableListTitle = new ArrayList<String>(holder.expandableListDetail.keySet());
                 holder.expandableListAdapter = new CustomExpandableListAdapter(context, holder.expandableListTitle, holder.expandableListDetail);
                 holder.expandableListView.setAdapter(holder.expandableListAdapter);
            //////////////////
-//                holder.expandableListDetail1 = ExpandableListDataPump2.getData(item.getvisituid(),item.getprdata());
-//                holder.expandableListTitle1 = new ArrayList<String>(holder.expandableListDetail1.keySet());
-//                holder.expandableListAdapter1 = new CustomExpandableListAdapter(context, holder.expandableListTitle1, holder.expandableListDetail1);
-//                holder.expandableListView1.setAdapter(holder.expandableListAdapter1);
-
-
+                holder.expandableListDetail1 = ExpandableListDataPump2.getData(item.getvisituid(),item.getatdata());
+                holder.expandableListTitle1 = new ArrayList<String>(holder.expandableListDetail1.keySet());
+                holder.expandableListAdapter1 = new CustomExpandableListAdapter(context, holder.expandableListTitle1, holder.expandableListDetail1);
+                holder.expandableListView1.setAdapter(holder.expandableListAdapter1);
+                //////////////////
+                holder.expandableListDetail2 = ExpandableListDataPump3.getData(item.getvisituid(),item.getrcdata());
+                holder.expandableListTitle2 = new ArrayList<String>(holder.expandableListDetail2.keySet());
+                holder.expandableListAdapter2 = new CustomExpandableListAdapter(context, holder.expandableListTitle2, holder.expandableListDetail2);
+                holder.expandableListView2.setAdapter(holder.expandableListAdapter2);
             }
         }catch (Exception ex){
 
@@ -110,11 +116,15 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             holder.expandableListView.setAdapter(holder.expandableListAdapter);
 
             //////////////////
-//            holder.expandableListDetail1 = ExpandableListDataPump2.getData(item.getvisituid(),item.getprdata());
-//            holder.expandableListTitle1 = new ArrayList<String>(holder.expandableListDetail1.keySet());
-//            holder.expandableListAdapter1 = new CustomExpandableListAdapter(context, holder.expandableListTitle1, holder.expandableListDetail1);
-//            holder.expandableListView1.setAdapter(holder.expandableListAdapter1);
-
+            holder.expandableListDetail1 = ExpandableListDataPump2.getData(item.getvisituid(),item.getatdata());
+            holder.expandableListTitle1 = new ArrayList<String>(holder.expandableListDetail1.keySet());
+            holder.expandableListAdapter1 = new CustomExpandableListAdapter(context, holder.expandableListTitle1, holder.expandableListDetail1);
+            holder.expandableListView1.setAdapter(holder.expandableListAdapter1);
+//////////////////
+            holder.expandableListDetail2 = ExpandableListDataPump3.getData(item.getvisituid(),item.getrcdata());
+            holder.expandableListTitle2 = new ArrayList<String>(holder.expandableListDetail2.keySet());
+            holder.expandableListAdapter2 = new CustomExpandableListAdapter(context, holder.expandableListTitle2, holder.expandableListDetail2);
+            holder.expandableListView2.setAdapter(holder.expandableListAdapter2);
         }
         holder.expandableListView.setSelection(position);
 //        holder.expandableListView1.setSelection(position);
@@ -154,17 +164,34 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
 //        holder.expandableListView1.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 //            @Override
 //            public void onGroupExpand(int groupPosition) {
-//                int height = 0;
-//                int rt=holder.expandableListView1.getChildCount();
-//                for (int i = 0; i < holder.expandableListView1.getChildCount(); i++) {
-//                    height += holder.expandableListView1.getChildAt(i).getMeasuredHeight();
-//                    height += holder.expandableListView1.getDividerHeight();
-//                }
-//                holder.expandableListView1.setSelectedGroup(groupPosition);
-//                holder.expandableListView1.getLayoutParams().height = (height+717);
-//                holder.ly3.getLayoutParams().height =(height+717);
+////                int height = 0;
+////                int rt=holder.expandableListView1.getChildCount();
+////                for (int i = 0; i < holder.expandableListView1.getChildCount(); i++) {
+////                    height += holder.expandableListView1.getChildAt(i).getMeasuredHeight();
+////                    height += holder.expandableListView1.getDividerHeight();
+////                }
+////                holder.expandableListView1.setSelectedGroup(groupPosition);
+////                holder.expandableListView1.getLayoutParams().height = (height+717);
+////                holder.ly3.getLayoutParams().height =(height+717);
+//                return true;
 //            }
 //        });
+        holder.expandableListView1.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+
+                    return true;
+
+            }
+        });
+        holder.expandableListView2.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+
+                return true;
+
+            }
+        });
 //
 //        // Listview Group collapsed listener
 //        holder.expandableListView1.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
@@ -250,7 +277,7 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
+        ListView listView;
         private TextView visitd,visitp, visitbr,visitag,visitpr,visitcns,visitdr,visitrmk,textView_name;
         private ImageView ivOwner;
         public RelativeLayout buttonLayout;
@@ -264,14 +291,17 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
         private GridView gridView;
         public List<Species> spdata;
         ExpandableListView expandableListView;
-//        ExpandableListView expandableListView1;
+       ExpandableListView expandableListView1;
+        ExpandableListView expandableListView2;
         ExpandableListAdapter expandableListAdapter;
         ExpandableListAdapter expandableListAdapter1;
+        ExpandableListAdapter expandableListAdapter2;
         List<String> expandableListTitle;
         HashMap<String, List<String>> expandableListDetail;
         List<String> expandableListTitle1;
         HashMap<String, List<String>> expandableListDetail1;
-
+        List<String> expandableListTitle2;
+        HashMap<String, List<String>> expandableListDetail2;
         public ViewHolder(View view) {
             super(view);
            // spdata = new ArrayList<>();
@@ -280,15 +310,15 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             visitp = (TextView)view.findViewById(R.id.visitsp);
             //refg=(RecyclerView)view.findViewById(R.id.recycler5);
 ly2=(LinearLayout)view.findViewById(R.id.ly1);
-           // ly3=(LinearLayout)view.findViewById(R.id.ly2);
+            ly3=(LinearLayout)view.findViewById(R.id.ly2);
             textView_name = (TextView)view.findViewById(R.id.textView_name);
             ////ivOwner = (ImageView) view.findViewById(R.id.imageView_Owner);
-
+            listView =  (ListView) view.findViewById(R.id.expandableListView3);
             buttonLayout = (RelativeLayout) view.findViewById(R.id.button);
             expandableLayout = (LinearLayout) view.findViewById(R.id.expandableLayout);
             expandableListView = (ExpandableListView) view.findViewById(R.id.expandableListView);
-//            expandableListView1 = (ExpandableListView) view.findViewById(R.id.expandableListView1);
-
+            expandableListView1 = (ExpandableListView) view.findViewById(R.id.expandableListView1);
+            expandableListView2 = (ExpandableListView) view.findViewById(R.id.expandableListView3);
 
 
         }

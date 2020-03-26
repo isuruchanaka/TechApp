@@ -149,35 +149,62 @@
 
                 </ExpandableListView>
             </LinearLayout>
-<!--            <TextView-->
-<!--                android:id="@+id/spdesc1"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:background="@color/grey"-->
-<!--                android:gravity="center"-->
-<!--                android:text="Products"-->
-<!--                android:textColor="@color/background"-->
-<!--                android:textStyle="bold"-->
-<!--                card_view:layout_constraintTop_toBottomOf="@id/expandableListView"-->
-<!--                tools:layout_editor_absoluteX="24dp" />-->
-<!--            <LinearLayout-->
-<!--                android:id="@+id/ly2"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="210dp"-->
-<!--                android:orientation="vertical">-->
-<!--            <ExpandableListView-->
-<!--                android:id="@+id/expandableListView1"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:divider="@android:color/darker_gray"-->
-<!--                android:dividerHeight="0.5dp"-->
-<!--                android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"-->
-<!--                android:nestedScrollingEnabled="false"-->
-<!--                android:textColor="@color/black"-->
-<!--                card_view:layout_constraintTop_toBottomOf="@id/spdesc1" />-->
+            <TextView
+                android:id="@+id/spdesc1"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/grey"
+                android:gravity="center"
+                android:text="Actions"
+                android:textColor="@color/background"
+                android:textStyle="bold"
+                card_view:layout_constraintTop_toBottomOf="@id/expandableListView"
+                tools:layout_editor_absoluteX="24dp" />
+            <LinearLayout
+                android:id="@+id/ly2"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="vertical">
+            <ExpandableListView
+                android:id="@+id/expandableListView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/darker_gray"
+                android:dividerHeight="0.5dp"
 
-<!--            </LinearLayout>-->
+                android:nestedScrollingEnabled="false"
+                android:textColor="@color/black"
+                card_view:layout_constraintTop_toBottomOf="@id/spdesc1" />
 
+            </LinearLayout>
+            <TextView
+                android:id="@+id/spdesc3"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/grey"
+                android:gravity="center"
+                android:text="Recommondations"
+                android:textColor="@color/background"
+                android:textStyle="bold"
+                card_view:layout_constraintTop_toBottomOf="@id/expandableListView1"
+                tools:layout_editor_absoluteX="24dp" />
+            <LinearLayout
+                android:id="@+id/ly3"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="vertical">
+                <ExpandableListView
+                    android:id="@+id/expandableListView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@android:color/darker_gray"
+                    android:dividerHeight="0.5dp"
+
+                    android:nestedScrollingEnabled="false"
+                    android:textColor="@color/black"
+                    card_view:layout_constraintTop_toBottomOf="@id/spdesc3" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

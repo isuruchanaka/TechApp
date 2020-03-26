@@ -99,7 +99,7 @@ public class fragmentseven extends RecyclerView.Adapter<fragmentseven.MyViewHold
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         repo album = repodata.get(position);
-        holder.visitd.setText("Visit Detail: " +album.getvisitd());
+        holder.visitd.setText("Notes: " +album.getvisitd());
         holder.visitp.setText("Visit type: " +album.getVisitType());
 
         holder.textView_name.setText("Station Visit: " +album.getcrdt());

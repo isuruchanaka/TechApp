@@ -219,7 +219,7 @@
                     android:id="@+id/visitdesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Visit Detail"
+                    android:hint="Notes"
                     android:inputType="textAutoComplete"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused" />
             </com.google.android.material.textfield.TextInputLayout>

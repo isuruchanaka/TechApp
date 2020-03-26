@@ -419,7 +419,7 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
                     LatLng sydney = new LatLng(Double.parseDouble(lti), Double.parseDouble(lngi));
 
                     googleMap.addMarker(new MarkerOptions().position(sydney).title(al.getDescription()).snippet(al.getstype()).icon(BitmapDescriptorFactory.fromResource(R.drawable.rodent)));
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(13).build();
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(15).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
                 // For zooming automatically to the location of the marker
@@ -719,7 +719,7 @@ if(sbread1.equals("")){
 
                 int spcpos = spinner9.getSelectedItemPosition();
                 String spcpos2 = compList1.get(spcpos);
-                if(spcpos2.equals("null")){
+                if(spcpos2==null){
 
                     spcpos2="0";
                 }
