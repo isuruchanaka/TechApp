@@ -60,9 +60,9 @@
     <string name="weburl42">https://poc.allgonpest.com.au/mobile/getstrec.ashx</string>
     <string name="weburl43">https://poc.allgonpest.com.au/mobile/getstat.ashx</string>
     <string name="weburl44">https://poc.allgonpest.com.au/mobile/getstbyuid.ashx</string>
+    <string name="weburl45">https://poc.allgonpest.com.au/mobile/getvisittpp.ashx</string>
 
-
-    <string name="weburl35">12</string>
+    <string name="weburl35">13</string>
 
 
     <string name="action_settings">Settings</string>

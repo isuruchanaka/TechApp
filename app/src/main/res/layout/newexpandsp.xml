@@ -70,8 +70,9 @@
             android:orientation="vertical">
 
 
+
             <TextView
-                android:id="@+id/breed"
+                android:id="@+id/age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/visitd"
@@ -83,21 +84,7 @@
                 android:textSize="@dimen/album_title"
 
 
-                card_view:layout_constraintTop_toBottomOf="parent" />
-            <TextView
-                android:id="@+id/age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/breed"
-
-                android:paddingLeft="@dimen/album_title_padding"
-                android:paddingTop="@dimen/album_title_padding"
-                android:paddingRight="@dimen/album_title_padding"
-                android:textColor="@color/black"
-                android:textSize="@dimen/album_title"
-
-
-                card_view:layout_constraintTop_toBottomOf="@id/breed" />
+                card_view:layout_constraintTop_toBottomOf="@id/visitd" />
 
             <TextView
                 android:id="@+id/dead"

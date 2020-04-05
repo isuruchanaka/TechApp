@@ -65,7 +65,7 @@ public class Expandsps extends RecyclerView.Adapter<Expandsps.ViewHolder>{
 
         Log.wtf("biu",sps.get(i).getspuid());
         viewHolder.visitd.setText("Species: " +sps.get(i).getspdesc());
-        viewHolder.visitbr.setText("Bread: " +sps.get(i).getbreed());
+        //viewHolder.visitbr.setText("Bread: " +sps.get(i).getbreed());
         viewHolder.visitag.setText("Visible: " +sps.get(i).getage());
         viewHolder.visitdr.setText("Average Consumed: " +sps.get(i).getavgcns());
         viewHolder.visitpr.setText("Dead Presence: " +sps.get(i).getdeadpr());
@@ -120,7 +120,7 @@ public class Expandsps extends RecyclerView.Adapter<Expandsps.ViewHolder>{
 
 
             visitd = (TextView)view.findViewById(R.id.spdesc);
-            visitbr  = (TextView)view.findViewById(R.id.breed);
+           // visitbr  = (TextView)view.findViewById(R.id.breed);
             visitag = (TextView)view.findViewById(R.id.age);
             visitpr = (TextView)view.findViewById(R.id.dead);
             visitcns = (TextView)view.findViewById(R.id.cnt);

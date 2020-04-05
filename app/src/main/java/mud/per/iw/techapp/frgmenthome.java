@@ -140,6 +140,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
     public static List<String> caList;
     public static List<String> recoList;
     public static List<String> vsitypList;
+    public static List<String> vsitypListp;
     public static List<String> compList;
 
     public static HashMap<Integer,String > sitetypList1 =new HashMap<>();
@@ -150,6 +151,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
     public static HashMap<Integer,String > caList1 =new HashMap<>();
     public static HashMap<Integer,String > recoList1 =new HashMap<>();
     public static HashMap<Integer,String > vsitypList1 =new HashMap<>();
+    public static HashMap<Integer,String > vsitypList1p =new HashMap<>();
     public static HashMap<Integer,String > compList1 =new HashMap<>();
     private String rid;
     private String ctry;
@@ -180,7 +182,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
         recoList=   new ArrayList<>();
         vsitypList=   new ArrayList<>();
        compList=   new ArrayList<>();
-
+        vsitypListp=   new ArrayList<>();
         SharedPreferences prefs = getContext().getSharedPreferences("userinfo", MODE_PRIVATE);
         String restoredText = prefs.getString("UserID", null);
 
@@ -214,6 +216,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
         getca(ctry);
         getreco(ctry);
         getvistyp(ctry);
+        getvistyp1(ctry);
 /////////////////////////////////////////////////////////////////////////////////////////
         firstButton = (ImageView) view.findViewById(R.id.imageView7);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -1104,6 +1107,76 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
 
                                 recoList.add(Description);
                                 recoList1.put(row,Code);
+                                b++;
+                            }
+
+
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+    public String getvistyp1(String  val1 ){
+        String url = getContext().getResources().getString( R.string.weburl45)+"?id="+val1;
+
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("UId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+                                vsitypListp.add(Description);
+                                vsitypList1p.put(row,Code);
                                 b++;
                             }
 

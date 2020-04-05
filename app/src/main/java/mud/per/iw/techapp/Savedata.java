@@ -448,8 +448,8 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
                 try {
                     int spcpos = spinner2.getSelectedItemPosition();
                     String spcpos2 = frgmenthome.spList1.get(spcpos);
-                    EditText sbread = (EditText) view.findViewById(R.id.sbread);
-                    sbread1 = sbread.getText().toString();
+                  //  EditText sbread = (EditText) view.findViewById(R.id.sbread);
+                   // sbread1 = sbread.getText().toString();
                     EditText sage = (EditText) view.findViewById(R.id.sage);
                     sage1 = sage.getText().toString();
                     EditText savg = (EditText) view.findViewById(R.id.savg);
@@ -460,9 +460,9 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
                     scnt1 = scnt.getText().toString();
 //                    EditText srmk = (EditText) view.findViewById(R.id.srmk);
 //                    srmk1 = srmk.getText().toString();
-                    if(sbread1.equals("")){
-                        sbread1="0";
-                    }
+//                    if(sbread1.equals("")){
+//                        sbread1="0";
+//                    }
 
                     if(sage1.equals("")){
                         sage1="0";
@@ -477,7 +477,7 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
                         scnt1="0";
                     }
                   //  if(validate2()) {
-                        Species a = new Species(spcpos2, sbread1, sage1, spinner2.getSelectedItem().toString(), savg1, sdead1, scnt1, "");
+                        Species a = new Species(spcpos2, "0", sage1, spinner2.getSelectedItem().toString(), savg1, sdead1, scnt1, "");
                         spdata.add(a);
                         spadapter2 = new Expandsps(spdata);
                         recyclerView = (RecyclerView) view.findViewById(R.id.recycler2);
@@ -486,7 +486,7 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
                         recyclerView.setLayoutManager(layoutManager);
 //fetch data and on ExpandableRecyclerAdapter
                         recyclerView.setAdapter(spadapter2);
-                    sbread.setText("");
+                    //sbread.setText("");
 
                     sage.setText("");
 
@@ -831,7 +831,7 @@ if(validate()){
         String savg2=savg1;
         String sdead2=sdead1;
         String srmk2=srmk1;
-        String sbread2=sbread1;
+       // String sbread2=sbread1;
         //  EditText sdesc = (EditText) view.findViewById(R.id.sdesc);
 
         EditText sage = (EditText) view.findViewById(R.id.sage);
@@ -842,7 +842,7 @@ if(validate()){
 
         //EditText srmk = (EditText) view.findViewById(R.id.srmk);
 
-        EditText sbread = (EditText) view.findViewById(R.id.sbread);
+       // EditText sbread = (EditText) view.findViewById(R.id.sbread);
 
         EditText scnt = (EditText) view.findViewById(R.id.cnt);
 
@@ -886,14 +886,14 @@ if(validate()){
         }
 
 
-        if (sbread2.isEmpty() ) {
-
-
-            sbread.setError("enter value!");
-            valid = false;
-        } else {
-            sbread.setError(null);
-        }
+//        if (sbread2.isEmpty() ) {
+//
+//
+//            sbread.setError("enter value!");
+//            valid = false;
+//        } else {
+//            sbread.setError(null);
+//        }
 
         return valid;
     }

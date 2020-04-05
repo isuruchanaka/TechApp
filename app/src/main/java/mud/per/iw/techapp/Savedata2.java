@@ -56,6 +56,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.util.ArrayUtils;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -80,6 +81,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,8 +117,9 @@ import static mud.per.iw.techapp.frgmenthome.compList1;
 import static mud.per.iw.techapp.frgmenthome.prodList;
 import static mud.per.iw.techapp.frgmenthome.recoList;
 import static mud.per.iw.techapp.frgmenthome.recoList1;
-import static mud.per.iw.techapp.frgmenthome.vsitypList;
-import static mud.per.iw.techapp.frgmenthome.vsitypList1;
+
+import static mud.per.iw.techapp.frgmenthome.vsitypList1p;
+import static mud.per.iw.techapp.frgmenthome.vsitypListp;
 
 public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
     private Context mContext;
@@ -351,22 +354,28 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
         try{
             spinner8 = (Spinner)view.findViewById(R.id.visittype);
            // spinner8.setOnItemSelectedListener(this);
+            List<String> stringlist;
+            String[] stockArr8 = new String[vsitypListp.size()];
 
-            String[] stockArr8 = new String[vsitypList.size()];
-            stockArr8= vsitypList.toArray(stockArr8);
+
+            stockArr8= vsitypListp.toArray(stockArr8);
+//            stringlist = new ArrayList<>(Arrays.asList(stockArr8));
+//
+//            stringlist.remove(4);
+
 
             adapter8 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr8);
 
             spinner8.setAdapter(adapter8);
             // stockArr8[vsitypList.size()]="-Select Visit Type-";
-            spinner8.setSelection(vsitypList.size()-1);
+            spinner8.setSelection(vsitypListp.size()-1);
 
             spinner8.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
                 {
                     String selectedItem = parent.getItemAtPosition(position).toString(); //this is your selected item
                     int spcpos = spinner8.getSelectedItemPosition();
-              String spcpos2 = vsitypList1.get(spcpos);
+              String spcpos2 = vsitypList1p.get(spcpos);
                  //   String itemName = adapter8.getItem(selectedItem);
                     if(spcpos2!=null) {
                         if (spcpos2.equals("1003")) {
@@ -595,8 +604,8 @@ public class Savedata2 extends Fragment implements AdapterView.OnItemSelectedLis
 
                         int spcpos = spinner2.getSelectedItemPosition();
                         String spcpos2 = frgmenthome.spList1.get(spcpos);
-                        EditText sbread = (EditText) view.findViewById(R.id.sbread);
-                        sbread1 = sbread.getText().toString();
+                       // EditText sbread = (EditText) view.findViewById(R.id.sbread);
+                      //  sbread1 = sbread.getText().toString();
                         EditText sage = (EditText) view.findViewById(R.id.sage);
                         sage1 = sage.getText().toString();
                         EditText savg = (EditText) view.findViewById(R.id.savg);
@@ -633,7 +642,7 @@ if(sbread1.equals("")){
                         recyclerView.setLayoutManager(layoutManager);
 //fetch data and on ExpandableRecyclerAdapter
                         recyclerView.setAdapter(spadapter2);
-                    sbread.setText("");
+                    //sbread.setText("");
 
                     sage.setText("");
 
@@ -715,7 +724,7 @@ if(sbread1.equals("")){
 
 
                 int subpos5 = spinner8.getSelectedItemPosition();
-                String subpos6 =frgmenthome.vsitypList1.get(subpos5);
+                String subpos6 =frgmenthome.vsitypList1p.get(subpos5);
 
                 int spcpos = spinner9.getSelectedItemPosition();
                 String spcpos2 = compList1.get(spcpos);
@@ -782,7 +791,7 @@ if(sbread1.equals("")){
 
         //EditText srmk = (EditText) view.findViewById(R.id.srmk);
 
-        EditText sbread = (EditText) view.findViewById(R.id.sbread);
+      //  EditText sbread = (EditText) view.findViewById(R.id.sbread);
 
         EditText scnt = (EditText) view.findViewById(R.id.cnt);
 
@@ -826,14 +835,14 @@ if(sbread1.equals("")){
         }
 
 
-        if (sbread2.isEmpty() ) {
-
-
-            sbread.setError("enter value!");
-            valid = false;
-        } else {
-            sbread.setError(null);
-        }
+//        if (sbread2.isEmpty() ) {
+//
+//
+//            sbread.setError("enter value!");
+//            valid = false;
+//        } else {
+//            sbread.setError(null);
+//        }
 
         return valid;
     }

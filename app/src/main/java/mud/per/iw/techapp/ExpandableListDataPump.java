@@ -21,7 +21,7 @@ String vtsdes = "";
         vtsdes = "Species:" + getspsdata.get(i).getspdesc();
         cricket.add("Species:" + getspsdata.get(i).getspdesc());
         cricket.add("Visible:" + getspsdata.get(i).getage());
-        cricket.add("Breed:" + getspsdata.get(i).getbreed());
+        //cricket.add("Breed:" + getspsdata.get(i).getbreed());
         cricket.add("Average Consumed:" + getspsdata.get(i).getavgcns());
         cricket.add("Dead Presence:" + getspsdata.get(i).getdeadpr());
         cricket.add("Captured:" + getspsdata.get(i).getcnt());
