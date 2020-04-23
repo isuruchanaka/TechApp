@@ -148,7 +148,7 @@ this.albumList=AlbumsAdapter.albumList;
             Log.wtf("vbn", qwef);
             if(qwef!=null) {
                 if (qwef.toLowerCase().equals(qrcod.toLowerCase())) {
-                    intentFragment = 2;
+                   // intentFragment = 2;
                     Log.wtf("vbx", String.valueOf(intentFragment));
                 }
             }
@@ -157,18 +157,44 @@ this.albumList=AlbumsAdapter.albumList;
 
         switch (intentFragment){
             case 1:
-                fragment1 = new Savedata();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
-                ft.replace(R.id.frameLayout, fragment1);
-                ft.commit();
+                fragment1 = new fmregistration();
+                FragmentTransaction ftreg = getSupportFragmentManager().beginTransaction();
+                ftreg.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ftreg.replace(R.id.frameLayout, fragment1);
+                ftreg.commit();
+//                fragment1 = new Savedata();
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                ft.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+//                ft.replace(R.id.frameLayout, fragment1);
+//                ft.commit();
                 break;
             case 2:
-                fragment1 = new Savedata2();
+                fragment1 = new fmfultreaetment();
                 FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
                 ft2.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
                 ft2.replace(R.id.frameLayout, fragment1);
                 ft2.commit();
+                break;
+            case 3:
+                fragment1 = new fmtargettrmnt();
+                FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
+                ft3.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ft3.replace(R.id.frameLayout, fragment1);
+                ft3.commit();
+                break;
+            case 4:
+                fragment1 = new fmcallback();
+                FragmentTransaction ft4 = getSupportFragmentManager().beginTransaction();
+                ft4.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ft4.replace(R.id.frameLayout, fragment1);
+                ft4.commit();
+                break;
+            case 5:
+                fragment1 = new fminspection();
+                FragmentTransaction ft5 = getSupportFragmentManager().beginTransaction();
+                ft5.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ft5.replace(R.id.frameLayout, fragment1);
+                ft5.commit();
                 break;
            default:
                try {
@@ -389,12 +415,79 @@ this.albumList=AlbumsAdapter.albumList;
                 ft2.replace(R.id.frameLayout, fragment);
                 ft2.commit();
                 break;
+            case R.id.nav_camera6:
+//                try {
+//                    data3.values().clear();
+//                    data3.clear();
+//                    //data3 = null;
+//                }catch (Exception ex){
+//                    Log.wtf("dfg", ex.toString());
+//                }
+
+                try {
+                    data3.values().clear();
+                    data3.clear();
+                    //data3 = null;
+                    getver1(1);
+                }catch (Exception ex){
+                    Log.wtf("dfg", ex.toString());
+                }
+//                fragment = new fmregistration();
+//                FragmentTransaction ftreg = getSupportFragmentManager().beginTransaction();
+//                ftreg.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+//                ftreg.replace(R.id.frameLayout, fragment);
+//                ftreg.commit();
+                break;
+            case R.id.nav_camera7:
+                try {
+                    data3.values().clear();
+                    data3.clear();
+                    //data3 = null;
+                    getver1(2);
+                }catch (Exception ex){
+                    Log.wtf("dfg", ex.toString());
+                }
+
+                break;
+            case R.id.nav_camera8:
+                try {
+                    data3.values().clear();
+                    data3.clear();
+                    //data3 = null;
+                    getver1(3);
+                }catch (Exception ex){
+                    Log.wtf("dfg", ex.toString());
+                }
+
+                break;
+            case R.id.nav_camera9:
+                try {
+                    data3.values().clear();
+                    data3.clear();
+                    //data3 = null;
+                    getver1(4);
+                }catch (Exception ex){
+                    Log.wtf("dfg", ex.toString());
+                }
+
+                break;
+            case R.id.nav_camera10:
+                try {
+                    data3.values().clear();
+                    data3.clear();
+                    //data3 = null;
+                    getver1(5);
+                }catch (Exception ex){
+                    Log.wtf("dfg", ex.toString());
+                }
+
+                break;
             case R.id.nav_camera3:
                 try {
                     data3.values().clear();
                     data3.clear();
                     //data3 = null;
-                    getver1();
+                    getver1(5);
                 }catch (Exception ex){
                     Log.wtf("dfg", ex.toString());
                 }
@@ -514,7 +607,7 @@ this.albumList=AlbumsAdapter.albumList;
 
         return super.onOptionsItemSelected(item);
     }
-    public String getver1(){
+    public String getver1(int val){
         String url = this.getApplicationContext().getResources().getString( R.string.weburl34);
 
 
@@ -567,6 +660,8 @@ this.albumList=AlbumsAdapter.albumList;
                                 }
                                 else {
                                     Intent intent1 = new Intent(MainActivity.this, BarcodeScannerActivity.class);
+                                    intent1.putExtra("frgToLoad", val);
+
                                     startActivity(intent1);
                                 }
                                 b++;

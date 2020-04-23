@@ -136,6 +136,8 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
     public static List<String> unitList;
     public static List<String> siteList;
     public static List<String> spList;
+    public static List<String> sptpList;
+    public static List<String> sptypList;
     public static List<String> prodList;
     public static List<String> caList;
     public static List<String> recoList;
@@ -147,6 +149,8 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
     public static HashMap<Integer,String > unitList1 =new HashMap<>();
     public static HashMap<Integer,String > siteList1 =new HashMap<>();
     public static HashMap<Integer,String > spList1 =new HashMap<>();
+    public static HashMap<Integer,String > sptpList1 =new HashMap<>();
+    public static HashMap<Integer,String > sptypList1 =new HashMap<>();
     public static HashMap<Integer,String > prodList1 =new HashMap<>();
     public static HashMap<Integer,String > caList1 =new HashMap<>();
     public static HashMap<Integer,String > recoList1 =new HashMap<>();
@@ -175,6 +179,8 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
         unitList=new ArrayList<>();
         siteList=new ArrayList<>();
         spList=new ArrayList<>();
+        sptpList=new ArrayList<>();
+        sptypList=new ArrayList<>();
         prodList=   new ArrayList<>();
         pairdata=   new ArrayList<>();
 
@@ -206,6 +212,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
         else {
             getdmsg("",ctry);
         }
+        getsptp("");
         getver();
         getunit();
         getsitetp();
@@ -784,11 +791,12 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
 
                                 String Code = we1.get("UId").toString();
                                 String Description = we1.get("Description").toString();
-
+                                String sptp = we1.get("SpeciesTypeUId").toString();
 
 
                                 spList.add(Description);
                                 spList1.put(row,Code);
+                                sptpList1.put(row,sptp);
                                 b++;
                             }
 
@@ -1247,6 +1255,75 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
 
                                 vsitypList.add(Description);
                                 vsitypList1.put(row,Code);
+                                b++;
+                            }
+
+
+                            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+
+                        } catch (NullPointerException ex){
+                            Log.wtf("CameraDemo", ex.toString());
+                        } catch (Exception e){
+                            Log.wtf("CameraDemo", e.toString());
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                        Log.wtf("CameraDemo", error.toString());
+
+                    }
+                });
+
+
+        singletongm.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+
+        return changeres;
+    }
+    public String getsptp(String  val1 ){
+        String url = getContext().getResources().getString( R.string.weburl46);
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String  suresb = response.toString();
+                        Log.wtf("CameraDemo1", suresb);
+                        try{
+
+                            JSONObject dbovh = null;
+
+                            dbovh = new JSONObject(suresb);
+
+                            JSONArray we = null;
+
+                            we = dbovh.getJSONArray("Table");
+
+
+
+                            int b=0;
+
+                            for (int row = 0; row < (we.length()); row++) {
+
+                                JSONObject we1 = we.getJSONObject(b);
+
+                                String Code = we1.get("UId").toString();
+                                String Description = we1.get("Description").toString();
+
+
+
+                                sptypList.add(Description);
+                                sptypList1.put(row,Code);
                                 b++;
                             }
 

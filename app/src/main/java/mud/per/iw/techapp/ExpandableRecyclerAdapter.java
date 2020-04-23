@@ -83,7 +83,7 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
         holder.visitd.setText("Notes: " + item.getvisitd());
         holder.visitp.setText("Visit type: " + item.getVisitType());
 
-        holder.textView_name.setText("Station Visit: " + item.getcrdt());
+        holder.textView_name.setText(item.getVisitType()+" : " + item.getcrdt());
         Log.wtf("dfg","dfg");
         getdmsg(item.getvisituid(), holder);
         try {

@@ -237,10 +237,15 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 //                                    mCameraSource.release();
 //                                    mCameraSource = null;
 //                                }
+                             int   intentFragment = 0;
+                                Intent intentnew = getIntent();
 
+                                if (intentnew.hasExtra("frgToLoad")) {
+                                    intentFragment = getIntent().getExtras().getInt("frgToLoad");
+                                }
                                 Intent intent = new Intent(BarcodeScannerActivity.this, MainActivity.class);
                                 intent.putExtra("scode", qrval);
-                                intent.putExtra("frgToLoad", 1);
+                                intent.putExtra("frgToLoad", intentFragment);
                                 startActivity(intent);
 
 

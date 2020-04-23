@@ -16,7 +16,7 @@
         <item
         android:id="@+id/nav_camera3"
         android:icon="@drawable/scanj"
-        android:title="Scan" />
+        android:title="Inspection" />
         <item
             android:id="@+id/nav_comp"
             android:icon="@drawable/ic_bug_report"
