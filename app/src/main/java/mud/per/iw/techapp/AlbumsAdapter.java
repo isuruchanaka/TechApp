@@ -61,10 +61,10 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Album album = albumList.get(position);
         holder.title.setText(album.getsitedesp());
-        holder.count.setText("State:"+album.getstat()+"          Suburb:" +album.getsurb());
-        holder.crdate.setText(album.getsalu()+""+album.getCustomerName());
-        holder.count2.setText(album.getCustomerContactNo());
-        holder.count3.setText(album.getAddress());
+        holder.count.setText(album.getCustomerName().trim());//album.getsalu().trim()+""+
+        holder.crdate.setText(album.getCustomerContactNo());
+        holder.count2.setText(album.getAddress());
+        holder.count3.setText("State:"+album.getstat()+"          Suburb:" +album.getsurb());
 //holder.thumbnail.setImageResource(album.getThumbnail());
         // loading album cover using Glide library
         //Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);

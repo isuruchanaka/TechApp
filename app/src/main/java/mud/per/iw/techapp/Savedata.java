@@ -520,6 +520,7 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
                     String prodpos2 = frgmenthome.prodList1.get(prodpos);
 
                     int unitpos = spinner4.getSelectedItemPosition();
+                    String uname = spinner4.getSelectedItem().toString();
                     String unitpos2 = frgmenthome.unitList1.get(unitpos);
                     EditText unnit = (EditText) view.findViewById(R.id.pqty);
                     prqty1 = unnit.getText().toString();
@@ -528,7 +529,7 @@ public class Savedata extends Fragment implements AdapterView.OnItemSelectedList
                     }
                     int spcpos = spinner2.getSelectedItemPosition();
                     String spcpos2 = frgmenthome.spList1.get(spcpos);
-                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2,unitpos2,prqty1,spcpos2);
+                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2,unitpos2,prqty1,spcpos2,uname,"");
                     prdata.add(a);
                     spadapter3 = new Expandpr( prdata);
                     recyclerView2 = (RecyclerView)view.findViewById(R.id.recycler4);

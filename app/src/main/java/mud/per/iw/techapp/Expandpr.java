@@ -64,8 +64,8 @@ public class Expandpr extends RecyclerView.Adapter<Expandpr.ViewHolder>{
 
 
         Log.wtf("biu",prds.get(i).getpuid());
-        viewHolder.visitd.setText("Product: " +prds.get(i).getpdesc());
-        viewHolder.visitbr.setText("Product: " +prds.get(i).getpdesc());
+        viewHolder.visitd.setText(prds.get(i).getprtype()+" : " +prds.get(i).getpdesc());
+        viewHolder.visitbr.setText(prds.get(i).getunit()+" : " +prds.get(i).getuname());
 
 
 

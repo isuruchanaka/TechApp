@@ -181,6 +181,7 @@ public class fmfultreaetment extends Fragment implements AdapterView.OnItemSelec
     Spinner spinner9;
     String rid;
     String ctry;
+    String prtype;
     private static final int OPEN_DOCUMENT_CODE = 148;
     @SuppressLint("MissingPermission")
     @Override
@@ -246,13 +247,15 @@ public class fmfultreaetment extends Fragment implements AdapterView.OnItemSelec
         Spinner spinner2 = (Spinner)view.findViewById(R.id.species);
         spinner2.setOnItemSelectedListener(this);
 
-        String[] stockArr2 = new String[frgmenthome.sptypList.size()];
+        String[] stockArr2 = new String[frgmenthome.sptypList.size()+1];
         stockArr2 = frgmenthome.sptypList.toArray(stockArr2);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(container.getContext(),R.layout.spinner_item, stockArr2);
 
         spinner2.setAdapter(adapter2);
-
+        stockArr2[frgmenthome.sptypList.size()]="-Select Species Type-";
+        spinner2.setSelection(frgmenthome.sptypList.size());
+        adapter2.notifyDataSetChanged();
         ////////////////////////////////////////////////////////////////////////////////////////
         RadioGroup rg = (RadioGroup) view.findViewById(R.id.radiog);
 
@@ -271,12 +274,14 @@ public class fmfultreaetment extends Fragment implements AdapterView.OnItemSelec
                         String spcpos3 = frgmenthome.sptypList1.get(spcpos1);
                         view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                         getprodc(spcpos3);
+                        prtype="Chemical";
                         break;
                     case R.id.radioButton3:
                         int spcpos5 = spinner2.getSelectedItemPosition();
                         view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                         String spcpos4 = frgmenthome.sptypList1.get(spcpos5);
                         getprodp(spcpos4);
+                        prtype="Product";
                         break;
                 }
             }
@@ -604,55 +609,57 @@ public class fmfultreaetment extends Fragment implements AdapterView.OnItemSelec
 
                     int spcpos = spinner2.getSelectedItemPosition();
                     String spcpos2 = frgmenthome.sptypList1.get(spcpos);
-                 //   String spcpos3 = frgmenthome.sptpList1.get(spcpos);
-                    // EditText sbread = (EditText) view.findViewById(R.id.sbread);
-                    //  sbread1 = sbread.getText().toString();
-                    EditText sage = (EditText) view.findViewById(R.id.sage);
-                    sage1 = sage.getText().toString();
-                    EditText savg = (EditText) view.findViewById(R.id.savg);
-                    savg1 = savg.getText().toString();
-                    EditText sdead = (EditText) view.findViewById(R.id.sdead);
-                    sdead1 = sdead.getText().toString();
-                    EditText scnt = (EditText) view.findViewById(R.id.cnt);
-                    scnt1 = scnt.getText().toString();
+                    if (spcpos2 != null) {
+                        //   String spcpos3 = frgmenthome.sptpList1.get(spcpos);
+                        // EditText sbread = (EditText) view.findViewById(R.id.sbread);
+                        //  sbread1 = sbread.getText().toString();
+                        EditText sage = (EditText) view.findViewById(R.id.sage);
+                        sage1 = sage.getText().toString();
+                        EditText savg = (EditText) view.findViewById(R.id.savg);
+                        savg1 = savg.getText().toString();
+                        EditText sdead = (EditText) view.findViewById(R.id.sdead);
+                        sdead1 = sdead.getText().toString();
+                        EditText scnt = (EditText) view.findViewById(R.id.cnt);
+                        scnt1 = scnt.getText().toString();
 //                        EditText srmk = (EditText) view.findViewById(R.id.srmk);
 //                        srmk1 = srmk.getText().toString();
-                    if(sbread1.equals("")){
-                        sbread1="0";
-                    }
+                        if (sbread1.equals("")) {
+                            sbread1 = "0";
+                        }
 
-                    if(sage1.equals("")){
-                        sage1="0";
-                    }
-                    if(savg1.equals("")){
-                        savg1="0";
-                    }
-                    if(sdead1.equals("")){
-                        sdead1="0";
-                    }
-                    if(scnt1.equals("")){
-                        scnt1="0";
-                    }
-                    //if(validate2()) {
-                    Species a = new Species("0", sbread1, sage1, spinner2.getSelectedItem().toString(), savg1, sdead1, scnt1, spcpos2);
-                    spdata.add(a);
-                    spadapter2 = new Expandsps(spdata);
-                    recyclerView = (RecyclerView) view.findViewById(R.id.recycler2);
-                    recyclerView.setHasFixedSize(true);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext().getApplicationContext());
-                    recyclerView.setLayoutManager(layoutManager);
+                        if (sage1.equals("")) {
+                            sage1 = "0";
+                        }
+                        if (savg1.equals("")) {
+                            savg1 = "0";
+                        }
+                        if (sdead1.equals("")) {
+                            sdead1 = "0";
+                        }
+                        if (scnt1.equals("")) {
+                            scnt1 = "0";
+                        }
+                        //if(validate2()) {
+                        Species a = new Species("0", sbread1, sage1, spinner2.getSelectedItem().toString(), savg1, sdead1, scnt1, spcpos2);
+                        spdata.add(a);
+                        spadapter2 = new Expandsps(spdata);
+                        recyclerView = (RecyclerView) view.findViewById(R.id.recycler2);
+                        recyclerView.setHasFixedSize(true);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext().getApplicationContext());
+                        recyclerView.setLayoutManager(layoutManager);
 //fetch data and on ExpandableRecyclerAdapter
-                    recyclerView.setAdapter(spadapter2);
-                    //sbread.setText("");
+                        recyclerView.setAdapter(spadapter2);
+                        //sbread.setText("");
 
-                    sage.setText("");
+                        sage.setText("");
 
-                    savg.setText("");
+                        savg.setText("");
 
-                    sdead.setText("");
+                        sdead.setText("");
 
-                    scnt.setText("");
-                    //  }
+                        scnt.setText("");
+                        //  }
+                    }
                 }
                 catch (Exception e)
                 {
@@ -679,6 +686,7 @@ public class fmfultreaetment extends Fragment implements AdapterView.OnItemSelec
                     String spcpos2 = frgmenthome.sptypList1.get(spcpos);
                     //String spcpos3 = frgmenthome.sptpList1.get(spcpos);
                     int unitpos = spinner4.getSelectedItemPosition();
+                    String uname = spinner4.getSelectedItem().toString();
                     String unitpos2 = frgmenthome.unitList1.get(unitpos);
                     EditText unnit = (EditText) view.findViewById(R.id.pqty);
                     prqty1 = unnit.getText().toString();
@@ -686,7 +694,7 @@ public class fmfultreaetment extends Fragment implements AdapterView.OnItemSelec
                         prqty1="0";
                     }
 
-                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2,unitpos2,prqty1,spcpos2);
+                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2,unitpos2,prqty1,spcpos2,uname, prtype);
                     prdata.add(a);
                     spadapter3 = new Expandpr( prdata);
                     recyclerView2 = (RecyclerView)view.findViewById(R.id.recycler4);

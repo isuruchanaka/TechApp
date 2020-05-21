@@ -9,16 +9,20 @@ public class Products {
     private  String unitid;
     private  String unit;
     private String spid;
+    private String uname;
+    private String prtype;
     public Products() {
     }
 
-    public Products(String puid, String pdesc,String psuid,String unitid,String unit,String spid) {
+    public Products(String puid, String pdesc,String psuid,String unitid,String unit,String spid,String uname,String prtype ) {
         this.puid = puid;
         this.pdesc = pdesc;
         this.psuid=psuid;
         this.unitid=unitid;
         this.unit=unit;
         this.spid=spid;
+        this.uname=uname;
+        this.prtype=prtype;
     }
 
     public String getpuid() {
@@ -38,6 +42,12 @@ public class Products {
     }
     public String getspid() {
         return spid;
+    }
+    public String getuname() {
+        return uname;
+    }
+    public String getprtype() {
+        return prtype;
     }
     public void setpuid(String puid) {
         this.puid = puid;

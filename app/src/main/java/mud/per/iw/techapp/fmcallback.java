@@ -181,6 +181,7 @@ public class fmcallback extends Fragment implements AdapterView.OnItemSelectedLi
     Spinner spinner9;
     String rid;
     String ctry;
+    String prtype;
     private static final int OPEN_DOCUMENT_CODE = 148;
     @SuppressLint("MissingPermission")
     @Override
@@ -248,13 +249,15 @@ public class fmcallback extends Fragment implements AdapterView.OnItemSelectedLi
         Spinner spinner2 = (Spinner)view.findViewById(R.id.species);
         spinner2.setOnItemSelectedListener(this);
 
-        String[] stockArr2 = new String[frgmenthome.spList.size()];
+        String[] stockArr2 = new String[frgmenthome.spList.size()+1];
         stockArr2 = frgmenthome.spList.toArray(stockArr2);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(container.getContext(),R.layout.spinner_item, stockArr2);
 
         spinner2.setAdapter(adapter2);
-
+        stockArr2[frgmenthome.spList.size()]="-Select Species-";
+        spinner2.setSelection(frgmenthome.spList.size());
+        adapter2.notifyDataSetChanged();
         ////////////////////////////////////////////////////////////////////////////////////////
         RadioGroup rg = (RadioGroup) view.findViewById(R.id.radiog);
 
@@ -273,12 +276,14 @@ public class fmcallback extends Fragment implements AdapterView.OnItemSelectedLi
                         String spcpos3 = frgmenthome.sptpList1.get(spcpos1);
                         view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                         getprodc(spcpos3);
+                        prtype="Chemical";
                         break;
                     case R.id.radioButton3:
                         int spcpos5 = spinner2.getSelectedItemPosition();
                         view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                         String spcpos4 = frgmenthome.sptpList1.get(spcpos5);
                         getprodp(spcpos4);
+                        prtype="Product";
                         break;
                 }
             }
@@ -679,6 +684,7 @@ public class fmcallback extends Fragment implements AdapterView.OnItemSelectedLi
                     String spcpos2 = frgmenthome.spList1.get(spcpos);
 
                     int unitpos = spinner4.getSelectedItemPosition();
+                    String uname = spinner4.getSelectedItem().toString();
                     String unitpos2 = frgmenthome.unitList1.get(unitpos);
                     EditText unnit = (EditText) view.findViewById(R.id.pqty);
                     prqty1 = unnit.getText().toString();
@@ -686,7 +692,7 @@ public class fmcallback extends Fragment implements AdapterView.OnItemSelectedLi
                         prqty1="0";
                     }
 
-                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2,unitpos2,prqty1,spcpos2);
+                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2,unitpos2,prqty1,spcpos2,uname,prtype);
                     prdata.add(a);
                     spadapter3 = new Expandpr( prdata);
                     recyclerView2 = (RecyclerView)view.findViewById(R.id.recycler4);
@@ -1646,8 +1652,8 @@ public class fmcallback extends Fragment implements AdapterView.OnItemSelectedLi
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        //  frgmenthome.compList1.clear();
-                        //   compList.clear();
+                          frgmenthome.compList1.clear();
+                           compList.clear();
                         String  suresb = response.toString();
                         Log.wtf("CameraDemo1", suresb);
                         try{

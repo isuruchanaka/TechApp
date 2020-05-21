@@ -181,6 +181,7 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
     Spinner spinner9;
     String rid;
     String ctry;
+    String prtype;
     private static final int OPEN_DOCUMENT_CODE = 148;
     @SuppressLint("MissingPermission")
     @Override
@@ -246,13 +247,15 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
         Spinner spinner2 = (Spinner)view.findViewById(R.id.species);
         spinner2.setOnItemSelectedListener(this);
 
-        String[] stockArr2 = new String[frgmenthome.spList.size()];
+        String[] stockArr2 = new String[frgmenthome.spList.size()+1];
         stockArr2 = frgmenthome.spList.toArray(stockArr2);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(container.getContext(),R.layout.spinner_item, stockArr2);
 
         spinner2.setAdapter(adapter2);
-
+        stockArr2[frgmenthome.spList.size()]="-Select Species-";
+        spinner2.setSelection(frgmenthome.spList.size());
+        adapter2.notifyDataSetChanged();
         ////////////////////////////////////////////////////////////////////////////////////////
         RadioGroup rg = (RadioGroup) view.findViewById(R.id.radiog);
 
@@ -271,12 +274,14 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
                         String spcpos3 = frgmenthome.sptpList1.get(spcpos1);
                         view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                         getprodc(spcpos3);
+                        prtype="Chemical";
                         break;
                     case R.id.radioButton3:
                         int spcpos5 = spinner2.getSelectedItemPosition();
                         view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                         String spcpos4 = frgmenthome.sptpList1.get(spcpos5);
                         getprodp(spcpos4);
+                        prtype="Product";
                         break;
                 }
             }
@@ -400,12 +405,13 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
 //
 //        }
 /////////////////////////////////////////////////////////////////////////////////////////
+        try {
         mMapView = (MapView) view.findViewById(R.id.mapViewu);
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume(); // needed to get the map to display immediately
 
-        try {
+
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
@@ -605,54 +611,56 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
                     int spcpos = spinner2.getSelectedItemPosition();
                     String spcpos2 = frgmenthome.spList1.get(spcpos);
                     String spcpos3 = frgmenthome.sptpList1.get(spcpos);
-                    // EditText sbread = (EditText) view.findViewById(R.id.sbread);
-                    //  sbread1 = sbread.getText().toString();
-                    EditText sage = (EditText) view.findViewById(R.id.sage);
-                    sage1 = sage.getText().toString();
-                    EditText savg = (EditText) view.findViewById(R.id.savg);
-                    savg1 = savg.getText().toString();
-                    EditText sdead = (EditText) view.findViewById(R.id.sdead);
-                    sdead1 = sdead.getText().toString();
-                    EditText scnt = (EditText) view.findViewById(R.id.cnt);
-                    scnt1 = scnt.getText().toString();
+                    if (spcpos2 != null) {
+                        // EditText sbread = (EditText) view.findViewById(R.id.sbread);
+                        //  sbread1 = sbread.getText().toString();
+                        EditText sage = (EditText) view.findViewById(R.id.sage);
+                        sage1 = sage.getText().toString();
+                        EditText savg = (EditText) view.findViewById(R.id.savg);
+                        savg1 = savg.getText().toString();
+                        EditText sdead = (EditText) view.findViewById(R.id.sdead);
+                        sdead1 = sdead.getText().toString();
+                        EditText scnt = (EditText) view.findViewById(R.id.cnt);
+                        scnt1 = scnt.getText().toString();
 //                        EditText srmk = (EditText) view.findViewById(R.id.srmk);
 //                        srmk1 = srmk.getText().toString();
-                    if(sbread1.equals("")){
-                        sbread1="0";
-                    }
+                        if (sbread1.equals("")) {
+                            sbread1 = "0";
+                        }
 
-                    if(sage1.equals("")){
-                        sage1="0";
-                    }
-                    if(savg1.equals("")){
-                        savg1="0";
-                    }
-                    if(sdead1.equals("")){
-                        sdead1="0";
-                    }
-                    if(scnt1.equals("")){
-                        scnt1="0";
-                    }
-                    //if(validate2()) {
-                    Species a = new Species(spcpos2, sbread1, sage1, spinner2.getSelectedItem().toString(), savg1, sdead1, scnt1, spcpos3);
-                    spdata.add(a);
-                    spadapter2 = new Expandsps(spdata);
-                    recyclerView = (RecyclerView) view.findViewById(R.id.recycler2);
-                    recyclerView.setHasFixedSize(true);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext().getApplicationContext());
-                    recyclerView.setLayoutManager(layoutManager);
+                        if (sage1.equals("")) {
+                            sage1 = "0";
+                        }
+                        if (savg1.equals("")) {
+                            savg1 = "0";
+                        }
+                        if (sdead1.equals("")) {
+                            sdead1 = "0";
+                        }
+                        if (scnt1.equals("")) {
+                            scnt1 = "0";
+                        }
+                        //if(validate2()) {
+                        Species a = new Species(spcpos2, sbread1, sage1, spinner2.getSelectedItem().toString(), savg1, sdead1, scnt1, spcpos3);
+                        spdata.add(a);
+                        spadapter2 = new Expandsps(spdata);
+                        recyclerView = (RecyclerView) view.findViewById(R.id.recycler2);
+                        recyclerView.setHasFixedSize(true);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext().getApplicationContext());
+                        recyclerView.setLayoutManager(layoutManager);
 //fetch data and on ExpandableRecyclerAdapter
-                    recyclerView.setAdapter(spadapter2);
-                    //sbread.setText("");
+                        recyclerView.setAdapter(spadapter2);
+                        //sbread.setText("");
 
-                    sage.setText("");
+                        sage.setText("");
 
-                    savg.setText("");
+                        savg.setText("");
 
-                    sdead.setText("");
+                        sdead.setText("");
 
-                    scnt.setText("");
-                    //  }
+                        scnt.setText("");
+                        //  }
+                    }
                 }
                 catch (Exception e)
                 {
@@ -674,11 +682,13 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
 
                 try {
                     int prodpos = spinner3.getSelectedItemPosition();
+
                     String prodpos2 = frgmenthome.prodList1.get(prodpos);
                     int spcpos = spinner2.getSelectedItemPosition();
                     String spcpos2 = frgmenthome.spList1.get(spcpos);
                     String spcpos3 = frgmenthome.sptpList1.get(spcpos);
                     int unitpos = spinner4.getSelectedItemPosition();
+                    String uname = spinner4.getSelectedItem().toString();
                     String unitpos2 = frgmenthome.unitList1.get(unitpos);
                     EditText unnit = (EditText) view.findViewById(R.id.pqty);
                     prqty1 = unnit.getText().toString();
@@ -686,7 +696,7 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
                         prqty1="0";
                     }
 
-                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2,unitpos2,prqty1,spcpos2);
+                    Products a = new Products(prodpos2,spinner3.getSelectedItem().toString(),spcpos2,unitpos2,prqty1,spcpos2,uname,prtype);
                     prdata.add(a);
                     spadapter3 = new Expandpr( prdata);
                     recyclerView2 = (RecyclerView)view.findViewById(R.id.recycler4);
@@ -860,12 +870,20 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
 //        String srmk2=srmk1;
 //
 //
-//        EditText visitdesc = (EditText) view.findViewById(R.id.visitdesc);
+       EditText visitdesc = (EditText) view.findViewById(R.id.visitdesc);
 
 
         valid= isNetworkAvailable(mContext);
 
+        String notes=   visitdesc.getText().toString();
+        if (notes.isEmpty() ) {
 
+
+            visitdesc.setError("enter value!");
+            valid = false;
+        } else {
+            visitdesc.setError(null);
+        }
 
 
 

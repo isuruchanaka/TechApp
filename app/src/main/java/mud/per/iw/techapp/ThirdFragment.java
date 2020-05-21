@@ -75,6 +75,8 @@ public class ThirdFragment extends Fragment implements
     private String rid;
     AutoCompleteTextView spinner;
     ArrayAdapter<String> adapter;
+    private String stname;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -162,7 +164,7 @@ public class ThirdFragment extends Fragment implements
 
 
                       //   String selected = spinner.getSelectedItem().toString();
-                     //     stpos = spinner.getSelectedItemPosition();
+                        //  stpos = spinner.getSelectedItemPosition();
                          String stpos2 = frgmenthome.siteList1.get(stpos);
                          Log.wtf("erbnm", stpos2);
                        // if(stpos!=0) {
@@ -424,7 +426,7 @@ try {
             CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(lat, lng)).zoom(3).build();
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
-        MyItem offsetItem = new MyItem(lat, lng, album.getDescription().toUpperCase(), "Site :"+frgmenthome.siteList.get(stpos).toString(), album.getUId());
+        MyItem offsetItem = new MyItem(lat, lng, album.getDescription().toUpperCase(), "Site :"+stname, album.getUId());
         mClusterManager.addItem(offsetItem);
         mClusterManager.cluster();
     }
@@ -625,6 +627,7 @@ catch (Exception ex){
         String tid="";
         String itemName = adapter.getItem(i);
        String[] sdfgh= itemName.split("\n");
+       stname=sdfgh[0].trim();
         spinner.setSelection(0);
         for(Album carnet : albumList) {
             if (carnet.getsitedesp().trim().contains(sdfgh[0].trim())) {

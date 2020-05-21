@@ -127,7 +127,9 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             holder.expandableListView2.setAdapter(holder.expandableListAdapter2);
         }
         holder.expandableListView.setSelection(position);
-//        holder.expandableListView1.setSelection(position);
+       holder.expandableListView1.setSelection(position);
+        holder.expandableListView2.setSelection(position);
+
         holder.expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
@@ -160,6 +162,83 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
                 holder.ly2.getLayoutParams().height =80*holder.expandableListView.getChildCount();
             }
         });
+
+        ///////////////////////////////////////////////////////////////////////
+        holder.expandableListView1.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                int height = 0;
+                int chkl = 0;
+                int rt=holder.expandableListView1.getChildCount();
+                chkl=  item.getatdata().size();
+                for (int i = 0; i < holder.expandableListView1.getChildCount(); i++) {
+                    height += holder.expandableListView1.getChildAt(i).getMeasuredHeight();
+                    height += holder.expandableListView1.getDividerHeight();
+                }
+                // holder.expandableListView.setSelectedGroup(groupPosition);
+                //Toast.makeText(context,String.valueOf( holder.expandableListView.getChildCount()) , Toast.LENGTH_SHORT).show();
+                holder.expandableListView1.getLayoutParams().height = (height+(600*chkl));
+                holder.ly3.getLayoutParams().height =(height+(700*chkl));
+
+
+            }
+        });
+
+        // Listview Group collapsed listener
+        holder.expandableListView1.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+
+                int nb_children =  holder.expandableListView1.getChildCount();
+                holder.expandableListView1.getLayoutParams().height -= 50*nb_children;
+                //holder.expandableListView.getLayoutParams().height =109;
+                holder.ly3.getLayoutParams().height =150*holder.expandableListView1.getChildCount();
+            }
+        });
+
+
+        holder.expandableListView2.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                int height = 0;
+                int chkl = 0;
+                int rt=holder.expandableListView2.getChildCount();
+                chkl=  item.getrcdata().size();
+                for (int i = 0; i < holder.expandableListView2.getChildCount(); i++) {
+                    height += holder.expandableListView2.getChildAt(i).getMeasuredHeight();
+                    height += holder.expandableListView2.getDividerHeight();
+                }
+                // holder.expandableListView.setSelectedGroup(groupPosition);
+                //Toast.makeText(context,String.valueOf( holder.expandableListView.getChildCount()) , Toast.LENGTH_SHORT).show();
+                holder.expandableListView2.getLayoutParams().height = (height+(600*chkl));
+                holder.ly4.getLayoutParams().height =(height+(600*chkl));
+
+//                LinearLayout.LayoutParams param = (LinearLayout.LayoutParams) holder.expandableListView2.getLayoutParams();
+//                param.height = (rt * holder.expandableListView2.getHeight());
+//                holder.expandableListView2.setLayoutParams(param);
+//                holder.expandableListView2.refreshDrawableState();
+//                holder.expandableListView2.refreshDrawableState();
+            }
+        });
+
+        // Listview Group collapsed listener
+        holder.expandableListView2.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+
+                int nb_children =  holder.expandableListView2.getChildCount();
+                holder.expandableListView2.getLayoutParams().height -= 50*nb_children;
+                //holder.expandableListView.getLayoutParams().height =109;
+                holder.ly4.getLayoutParams().height =80*holder.expandableListView2.getChildCount();
+//                LinearLayout.LayoutParams param = (LinearLayout.LayoutParams)  holder.expandableListView2.getLayoutParams();
+//                param.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                holder.expandableListView2.setLayoutParams(param);
+//                holder.expandableListView2.refreshDrawableState();
+//                holder.expandableListView2.refreshDrawableState();
+            }
+        });
         ///////////////////////////////
 //        holder.expandableListView1.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 //            @Override
@@ -176,22 +255,22 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
 //                return true;
 //            }
 //        });
-        holder.expandableListView1.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-
-                    return true;
-
-            }
-        });
-        holder.expandableListView2.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-
-                return true;
-
-            }
-        });
+//        holder.expandableListView1.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+//            @Override
+//            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+//
+//                   // return true;
+//
+//            }
+//        });
+//        holder.expandableListView2.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+//            @Override
+//            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+//
+//             //   return true;
+//
+//            }
+//        });
 //
 //        // Listview Group collapsed listener
 //        holder.expandableListView1.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
@@ -285,6 +364,7 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
         public newExpandsps vbn;
         public LinearLayout ly2;
         public LinearLayout ly3;
+        public LinearLayout ly4;
         LinearLayoutManager mLayoutManager;
         public LinearLayout expandableLayout;
         ExpandableListView expListView;
@@ -311,6 +391,7 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             //refg=(RecyclerView)view.findViewById(R.id.recycler5);
 ly2=(LinearLayout)view.findViewById(R.id.ly1);
             ly3=(LinearLayout)view.findViewById(R.id.ly2);
+           ly4=(LinearLayout)view.findViewById(R.id.ly3);
             textView_name = (TextView)view.findViewById(R.id.textView_name);
             ////ivOwner = (ImageView) view.findViewById(R.id.imageView_Owner);
             listView =  (ListView) view.findViewById(R.id.expandableListView3);

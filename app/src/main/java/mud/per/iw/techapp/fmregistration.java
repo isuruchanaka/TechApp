@@ -333,12 +333,14 @@ public class fmregistration extends Fragment implements AdapterView.OnItemSelect
         spinner5 = (Spinner)view.findViewById(R.id.sitetype);
         spinner5.setOnItemSelectedListener(this);
 
-        String[] stockArr5 = new String[sitetypList.size()];
+        String[] stockArr5 = new String[sitetypList.size()+1];
         stockArr5= sitetypList.toArray(stockArr5);
 
         adapter5 = new ArrayAdapter<String>(mContext,R.layout.spinner_item, stockArr5);
 
         spinner5.setAdapter(adapter5);
+        stockArr5[sitetypList.size()]="-Select Site Type-";
+        spinner5.setSelection(sitetypList.size());
 /////////////////////////////////////////////////////////////////////////////////////////
         firstButton = (Button) view.findViewById(R.id.btn_tpic);
 
@@ -749,8 +751,21 @@ public class fmregistration extends Fragment implements AdapterView.OnItemSelect
 
         EditText sdesc = (EditText) view.findViewById(R.id.stdesc);
         EditText visitdesc = (EditText) view.findViewById(R.id.visitdesc);
-        // Spinner spinnerx = (Spinner)view.findViewById(R.id.state);
-        //   int stpos = spinnerx.getSelectedItemPosition();
+         Spinner spinnerx = (Spinner)view.findViewById(R.id.sitetype);
+           int stpos = spinnerx.getSelectedItemPosition();
+           try {
+               String stpos2 = frgmenthome.sitetypList1.get(stpos);
+               if(stpos2==""||stpos2==null||stpos2.isEmpty()){
+                   Toast.makeText(getContext(), "Select Site Type!",
+                           Toast.LENGTH_LONG).show();
+                   valid = false;
+               }
+    }
+        catch (Exception ex ){
+            Toast.makeText(getContext(), "Select Site Type!",
+                    Toast.LENGTH_LONG).show();
+            valid = false;
+        }
         try {
             //   String stpos2 = frgmenthome.siteList1.get(stpos);
             if(tid==""||tid==null||tid.isEmpty()){
@@ -768,8 +783,15 @@ public class fmregistration extends Fragment implements AdapterView.OnItemSelect
 
 //
 
+     String notes=   visitdesc.getText().toString();
+        if (notes.isEmpty() ) {
 
 
+            visitdesc.setError("enter value!");
+            valid = false;
+        } else {
+            visitdesc.setError(null);
+        }
         if (sdesc2.isEmpty() ) {
 
 

@@ -246,13 +246,15 @@ public class fminspection extends Fragment implements AdapterView.OnItemSelected
         Spinner spinner2 = (Spinner)view.findViewById(R.id.species);
         spinner2.setOnItemSelectedListener(this);
 
-        String[] stockArr2 = new String[frgmenthome.spList.size()];
+        String[] stockArr2 = new String[frgmenthome.spList.size()+1];
         stockArr2 = frgmenthome.spList.toArray(stockArr2);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(container.getContext(),R.layout.spinner_item, stockArr2);
 
         spinner2.setAdapter(adapter2);
-
+        stockArr2[frgmenthome.spList.size()]="-Select Species-";
+        spinner2.setSelection(frgmenthome.spList.size());
+        adapter2.notifyDataSetChanged();
         ////////////////////////////////////////////////////////////////////////////////////////
 //        RadioGroup rg = (RadioGroup) view.findViewById(R.id.radiog);
 //
@@ -860,12 +862,20 @@ public class fminspection extends Fragment implements AdapterView.OnItemSelected
 //        String srmk2=srmk1;
 //
 //
-//        EditText visitdesc = (EditText) view.findViewById(R.id.visitdesc);
+        EditText visitdesc = (EditText) view.findViewById(R.id.visitdesc);
 
 
         valid= isNetworkAvailable(mContext);
 
+        String notes=   visitdesc.getText().toString();
+        if (notes.isEmpty() ) {
 
+
+            visitdesc.setError("enter value!");
+            valid = false;
+        } else {
+            visitdesc.setError(null);
+        }
 
 
 

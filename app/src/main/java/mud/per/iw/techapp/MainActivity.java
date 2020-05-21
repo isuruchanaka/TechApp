@@ -149,8 +149,17 @@ this.albumList=AlbumsAdapter.albumList;
             if(qwef!=null) {
                 if (qwef.toLowerCase().equals(qrcod.toLowerCase())) {
                    // intentFragment = 2;
+                    if(intentFragment==1){
+                        Toast.makeText(this, "Already Registered QR Code!", Toast.LENGTH_LONG).show();
+                        intentFragment = 0;
+                    }
                     Log.wtf("vbx", String.valueOf(intentFragment));
                 }
+
+
+            } else {
+                intentFragment = 1;
+                Log.wtf("chc", String.valueOf(intentFragment));
             }
         }
 
@@ -160,6 +169,7 @@ this.albumList=AlbumsAdapter.albumList;
                 fragment1 = new fmregistration();
                 FragmentTransaction ftreg = getSupportFragmentManager().beginTransaction();
                 ftreg.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ftreg.addToBackStack("reg");
                 ftreg.replace(R.id.frameLayout, fragment1);
                 ftreg.commit();
 //                fragment1 = new Savedata();
@@ -172,6 +182,7 @@ this.albumList=AlbumsAdapter.albumList;
                 fragment1 = new fmfultreaetment();
                 FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
                 ft2.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ft2.addToBackStack("ful");
                 ft2.replace(R.id.frameLayout, fragment1);
                 ft2.commit();
                 break;
@@ -179,6 +190,7 @@ this.albumList=AlbumsAdapter.albumList;
                 fragment1 = new fmtargettrmnt();
                 FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
                 ft3.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ft3.addToBackStack("tar");
                 ft3.replace(R.id.frameLayout, fragment1);
                 ft3.commit();
                 break;
@@ -186,6 +198,7 @@ this.albumList=AlbumsAdapter.albumList;
                 fragment1 = new fmcallback();
                 FragmentTransaction ft4 = getSupportFragmentManager().beginTransaction();
                 ft4.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ft4.addToBackStack("call");
                 ft4.replace(R.id.frameLayout, fragment1);
                 ft4.commit();
                 break;
@@ -193,6 +206,7 @@ this.albumList=AlbumsAdapter.albumList;
                 fragment1 = new fminspection();
                 FragmentTransaction ft5 = getSupportFragmentManager().beginTransaction();
                 ft5.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ft5.addToBackStack("ins");
                 ft5.replace(R.id.frameLayout, fragment1);
                 ft5.commit();
                 break;
@@ -212,6 +226,7 @@ this.albumList=AlbumsAdapter.albumList;
                fragment1 = new frgmenthome();
                FragmentTransaction ft6 = getSupportFragmentManager().beginTransaction();
                ft6.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+               ft6.addToBackStack("hom");
                ft6.replace(R.id.frameLayout, fragment1);
                ft6.commit();
                 break;
@@ -245,7 +260,7 @@ this.albumList=AlbumsAdapter.albumList;
 
             View headerView1 = navigationView1.getHeaderView(0);
             TextView b1 = (TextView)headerView1.findViewById(R.id.txtname);
-            b1.setText(Rnkname+""+initials+" "+ name);
+            b1.setText((initials).toString().trim()+" "+ (name).toString().trim()); //(Rnkname).toString().trim()+" "+
             TextView b2 = (TextView)headerView1.findViewById(R.id.txtemail);
             b2.setText("PIMS v13");
             inBed=true;
@@ -382,6 +397,7 @@ this.albumList=AlbumsAdapter.albumList;
                 fragment = new SecondFragment();
                 FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
                 ft1.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ft1.addToBackStack("sec");
                 ft1.replace(R.id.frameLayout, fragment);
                 ft1.commit();
 
@@ -397,6 +413,7 @@ this.albumList=AlbumsAdapter.albumList;
                 fragment = new frgmenthome();
                 FragmentTransaction ft6 = getSupportFragmentManager().beginTransaction();
                 ft6.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ft6.addToBackStack("hom");
                 ft6.replace(R.id.frameLayout, fragment);
                 ft6.commit();
 
@@ -412,6 +429,7 @@ this.albumList=AlbumsAdapter.albumList;
                 fragment = new ThirdFragment();
                 FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
                 ft2.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ft2.addToBackStack("thi");
                 ft2.replace(R.id.frameLayout, fragment);
                 ft2.commit();
                 break;
@@ -507,8 +525,22 @@ this.albumList=AlbumsAdapter.albumList;
                 changepass();
                 break;
             case R.id.feedmenu:
-                Intent intentfeed = new Intent(this, actfeedback.class);
-                startActivity(intentfeed);
+//                Intent intentfeed = new Intent(this, actfeedback.class);
+//                startActivity(intentfeed);
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                } else {
+                   // super.onBackPressed();
+                }
+                fragment = new fmfeedback();
+                FragmentTransaction ftf = getSupportFragmentManager().beginTransaction();
+                ftf.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                ftf.addToBackStack("fee");
+                ftf.replace(R.id.frameLayout, fragment);
+                ftf.commit();
+
+
                 break;
             case R.id.nav_comp:
                 if (rid.equals("1003")) {
@@ -517,6 +549,7 @@ this.albumList=AlbumsAdapter.albumList;
                     fragment = new actcomplain();
                     FragmentTransaction ftcom = getSupportFragmentManager().beginTransaction();
                     ftcom.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                    ftcom.addToBackStack("com");
                     ftcom.replace(R.id.frameLayout, fragment);
                     ftcom.commit();
 
@@ -528,6 +561,7 @@ this.albumList=AlbumsAdapter.albumList;
                     fragment = new frtechcomplain();
                     FragmentTransaction ftcom = getSupportFragmentManager().beginTransaction();
                     ftcom.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                    ftcom.addToBackStack("tec");
                     ftcom.replace(R.id.frameLayout, fragment);
                     ftcom.commit();
 
@@ -537,6 +571,7 @@ this.albumList=AlbumsAdapter.albumList;
                     fragment = new Fragviewcomp();
                     FragmentTransaction ftcom = getSupportFragmentManager().beginTransaction();
                     ftcom.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                    ftcom.addToBackStack("vie");
                     ftcom.replace(R.id.frameLayout, fragment);
                     ftcom.commit();
 
@@ -583,6 +618,20 @@ this.albumList=AlbumsAdapter.albumList;
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            //getSupportFragmentManager().popBackStack();
+            fragment1 = new frgmenthome();
+            FragmentTransaction ft6 = getSupportFragmentManager().beginTransaction();
+            ft6.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+            ft6.addToBackStack("hom");
+            ft6.replace(R.id.frameLayout, fragment1);
+            ft6.commit();
         }
     }
 

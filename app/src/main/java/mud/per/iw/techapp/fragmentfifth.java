@@ -493,7 +493,7 @@ else{
                 String Qty = we1.get("Qty").toString();
                 String UnitUId = we1.get("UnitUId").toString();
 
-                Products a = new Products(ProductUId,Description, spuid,UnitUId,Qty,spid);
+                Products a = new Products(ProductUId,Description, spuid,UnitUId,Qty,spid,"","");
                 prdata.add(a);
                 Log.wtf("uiu",  ProductUId+"**"+Description);
 

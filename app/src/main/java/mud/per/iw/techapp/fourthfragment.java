@@ -3,6 +3,7 @@ package mud.per.iw.techapp;
 
 
 
+        import android.content.DialogInterface;
         import android.os.Bundle;
         import android.util.Log;
         import android.view.LayoutInflater;
@@ -22,7 +23,10 @@ package mud.per.iw.techapp;
         import com.google.android.gms.maps.model.LatLng;
         import com.google.android.gms.maps.model.Marker;
         import com.google.android.gms.maps.model.MarkerOptions;
+        import com.google.android.material.floatingactionbutton.FloatingActionButton;
         import com.google.maps.android.clustering.ClusterManager;
+
+        import androidx.appcompat.app.AlertDialog;
         import androidx.fragment.app.Fragment;
 
 public class fourthfragment extends Fragment implements
@@ -88,14 +92,68 @@ public class fourthfragment extends Fragment implements
 
 
         });
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "Contact Us", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
 
+                showMapTypeSelectorDialog();
+
+            }
+        });
 
 
 
 
         return view;
     }
+    private static final CharSequence[] MAP_TYPE_ITEMS =
+            {"Road Map", "Satellite", "Terrain", "Hybrid"};
 
+    private void showMapTypeSelectorDialog() {
+        // Prepare the dialog by setting up a Builder.
+        final String fDialogTitle = "Select Map Type";
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(fDialogTitle);
+
+        // Find the current map type to pre-check the item representing the current state.
+        int checkItem = googleMap.getMapType() - 1;
+
+        // Add an OnClickListener to the dialog, so that the selection will be handled.
+        builder.setSingleChoiceItems(
+                MAP_TYPE_ITEMS,
+                checkItem,
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int item) {
+                        // Locally create a finalised object.
+
+                        // Perform an action depending on which item was selected.
+                        switch (item) {
+                            case 1:
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                                break;
+                            case 2:
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                                break;
+                            case 3:
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                                break;
+                            default:
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                        }
+                        dialog.dismiss();
+                    }
+                }
+        );
+
+        // Build the dialog and show it.
+        AlertDialog fMapTypeDialog = builder.create();
+        fMapTypeDialog.setCanceledOnTouchOutside(true);
+        fMapTypeDialog.show();
+    }
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
