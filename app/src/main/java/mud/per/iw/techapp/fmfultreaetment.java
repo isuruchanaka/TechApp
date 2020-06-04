@@ -765,8 +765,8 @@ public class fmfultreaetment extends Fragment implements AdapterView.OnItemSelec
                     Log.wtf("cls1", qrcod);
                 }
                 else{
-                    Toast.makeText(mContext, "Check Your Internet Connection!",
-                            Toast.LENGTH_LONG).show();
+//                    Toast.makeText(mContext, "Check Your Internet Connection!",
+//                            Toast.LENGTH_LONG).show();
                 }
 
 

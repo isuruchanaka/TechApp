@@ -759,8 +759,8 @@ public class fminspection extends Fragment implements AdapterView.OnItemSelected
                     Log.wtf("cls1", qrcod);
                 }
                 else{
-                    Toast.makeText(mContext, "Check Your Internet Connection!",
-                            Toast.LENGTH_LONG).show();
+//                    Toast.makeText(mContext, "Check Your Internet Connection!",
+//                            Toast.LENGTH_LONG).show();
                 }
 
 

@@ -763,8 +763,8 @@ public class fmcallback extends Fragment implements AdapterView.OnItemSelectedLi
                     Log.wtf("cls1", qrcod);
                 }
                 else{
-                    Toast.makeText(mContext, "Check Your Internet Connection!",
-                            Toast.LENGTH_LONG).show();
+//                    Toast.makeText(mContext, "Check Your Internet Connection!",
+//                            Toast.LENGTH_LONG).show();
                 }
 
 
