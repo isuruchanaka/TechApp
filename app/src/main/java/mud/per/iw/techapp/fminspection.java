@@ -855,40 +855,41 @@ public class fminspection extends Fragment implements AdapterView.OnItemSelected
 
     public boolean validate() {
         boolean valid = true;
+        try {
 
-//        String sdesc2 =sdesc1;
-//        String visitdesc2=visitdesc1;
-//
-//        String srmk2=srmk1;
-//
-//
-        EditText visitdesc = (EditText) view.findViewById(R.id.visitdesc);
-
-
-        valid= isNetworkAvailable(mContext);
-
-        String notes=   visitdesc.getText().toString();
-        if (notes.isEmpty() ) {
+            if(data3.size()<1) {
+                Toast.makeText(getContext(), "Add atleast one photo!",
+                        Toast.LENGTH_LONG).show();
+                valid = false;
+            }
+            else   if(sps==null){
+                Toast.makeText(getContext(), "Add atleast one species!",
+                        Toast.LENGTH_LONG).show();
+                valid = false;
+            }
 
 
-            visitdesc.setError("enter value!");
-            valid = false;
-        } else {
-            visitdesc.setError(null);
+
+
+
+
+
+
+            else   if(!isNetworkAvailable(mContext)){
+                Toast.makeText(getContext(), "No internet!",
+                        Toast.LENGTH_LONG).show();
+                valid = false;
+            }
+
+
+
+
         }
-
-
-
-//        if (visitdesc2.isEmpty() ) {
-//
-//
-//            visitdesc.setError("enter value!");
-//            valid = false;
-//        } else {
-//            visitdesc.setError(null);
-//        }
-
-
+        catch (Exception ex ){
+            Toast.makeText(getContext(), "Error!",
+                    Toast.LENGTH_LONG).show();
+            valid = false;
+        }
 
 
 
@@ -1184,6 +1185,7 @@ public class fminspection extends Fragment implements AdapterView.OnItemSelected
                             view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                             data3.values().clear();
                             data3.clear();
+                            fmtargettrmnt.imagePaths.clear();
                             //data3 = null;
                         }catch (Exception ex){
                             Log.wtf("dfg", ex.toString());
@@ -1271,13 +1273,13 @@ public class fminspection extends Fragment implements AdapterView.OnItemSelected
         if (requestCode == TAKE_PHOTO_CODE && resultCode == RESULT_OK) {
             Log.wtf("CameraDemo", "Pic saved");
             InitilizeGridLayout(count);
-            imagePaths.add(purl);
-            adapter = new GridViewImageAdapter2(fminspection.this.getContext(), imagePaths,
+            fmtargettrmnt.imagePaths.add(purl);
+            adapter = new GridViewImageAdapter2(fminspection.this.getContext(), fmtargettrmnt.imagePaths,
                     columnWidth);
 
 
             gridView.setAdapter(adapter);
-
+            adapter.notifyDataSetChanged();
         }
         if (requestCode == OPEN_DOCUMENT_CODE && resultCode == RESULT_OK) {
             if (data != null) {
@@ -1285,12 +1287,13 @@ public class fminspection extends Fragment implements AdapterView.OnItemSelected
                 Uri imageUri = data.getData();
 
                 InitilizeGridLayout(count);
-                imagePaths.add(imageUri.toString());
-                adapter = new GridViewImageAdapter2(fminspection.this.getContext(), imagePaths,
+                fmtargettrmnt.imagePaths.add(imageUri.toString());
+                adapter = new GridViewImageAdapter2(fminspection.this.getContext(), fmtargettrmnt.imagePaths,
                         columnWidth);
 
 
                 gridView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         }
     }

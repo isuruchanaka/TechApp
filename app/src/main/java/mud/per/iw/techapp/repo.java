@@ -5,7 +5,7 @@ import java.util.List;
 
 public class repo {
     private String visitd,visituid, VisitType,crdt;
-    private List<Species> spsdata;
+    public List<Species> spsdata;
     private int thumbnail;
     List<Products> prdata;
     List<atdatas> atdata;

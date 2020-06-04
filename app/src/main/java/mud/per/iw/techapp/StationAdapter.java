@@ -74,7 +74,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.MyViewHo
         }
        // holder.count.setText("Lattitude:"+glat+"        Longitude:" +glon);
         holder.count.setText("Site Type : "+album.getstype());
-        holder.crdate.setText("QR Code:"+album.getCode() );
+        holder.crdate.setText("QR Code :"+album.getCode() );
 //        holder.count2.setText(album.getCustomerContactNo());
 //        holder.count3.setText(album.getAddress());
 //holder.thumbnail.setImageResource(album.getThumbnail());

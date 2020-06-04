@@ -124,7 +124,7 @@ public class fmregistration extends Fragment implements AdapterView.OnItemSelect
     private GridView gridView;
     private int columnWidth;
     private GridViewImageAdapter2 adapter;
-    private ArrayList<String> imagePaths = new ArrayList<String>();
+
     private String purl="";
     private String changeres;
     private FusedLocationProviderClient fusedLocationClient;
@@ -781,17 +781,30 @@ public class fmregistration extends Fragment implements AdapterView.OnItemSelect
             valid = false;
         }
 
+        try {
+
+            if(data3.size()<1){
+                Toast.makeText(getContext(), "Add atleast one photo!",
+                        Toast.LENGTH_LONG).show();
+                valid = false;
+            }
+        }
+        catch (Exception ex ){
+            Toast.makeText(getContext(), "Add atleast one photo!",
+                    Toast.LENGTH_LONG).show();
+            valid = false;
+        }
 //
 
-     String notes=   visitdesc.getText().toString();
-        if (notes.isEmpty() ) {
-
-
-            visitdesc.setError("enter value!");
-            valid = false;
-        } else {
-            visitdesc.setError(null);
-        }
+//     String notes=   visitdesc.getText().toString();
+//        if (notes.isEmpty() ) {
+//
+//
+//            visitdesc.setError("enter value!");
+//            valid = false;
+//        } else {
+//            visitdesc.setError(null);
+//        }
         if (sdesc2.isEmpty() ) {
 
 
@@ -1174,6 +1187,7 @@ public class fmregistration extends Fragment implements AdapterView.OnItemSelect
                             data3.values().clear();
                             data3.clear();
                             //data3 = null;
+                            fmtargettrmnt.imagePaths.clear();
                         }catch (Exception ex){
                             Log.wtf("dfg", ex.toString());
                         }
@@ -1264,13 +1278,13 @@ public class fmregistration extends Fragment implements AdapterView.OnItemSelect
         if (requestCode == TAKE_PHOTO_CODE && resultCode == RESULT_OK) {
             Log.wtf("CameraDemo", "Pic saved");
             InitilizeGridLayout(count);
-            imagePaths.add(purl);
-            adapter = new GridViewImageAdapter2(fmregistration.this.getContext(), imagePaths,
+            fmtargettrmnt.imagePaths.add(purl);
+            adapter = new GridViewImageAdapter2(fmregistration.this.getContext(), fmtargettrmnt.imagePaths,
                     columnWidth);
 
 
             gridView.setAdapter(adapter);
-
+            adapter.notifyDataSetChanged();
         }
         if (requestCode == OPEN_DOCUMENT_CODE && resultCode == RESULT_OK) {
             if (data != null) {
@@ -1278,12 +1292,13 @@ public class fmregistration extends Fragment implements AdapterView.OnItemSelect
                 Uri imageUri = data.getData();
 
                 InitilizeGridLayout(count);
-                imagePaths.add(imageUri.toString());
-                adapter = new GridViewImageAdapter2(fmregistration.this.getContext(), imagePaths,
+                fmtargettrmnt.imagePaths.add(imageUri.toString());
+                adapter = new GridViewImageAdapter2(fmregistration.this.getContext(), fmtargettrmnt.imagePaths,
                         columnWidth);
 
 
                 gridView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         }
         if(requestCode ==152){

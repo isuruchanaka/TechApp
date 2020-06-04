@@ -7,6 +7,9 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -25,6 +28,7 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -45,6 +49,7 @@ import com.bumptech.glide.request.RequestOptions;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class GridViewImageAdapter2 extends BaseAdapter {
@@ -54,6 +59,8 @@ public class GridViewImageAdapter2 extends BaseAdapter {
     private ArrayList<Bitmap> imgmb = new ArrayList<Bitmap>();
     private ArrayList<Integer> cnt = new ArrayList<Integer>();
     private int imageWidth;
+    private static LayoutInflater inflater = null;
+    GridViewImageAdapter2 adapter = this;
     //private int _postion;
 
     public static HashMap<Integer,String > data3 =new HashMap<>();
@@ -64,6 +71,7 @@ public class GridViewImageAdapter2 extends BaseAdapter {
         this._activity = activity;
         this._filePaths = filePaths;
         this.imageWidth = imageWidth;
+        inflater = (LayoutInflater) _activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -84,17 +92,29 @@ public class GridViewImageAdapter2 extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
+        final ViewHolder holder;
+
         if (convertView == null) {
-            imageView = new ImageView(_activity);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setLayoutParams(new GridView.LayoutParams(imageWidth,imageWidth));
+//            imageView = new ImageView(_activity);
+//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//            imageView.setLayoutParams(new GridView.LayoutParams(imageWidth,imageWidth));
+            convertView = inflater.inflate(R.layout.griditem, null);
+
+            holder = new ViewHolder();
+            holder.poster = (ImageView) convertView.findViewById(R.id.upcoming_image);
+
+            holder.editbutton = (ImageView) convertView.findViewById(R.id.delete_item);
+            // The tag can be any Object, this just happens to be the ViewHolder
+            convertView.setTag(holder);
 
         } else {
-            imageView = (ImageView) convertView;
+           // imageView = (ImageView) convertView;
+            holder = (ViewHolder) convertView.getTag();
+
         }
 
         //imageView.setImageResource(R.drawable.loading);
-
+        final View finalConvertView = convertView;
         String url = _filePaths.get(position);
         Log.wtf("tte", String.valueOf(url));
 
@@ -111,7 +131,8 @@ public class GridViewImageAdapter2 extends BaseAdapter {
         InputStream is =_activity.getContentResolver().openInputStream( Uri.parse(url));
         Bitmap bitmap = BitmapFactory.decodeStream(is);
             Bitmap bitmap2 =  Bitmap.createScaledBitmap(bitmap,100, 100, true);
-            imageView.setImageBitmap(bitmap2);
+           // imageView.setImageBitmap(bitmap2);
+            holder.poster.setImageBitmap(bitmap2);
             data3.put(position, url);
             Log.wtf("ttx", String.valueOf(position));
             is.close();
@@ -125,9 +146,49 @@ public class GridViewImageAdapter2 extends BaseAdapter {
 
 
 
-        imageView.setOnClickListener(new OnImageClickListener(position));
+        //imageView.setOnClickListener(new OnImageClickListener(position));
+        holder.poster.setOnClickListener(new OnImageClickListener(position));
+
+
+        holder.editbutton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+
+
+                Object firstKey=data3.keySet().toArray()[position];
+             String rfty=   data3.get(firstKey);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    fmtargettrmnt.imagePaths.removeIf(st -> st.equalsIgnoreCase(data3.get(position)));
+                }
+                //data3.remove(firstKey);
+
+//                for (Map.Entry<Integer, String> entry : data3.entrySet()) {
+//                    data3.values().remove(entry.getValue());
+//                    // Do things with the list
+//                }
+                Iterator it = data3.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    //System.out.println(pair.getKey() + " = " + pair.getValue());
+                    if(rfty.equals(pair.getValue())){
+                        it.remove(); // avoids a ConcurrentModificationException
+                    }
+
+                }
+                notifyDataSetChanged();
+
+
+            }
+        });
+
+
+
+
         //this._postion = position;
-        return imageView;
+        //return imageView;
+        return convertView;
     }
 
     class OnImageClickListener implements OnClickListener {
@@ -161,6 +222,10 @@ public class GridViewImageAdapter2 extends BaseAdapter {
      * Resizing image size
      */
 
+     class ViewHolder {
+        ImageView poster;
+        ImageView editbutton;
+    }
 
 
     public void showImage(Bitmap nm) {

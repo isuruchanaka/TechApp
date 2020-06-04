@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -854,20 +854,25 @@ this.albumList=AlbumsAdapter.albumList;
                 String emnttext = titleBox.getText().toString();
                 String descr = descriptionBox.getText().toString();
                 String descr1 = titleBox1.getText().toString();
+                try {
                 if(!emnttext.equals(descr)){
                     Toast.makeText(MainActivity.this, "Please Make Sure New Password and Confirm Password Same!",
                             Toast.LENGTH_LONG).show();
                 }
-                try {
-                    if(!oldpw.equals(generateSHA1Hash(descr1))){
+
+                 else   if(!oldpw.equals(generateSHA1Hash(descr1))){
                         Toast.makeText(MainActivity.this, "Incorrect Old Password!",
                                 Toast.LENGTH_LONG).show();
                     }
-
+                else   if(oldpw.equals(generateSHA1Hash(descr))){
+                    Toast.makeText(MainActivity.this, "New Password and Old Password cannot be same!",
+                            Toast.LENGTH_LONG).show();
+                }
                     else {
 
                         try {
                             chnguser(svcid,generateSHA1Hash(descr) );
+                            findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -912,6 +917,7 @@ this.albumList=AlbumsAdapter.albumList;
                         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                         Toast.makeText(MainActivity.this, "Password Changed!",
                                 Toast.LENGTH_LONG).show();
+
                         signOut();
 
                     }

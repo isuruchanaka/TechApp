@@ -139,7 +139,7 @@ public class fmcallback extends Fragment implements AdapterView.OnItemSelectedLi
     private GridView gridView;
     private int columnWidth;
     private GridViewImageAdapter2 adapter;
-    private ArrayList<String> imagePaths = new ArrayList<String>();
+    //private ArrayList<String> imagePaths = new ArrayList<String>();
     private String purl="";
     private String changeres;
     private FusedLocationProviderClient fusedLocationClient;
@@ -859,17 +859,46 @@ public class fmcallback extends Fragment implements AdapterView.OnItemSelectedLi
 
     public boolean validate() {
         boolean valid = true;
+        try {
 
-//        String sdesc2 =sdesc1;
-//        String visitdesc2=visitdesc1;
-//
-//        String srmk2=srmk1;
-//
-//
-//        EditText visitdesc = (EditText) view.findViewById(R.id.visitdesc);
+            if(data3.size()<1) {
+                Toast.makeText(getContext(), "Add atleast one photo!",
+                        Toast.LENGTH_LONG).show();
+                valid = false;
+            }
+            else   if(sps==null){
+                Toast.makeText(getContext(), "Add atleast one species!",
+                        Toast.LENGTH_LONG).show();
+                valid = false;
+            }
+            else if(prds==null){
+                Toast.makeText(getContext(), "Add atleast one product!",
+                        Toast.LENGTH_LONG).show();
+                valid = false;
+            }
 
 
-        valid= isNetworkAvailable(mContext);
+
+
+
+
+
+            else   if(!isNetworkAvailable(mContext)){
+                Toast.makeText(getContext(), "No Internt!",
+                        Toast.LENGTH_LONG).show();
+                valid = false;
+            }
+
+
+
+
+        }
+        catch (Exception ex ){
+            Toast.makeText(getContext(), "Error!",
+                    Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+
 
 
 
@@ -1180,6 +1209,7 @@ public class fmcallback extends Fragment implements AdapterView.OnItemSelectedLi
                             view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                             data3.values().clear();
                             data3.clear();
+                            fmtargettrmnt.imagePaths.clear();
                             //data3 = null;
                         }catch (Exception ex){
                             Log.wtf("dfg", ex.toString());
@@ -1267,13 +1297,13 @@ public class fmcallback extends Fragment implements AdapterView.OnItemSelectedLi
         if (requestCode == TAKE_PHOTO_CODE && resultCode == RESULT_OK) {
             Log.wtf("CameraDemo", "Pic saved");
             InitilizeGridLayout(count);
-            imagePaths.add(purl);
-            adapter = new GridViewImageAdapter2(fmcallback.this.getContext(), imagePaths,
+            fmtargettrmnt.imagePaths.add(purl);
+            adapter = new GridViewImageAdapter2(fmcallback.this.getContext(), fmtargettrmnt.imagePaths,
                     columnWidth);
 
 
             gridView.setAdapter(adapter);
-
+            adapter.notifyDataSetChanged();
         }
         if (requestCode == OPEN_DOCUMENT_CODE && resultCode == RESULT_OK) {
             if (data != null) {
@@ -1281,12 +1311,13 @@ public class fmcallback extends Fragment implements AdapterView.OnItemSelectedLi
                 Uri imageUri = data.getData();
 
                 InitilizeGridLayout(count);
-                imagePaths.add(imageUri.toString());
-                adapter = new GridViewImageAdapter2(fmcallback.this.getContext(), imagePaths,
+                fmtargettrmnt.imagePaths.add(imageUri.toString());
+                adapter = new GridViewImageAdapter2(fmcallback.this.getContext(), fmtargettrmnt.imagePaths,
                         columnWidth);
 
 
                 gridView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         }
     }

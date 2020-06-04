@@ -79,7 +79,71 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
     public void onBindViewHolder(final ExpandableRecyclerAdapter.ViewHolder holder, int position) {
         //holder.setIsRecyclable(false);
         final repo item = repos.get(position);
+///////////////////////////////////////////////////////////
+        if(item.spsdata==null){
 
+            holder.expandableListView.setVisibility(View.GONE);
+            holder.ly2.setVisibility(View.GONE);
+            holder.tv1.setVisibility(View.GONE);
+        }
+        else{
+            if(item.spsdata.size()==0){
+                holder.expandableListView.setVisibility(View.GONE);
+                holder.ly2.setVisibility(View.GONE);
+                holder.tv1.setVisibility(View.GONE);
+            }
+            else {
+                holder.expandableListView.setVisibility(View.VISIBLE);
+                holder.ly2.setVisibility(View.VISIBLE);
+                holder.tv1.setVisibility(View.VISIBLE);
+            }
+        }
+
+        if(item.atdata==null){
+
+            holder.expandableListView1.setVisibility(View.GONE);
+            holder.ly3.setVisibility(View.GONE);
+            holder.tv2.setVisibility(View.GONE);
+        }
+        else{
+            if(item.atdata.size()==0){
+                holder.expandableListView1.setVisibility(View.GONE);
+                holder.ly3.setVisibility(View.GONE);
+                holder.tv2.setVisibility(View.GONE);
+            }
+            else{
+            holder.expandableListView1.setVisibility(View.VISIBLE);
+            holder.ly3.setVisibility(View.VISIBLE);
+            holder.tv2.setVisibility(View.VISIBLE);
+            }
+        }
+
+        if(item.rcdata==null){
+
+            holder.expandableListView2.setVisibility(View.GONE);
+            holder.ly4.setVisibility(View.GONE);
+            holder.tv3.setVisibility(View.GONE);
+        }
+        else{
+            if(item.rcdata.size()==0){
+                holder.expandableListView2.setVisibility(View.GONE);
+                holder.ly4.setVisibility(View.GONE);
+                holder.tv3.setVisibility(View.GONE);
+            }
+            else {
+                holder.expandableListView2.setVisibility(View.VISIBLE);
+                holder.ly4.setVisibility(View.VISIBLE);
+                holder.tv3.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+
+
+
+
+
+        //////////////////////////////////////////////////
         holder.visitd.setText("Notes: " + item.getvisitd());
         holder.visitp.setText("Visit type: " + item.getVisitType());
 
@@ -126,9 +190,9 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             holder.expandableListAdapter2 = new CustomExpandableListAdapter(context, holder.expandableListTitle2, holder.expandableListDetail2);
             holder.expandableListView2.setAdapter(holder.expandableListAdapter2);
         }
-        holder.expandableListView.setSelection(position);
-       holder.expandableListView1.setSelection(position);
-        holder.expandableListView2.setSelection(position);
+//        holder.expandableListView.setSelection(position);
+//       holder.expandableListView1.setSelection(position);
+//        holder.expandableListView2.setSelection(position);
 
         holder.expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
@@ -365,6 +429,9 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
         public LinearLayout ly2;
         public LinearLayout ly3;
         public LinearLayout ly4;
+        public TextView tv1;
+        public TextView tv2;
+        public TextView tv3;
         LinearLayoutManager mLayoutManager;
         public LinearLayout expandableLayout;
         ExpandableListView expListView;
@@ -388,6 +455,9 @@ public class ExpandableRecyclerAdapter extends RecyclerView.Adapter<ExpandableRe
             gridView = (GridView) view.findViewById(R.id.grid_view);
             visitd = (TextView)view.findViewById(R.id.visitd);
             visitp = (TextView)view.findViewById(R.id.visitsp);
+            tv1= (TextView)view.findViewById(R.id.spdesc);
+            tv2= (TextView)view.findViewById(R.id.spdesc1);
+            tv3= (TextView)view.findViewById(R.id.spdesc3);
             //refg=(RecyclerView)view.findViewById(R.id.recycler5);
 ly2=(LinearLayout)view.findViewById(R.id.ly1);
             ly3=(LinearLayout)view.findViewById(R.id.ly2);

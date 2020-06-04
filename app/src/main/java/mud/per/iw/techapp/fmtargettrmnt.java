@@ -139,7 +139,7 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
     private GridView gridView;
     private int columnWidth;
     private GridViewImageAdapter2 adapter;
-    private ArrayList<String> imagePaths = new ArrayList<String>();
+    public static ArrayList<String> imagePaths = new ArrayList<String>();
     private String purl="";
     private String changeres;
     private FusedLocationProviderClient fusedLocationClient;
@@ -863,40 +863,45 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
 
     public boolean validate() {
         boolean valid = true;
+        try {
 
-//        String sdesc2 =sdesc1;
-//        String visitdesc2=visitdesc1;
-//
-//        String srmk2=srmk1;
-//
-//
-       EditText visitdesc = (EditText) view.findViewById(R.id.visitdesc);
+            if(data3.size()<1) {
+                Toast.makeText(getContext(), "Add atleast one photo!",
+                        Toast.LENGTH_LONG).show();
+                valid = false;
+            }
+            else   if(sps==null){
+                Toast.makeText(getContext(), "Add atleast one species!",
+                        Toast.LENGTH_LONG).show();
+                valid = false;
+            }
+            else if(prds==null){
+                Toast.makeText(getContext(), "Add atleast one product!",
+                        Toast.LENGTH_LONG).show();
+                valid = false;
+            }
 
 
-        valid= isNetworkAvailable(mContext);
-
-        String notes=   visitdesc.getText().toString();
-        if (notes.isEmpty() ) {
 
 
-            visitdesc.setError("enter value!");
-            valid = false;
-        } else {
-            visitdesc.setError(null);
+
+
+
+            else   if(!isNetworkAvailable(mContext)){
+                Toast.makeText(getContext(), "No Internet!",
+                        Toast.LENGTH_LONG).show();
+                valid = false;
+            }
+
+
+
+
         }
-
-
-
-//        if (visitdesc2.isEmpty() ) {
-//
-//
-//            visitdesc.setError("enter value!");
-//            valid = false;
-//        } else {
-//            visitdesc.setError(null);
-//        }
-
-
+        catch (Exception ex ){
+            Toast.makeText(getContext(), "Error!",
+                    Toast.LENGTH_LONG).show();
+            valid = false;
+        }
 
 
 
@@ -1192,6 +1197,7 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
                             view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                             data3.values().clear();
                             data3.clear();
+                            imagePaths.clear();
                             //data3 = null;
                         }catch (Exception ex){
                             Log.wtf("dfg", ex.toString());
@@ -1285,7 +1291,7 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
 
 
             gridView.setAdapter(adapter);
-
+            adapter.notifyDataSetChanged();
         }
         if (requestCode == OPEN_DOCUMENT_CODE && resultCode == RESULT_OK) {
             if (data != null) {
@@ -1299,6 +1305,7 @@ public class fmtargettrmnt extends Fragment implements AdapterView.OnItemSelecte
 
 
                 gridView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         }
     }
