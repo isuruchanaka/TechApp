@@ -292,7 +292,7 @@ public class frgmenthome extends Fragment implements AdapterView.OnItemSelectedL
 
                 Bundle bundle = new Bundle();
                 bundle.putString("message", query);
-
+              view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                 SecondFragment fragobj=new SecondFragment();
                 fragobj.setArguments(bundle);
                 FragmentTransaction ft1 =getActivity().getSupportFragmentManager().beginTransaction();

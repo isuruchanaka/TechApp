@@ -328,6 +328,13 @@ public class ThirdFragment extends Fragment implements
                  for (int i = 0; i < CodeList.size(); i++) {
 
                     Code album =CodeList.get(i);
+                     Album al1=null;
+                     for(Album carnet : albumList) {
+                         if (carnet.getuid().trim().contains(album.getSiteUId().trim())) {
+                             al1 = carnet;
+                             break;
+                         }
+                     }
                     // Code album=  getalbum(albumList.get(i).getuid());
                     // Log.wtf("icj",album.getUId());
                      if(album !=null) {
@@ -338,7 +345,7 @@ public class ThirdFragment extends Fragment implements
                                  CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(lat, lng)).zoom(3).build();
                                  googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                              }
-                             MyItem offsetItem = new MyItem(lat, lng, album.getstypedes(), "Site :" + album.getDescription().toString(), album.getUId());
+                             MyItem offsetItem = new MyItem(lat, lng, album.getstypedes(), "Site :" + album.getDescription().toString()+"\n"+al1.getCustomerName()+"\n"+al1.getAddress(), album.getUId());
                              mClusterManager.addItem(offsetItem);
                          }
 
@@ -417,7 +424,13 @@ public class ThirdFragment extends Fragment implements
         for (int i = 0; i < stationsListv.size(); i++) {
 try {
     station album = stationsListv.get(i);
-
+    Album al1=null;
+    for(Album carnet : albumList) {
+        if (carnet.getuid().trim().contains(album.getSiteUId().trim())) {
+            al1 = carnet;
+            break;
+        }
+    }
     Log.wtf("icjo", frgmenthome.siteList.get( stpos).toString());
     if (!album.getLat().equals("null") && !album.getLong().equals("null") && !album.getLat().equals("") && !album.getLong().equals("null")) {
         lat = Double.parseDouble(album.getLat());
@@ -426,7 +439,7 @@ try {
             CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(lat, lng)).zoom(3).build();
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
-        MyItem offsetItem = new MyItem(lat, lng, album.getDescription().toUpperCase(), "Site :"+stname, album.getUId());
+        MyItem offsetItem = new MyItem(lat, lng, album.getDescription().toUpperCase(), "Site :"+stname +"\n"+al1.getCustomerName()+"\n"+al1.getAddress(), album.getUId());
         mClusterManager.addItem(offsetItem);
         mClusterManager.cluster();
     }
