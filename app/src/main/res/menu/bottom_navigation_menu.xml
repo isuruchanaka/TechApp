@@ -13,10 +13,10 @@
             android:id="@+id/nav_camera2"
             android:icon="@drawable/mapicn"
             android:title="Map" />
-        <item
-        android:id="@+id/nav_camera3"
-        android:icon="@drawable/scanj"
-        android:title="Inspection" />
+<!--        <item-->
+<!--        android:id="@+id/nav_camera3"-->
+<!--        android:icon="@drawable/scanj"-->
+<!--        android:title="inspection" />-->
         <item
             android:id="@+id/nav_comp"
             android:icon="@drawable/ic_bug_report"

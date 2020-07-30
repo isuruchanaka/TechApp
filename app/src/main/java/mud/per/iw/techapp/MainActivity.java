@@ -241,11 +241,11 @@ this.albumList=AlbumsAdapter.albumList;
            Rnkname = prefs.getString("Description", "no");
            rid=  prefs.getString("RoleID", "no");
             if (rid.equals("1003")) {
-                Menu menubn = bottomNavigationView.getMenu();
-
-                MenuItem target = menubn.findItem(R.id.nav_camera3);
-
-                target.setVisible(false);
+//                Menu menubn = bottomNavigationView.getMenu();
+//
+//                MenuItem target = menubn.findItem(R.id.nav_camera3);
+//
+//                target.setVisible(false);
             }
             if (!rid.equals("1003")&&!rid.equals("1002")&&!rid.equals("1000")&&!rid.equals("1001")) {
                 Menu menubn = bottomNavigationView.getMenu();
@@ -262,7 +262,7 @@ this.albumList=AlbumsAdapter.albumList;
             TextView b1 = (TextView)headerView1.findViewById(R.id.txtname);
             b1.setText((initials).toString().trim()+" "+ (name).toString().trim()); //(Rnkname).toString().trim()+" "+
             TextView b2 = (TextView)headerView1.findViewById(R.id.txtemail);
-            b2.setText("PIMS v13");
+            b2.setText("PIMS v15");
             inBed=true;
             updateMenuTitles();
             int PERMISSION_ALL = 1;
@@ -500,17 +500,17 @@ this.albumList=AlbumsAdapter.albumList;
                 }
 
                 break;
-            case R.id.nav_camera3:
-                try {
-                    data3.values().clear();
-                    data3.clear();
-                    //data3 = null;
-                    getver1(5);
-                }catch (Exception ex){
-                    Log.wtf("dfg", ex.toString());
-                }
-
-                break;
+//            case R.id.nav_camera3:
+//                try {
+//                    data3.values().clear();
+//                    data3.clear();
+//                    //data3 = null;
+//                    getver1(5);
+//                }catch (Exception ex){
+//                    Log.wtf("dfg", ex.toString());
+//                }
+//
+//                break;
             case R.id.nav_camera5:
 
                 if (inBed) {

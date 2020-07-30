@@ -6,27 +6,27 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera6"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/registration"
             android:textColor="@color/black"
             android:title="Registration" />
         <item
             android:id="@+id/nav_camera7"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/full_treatment"
             android:textColor="@color/black"
             android:title="Full Treatment" />
         <item
             android:id="@+id/nav_camera8"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/target_treatment"
             android:textColor="@color/black"
             android:title="Target Treatment" />
         <item
             android:id="@+id/nav_camera9"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/callback"
             android:textColor="@color/black"
             android:title="Callback" />
         <item
             android:id="@+id/nav_camera10"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/inspection"
             android:textColor="@color/black"
             android:title="Inspection" />
         <item
